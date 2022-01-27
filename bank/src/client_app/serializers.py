@@ -1,0 +1,54 @@
+from client_app.models import Client
+from rest_framework import serializers
+
+
+class ClientCreateSerializer(serializers.ModelSerializer):
+    '''Serializer for creating clients'''
+
+    class Meta:
+        model = Client
+        fields = '__all__'
+
+
+class ClientDetailsSerializer(serializers.ModelSerializer):
+    '''Serializer for a specified client
+    This serializer provides detailed information about client.
+    '''
+
+    sex = serializers.CharField(source='get_sex_display')
+    city = serializers.CharField(source='get_city_display')
+    register_city = serializers.CharField(source='get_register_city_display')
+    family_status = serializers.CharField(source='get_family_status_display')
+    citizen = serializers.CharField(source='get_citizen_display')
+    disability = serializers.CharField(source='get_citizen_display')
+
+    class Meta:
+        model = Client
+        fields = '__all__'
+        read_only_fields = ['last_name', 'first_name', 'patronymic', 'birthday', 'birthday_place', 'sex',
+                            'passport_series', 'passport_number', 'passport_issued_by', 'passport_issued_at',
+                            'id_number', 'city', 'address', 'home_number', 'phone_number', 'email', 'job_place',
+                            'job_position', 'register_city', 'register_address', 'family_status', 'citizen',
+                            'disability', 'pensioner', 'monthly_salary', 'army']
+
+
+class ClientShortDetailsSerializer(serializers.ModelSerializer):
+    '''Serializer for a specified client
+    This serializer provides short information about client.
+    '''
+
+    sex = serializers.CharField(source='get_sex_display')
+
+    class Meta:
+        model = Client
+        fields = ['last_name', 'first_name', 'patronymic', 'birthday', 'sex', 'passport_number', 'id_number']
+        read_only_fields = ['last_name', 'first_name', 'patronymic', 'birthday', 'sex', 'passport_number', 'id_number']
+
+
+class ClientUpdateSerializer(serializers.ModelSerializer):
+    '''Serializer for updating a specified client.
+    '''
+
+    class Meta:
+        model = Client
+        fields = '__all__'
