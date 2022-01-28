@@ -41,8 +41,9 @@ class ClientShortDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Client
-        fields = ['last_name', 'first_name', 'patronymic', 'birthday', 'sex', 'passport_number', 'id_number']
-        read_only_fields = ['last_name', 'first_name', 'patronymic', 'birthday', 'sex', 'passport_number', 'id_number']
+        fields = ['id', 'last_name', 'first_name', 'patronymic', 'birthday', 'sex', 'passport_number', 'id_number']
+        read_only_fields = ['id', 'last_name', 'first_name', 'patronymic', 'birthday', 'sex', 'passport_number',
+                            'id_number']
 
 
 class ClientUpdateSerializer(serializers.ModelSerializer):

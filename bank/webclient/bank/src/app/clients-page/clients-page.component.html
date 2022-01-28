@@ -1,1 +1,44 @@
-<p>clients-page works!</p>
+<div class="page-title">
+    <h4>Clients</h4>
+    <button class="waves-effect waves-light btn grey darken-1" routerLink="/client/new">Add client</button>
+</div>
+
+<div class="row" *ngIf="clients$ | async as clients; else loader">
+    <table class="highlight" *ngIf="clients.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Last name</th>
+                <th>First name</th>
+                <th>Patronymic</th>
+                <th>Birthday</th>
+                <th>Passport number</th>
+                <th>ID number</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let client of clients">
+                <td>{{ client.id }}</td>
+                <td>{{ client.last_name }}</td>
+                <td>{{ client.first_name }}</td>
+                <td>{{ client.patronymic }}</td>
+                <td>{{ client.birthday }}</td>
+                <td>{{ client.passport_number }}</td>
+                <td>{{ client.id_number }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/client', client.id]">View</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #empty>
+        <div class="center">You don't have any clients!</div>
+    </ng-template>
+</div>
+
+<ng-template #loader>
+	<app-loader></app-loader>
+</ng-template>

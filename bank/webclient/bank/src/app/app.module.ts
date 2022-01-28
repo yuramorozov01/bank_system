@@ -14,7 +14,6 @@ import { TokenInterceptor } from './shared/services/auth/token.interceptor';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { ClientsPageComponent } from './clients-page/clients-page.component';
 import { ClientPageComponent } from './clients-page/client-page/client-page.component';
-import { ClientListComponent } from './clients-page/client-list/client-list.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +25,6 @@ import { ClientListComponent } from './clients-page/client-list/client-list.comp
         LoaderComponent,
         ClientsPageComponent,
         ClientPageComponent,
-        ClientListComponent,
     ],
     imports: [
         BrowserModule,

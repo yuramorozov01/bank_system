@@ -45,6 +45,10 @@ const routes: Routes = [
 				path: 'client',
 				component: ClientsPageComponent
 			},
+      {
+				path: 'client/new',
+				component: ClientPageComponent
+			},
 			{
 				path: 'client/:id',
 				component: ClientPageComponent
