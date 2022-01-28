@@ -35,7 +35,7 @@ class Client(models.Model):
     register_city = models.CharField('Registration city', choices=CityChoices.choices, max_length=128)
     register_address = models.CharField('Registration address', max_length=256)
 
-    family_status = models.CharField('Sex', choices=FamilyStatusChoices.choices, max_length=32)
+    family_status = models.CharField('Family status', choices=FamilyStatusChoices.choices, max_length=32)
     citizen = models.CharField('Citizen', choices=CitizenChoices.choices, max_length=128)
     disability = models.IntegerField(
         'Disability group',
