@@ -13,6 +13,16 @@ services:
       db:
         condition: service_healthy
 
+  client:
+    restart: always
+    build:
+      context: ./bank/webclient
+    ports:
+      - "4200:4200"
+    env_file: ./.env
+    depends_on:
+      - bank
+
   db:
     restart: always
     image: postgres
