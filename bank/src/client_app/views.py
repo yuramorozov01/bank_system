@@ -4,6 +4,11 @@ from client_app.serializers import (ClientCreateSerializer,
                                     ClientShortDetailsSerializer,
                                     ClientUpdateSerializer)
 from rest_framework import permissions, viewsets
+from client_app.permissions import (IsClientManagerAddClient,
+                                    IsClientManagerChangeClient,
+                                    IsClientManagerDeleteClient,
+                                    IsClientManagerViewClient)
+
 
 
 class ClientViewSet(viewsets.ModelViewSet):
@@ -46,15 +51,14 @@ class ClientViewSet(viewsets.ModelViewSet):
         return serializer_class
 
     def get_permissions(self):
-        # base_permissions = [permissions.IsAuthenticated]
-        base_permissions = [permissions.AllowAny]
+        base_permissions = [permissions.IsAuthenticated, IsClientManagerViewClient]
         permissions_dict = {
-            'create': [],
-            'destroy': [],
+            'create': [IsClientManagerAddClient],
+            'destroy': [IsClientManagerDeleteClient],
             'retrieve': [],
             'list': [],
-            'update': [],
-            'partial_update': [],
+            'update': [IsClientManagerChangeClient],
+            'partial_update': [IsClientManagerChangeClient],
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]

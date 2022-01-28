@@ -16,3 +16,6 @@ uploads/
 
 .pytest_cache/
 .coverage
+
+back_run.bash
+front_run.bash
