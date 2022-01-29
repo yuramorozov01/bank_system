@@ -31,7 +31,7 @@ class ClientDetailsSerializer(serializers.ModelSerializer):
     register_city = serializers.CharField(source='get_register_city_display')
     family_status = serializers.CharField(source='get_family_status_display')
     citizen = serializers.CharField(source='get_citizen_display')
-    disability = serializers.CharField(source='get_citizen_display')
+    disability = serializers.CharField(source='get_disability_display')
 
     class Meta:
         model = Client
