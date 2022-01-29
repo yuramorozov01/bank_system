@@ -3,39 +3,39 @@ from django.utils.translation import gettext_lazy as _
 
 
 class SexChoices(models.TextChoices):
-    MALE = 'ML', _('Male')
-    FEMALE = 'FM', _('Female')
+    MALE = 'Male', _('Male')
+    FEMALE = 'Female', _('Female')
     X = 'X', _('X')
     __empty__ = _('Unknown')
 
 
 class CityChoices(models.TextChoices):
-    MINSK = 'MINSK', _('Minsk')
-    MOGILEV = 'MOGILEV', _('Mogilev')
-    VITEBSK = 'VITEBSK', _('Vitebsk')
-    GOMEL = 'GOMEL', _('Gomel')
-    BREST = 'BREST', _('Brest')
-    MOSCOW = 'MOSCOW', _('Moscow')
-    WARSAWA = 'WARSAWA', _('Warsawa')
-    KYIV = 'KYIV', _('Kyiv')
-    VILNIUS = 'VILNIUS', ('Vilnius')
+    MINSK = 'Minsk', _('Minsk')
+    MOGILEV = 'Mogilev', _('Mogilev')
+    VITEBSK = 'Vitebsk', _('Vitebsk')
+    GOMEL = 'Gomel', _('Gomel')
+    BREST = 'Brest', _('Brest')
+    MOSCOW = 'Moscow', _('Moscow')
+    WARSAWA = 'Warsawa', _('Warsawa')
+    KYIV = 'Kyiv', _('Kyiv')
+    VILNIUS = 'Vilnius', ('Vilnius')
     __empty__ = _('Unknown')
 
 
 class FamilyStatusChoices(models.TextChoices):
-    MARRIED = 'MR', _('Married')
-    SINGLENESS = 'SG', _('Singleness')
-    DIVORCED = 'DV', _('Divorced')
-    COMMONLAW = 'CL', _('Common-law')
+    MARRIED = 'Married', _('Married')
+    SINGLENESS = 'Singleness', _('Singleness')
+    DIVORCED = 'Divorced', _('Divorced')
+    COMMONLAW = 'Common-law', _('Common-law')
     __empty__ = _('Unknown')
 
 
 class CitizenChoices(models.TextChoices):
-    BELARUS = 'BLR', _('Belarus')
-    RUSSIA = 'RUS', _('Russian')
-    UKRAINE = 'UKR', _('Ukraine')
-    POLAND = 'PLN', _('Poland')
-    LITHUANIA = 'LTU', _('Lithuania')
+    BELARUS = 'Belarus', _('Belarus')
+    RUSSIA = 'Russian', _('Russian')
+    UKRAINE = 'Ukraine', _('Ukraine')
+    POLAND = 'Poland', _('Poland')
+    LITHUANIA = 'Lithuania', _('Lithuania')
     __empty__ = _('Unknown')
 
 

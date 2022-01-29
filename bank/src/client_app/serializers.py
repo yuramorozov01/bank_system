@@ -26,13 +26,6 @@ class ClientDetailsSerializer(serializers.ModelSerializer):
     This serializer provides detailed information about client.
     '''
 
-    sex = serializers.CharField(source='get_sex_display')
-    city = serializers.CharField(source='get_city_display')
-    register_city = serializers.CharField(source='get_register_city_display')
-    family_status = serializers.CharField(source='get_family_status_display')
-    citizen = serializers.CharField(source='get_citizen_display')
-    disability = serializers.CharField(source='get_disability_display')
-
     class Meta:
         model = Client
         fields = '__all__'
