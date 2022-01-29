@@ -1,4 +1,5 @@
 from django.db import models
+from client_app.validators import validate_date
 from client_app.choices import SexChoices, CityChoices, FamilyStatusChoices, CitizenChoices, DisabilityChoices
 
 
@@ -11,14 +12,14 @@ class Client(models.Model):
     first_name = models.CharField('First name', max_length=128)
     patronymic = models.CharField('Patronymic', max_length=128)
 
-    birthday = models.DateField('Birthday')
+    birthday = models.DateField('Birthday', validators=[validate_date])
     birthday_place = models.CharField('Birthday place', max_length=128)
     sex = models.CharField('Sex', choices=SexChoices.choices, max_length=32)
 
     passport_series = models.CharField('Passport series', max_length=8)
     passport_number = models.CharField('Passport number', max_length=64, unique=True)
     passport_issued_by = models.CharField('Passport issuer', max_length=128)
-    passport_issued_at = models.DateField('Passport issue date')
+    passport_issued_at = models.DateField('Passport issue date', validators=[validate_date])
     id_number = models.CharField('Identification number', max_length=128, unique=True)
 
     city = models.CharField('City', choices=CityChoices.choices, max_length=128)

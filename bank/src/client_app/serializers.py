@@ -9,6 +9,17 @@ class ClientCreateSerializer(serializers.ModelSerializer):
         model = Client
         fields = '__all__'
 
+    def validate(self, data):
+        birthday = data.get('birthday')
+        passport_issued_at = data.get('passport_issued_at')
+        if (birthday is not None) and (passport_issued_at is not None):
+            if birthday > passport_issued_at:
+                raise serializers.ValidationError({
+                    'birthday': 'Birthday can\'t be after passport issue date!',
+                    'passport_issued_at': 'Passport issue date can\'t be before birthday!'
+                })
+        return data
+
 
 class ClientDetailsSerializer(serializers.ModelSerializer):
     '''Serializer for a specified client
