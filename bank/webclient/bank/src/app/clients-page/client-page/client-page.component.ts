@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -18,6 +19,8 @@ import { MaterializeService } from '../../shared/services/utils/materialize.serv
 export class ClientPageComponent implements OnInit {
 
 	@ViewChild('input') inputRef: ElementRef;
+    @ViewChild('select') selectRef: ElementRef;
+
 	form: FormGroup;
 	isNew = true;
 	client: IClient;
@@ -28,24 +31,60 @@ export class ClientPageComponent implements OnInit {
         'X': 'X',
     };
 
+    city_values = {
+        'Minsk': 'Minsk',
+        'Mogilev': 'Mogilev',
+        'Vitebsk': 'Vitebsk',
+        'Gomel': 'Gomel',
+        'Brest': 'Brest',
+        'Moscow': 'Moscow',
+        'Warsawa': 'Warsawa',
+        'Kyiv': 'Kyiv',
+        'Vilnius': 'Vilnius',
+    }
+
+    family_status_values = {
+        'Married': 'Married',
+        'Singleness': 'Singleness',
+        'Divorced': 'Divorced',
+        'Common-law': 'Common-law',
+    }
+
+    citizen_values = {
+        'Belarus': 'Belarus',
+        'Russian': 'Russian',
+        'Ukraine': 'Ukraine',
+        'Poland' : 'Poland',
+        'Lithuania': 'Lithuania',
+    }
+
+    disability_values = {
+        0: 'Group 0',
+        1: 'Group 1',
+        2: 'Group 2',
+        3: 'Group 3',
+    }
+
 	constructor(private router: Router,
 				private route: ActivatedRoute,
-				private clientService: ClientService) { }
+				private clientService: ClientService,
+                private datePipe: DatePipe) { }
 
 	ngOnInit(): void {
+        let curDate = new Date();
         this.form = new FormGroup({
             last_name: new FormControl(null, Validators.required),
             first_name: new FormControl(null, Validators.required),
             patronymic: new FormControl(null, Validators.required),
 
-            birthday: new FormControl(null, Validators.required),
+            birthday: new FormControl(this.datePipe.transform(curDate,"yyyy-MM-dd"), Validators.required),
             birthday_place: new FormControl(null, Validators.required),
             sex: new FormControl(null, Validators.required),
 
             passport_series: new FormControl(null, Validators.required),
             passport_number: new FormControl(null, Validators.required),
             passport_issued_by: new FormControl(null, Validators.required),
-            passport_issued_at: new FormControl(null, Validators.required),
+            passport_issued_at: new FormControl(this.datePipe.transform(curDate,"yyyy-MM-dd"), Validators.required),
             id_number: new FormControl(null, Validators.required),
 
             city: new FormControl(null, Validators.required),
@@ -65,9 +104,9 @@ export class ClientPageComponent implements OnInit {
             family_status: new FormControl(null, Validators.required),
             citizen: new FormControl(null, Validators.required),
             disability: new FormControl(null, Validators.required),
-            pensioner: new FormControl(null, Validators.required),
+            pensioner: new FormControl(false, Validators.required),
             monthly_salary: new FormControl(null),
-            army: new FormControl(null, Validators.required),
+            army: new FormControl(false, Validators.required),
 		});
 
 		this.form.disable();
@@ -89,12 +128,17 @@ export class ClientPageComponent implements OnInit {
 					if (client) {
 						this.client = client;
 						this.form.patchValue(client);
+                        this.form.get("city").patchValue(client.city);
 						MaterializeService.updateTextInputs();
 					}
 					this.form.enable();
 				},
 				error => MaterializeService.toast(error.error),
 			);
+	}
+
+    ngAfterViewInit(): void {
+		// MaterializeService.initializeSelect(this.selectRef);
 	}
 
 	triggerClick() {

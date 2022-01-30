@@ -1,3 +1,7 @@
 .dn {
 	display: none;
 }
+
+br {
+    line-height: 5px;
+}

@@ -57,7 +57,7 @@
                     <span style="padding-left: 25px">{{ sex.value }}</span>
                 </label>
                 <hr>
-
+                <br>
             </div>
         </div>
         <div class="input-field">
@@ -96,11 +96,16 @@
             </span>
         </div>
         <div class="input-field">
-            <input formControlName="city" id="city" type="text" [ngClass]="{'invalid': form.get('city').invalid && form.get('city').touched}" required>
-            <label for="city">City</label>
-            <span class="helper-text red-text" *ngIf="form.get('city').invalid && form.get('city').touched">
-            	<span *ngIf="form.get('city').errors['required']">Enter city</span>
-            </span>
+            <div>
+                <label>City</label>
+                <select class="browser-default" id="city" formControlName="city" required>
+                    <option [ngValue]="null" disabled>Choose your option</option>
+                    <option *ngFor="let city of city_values | keyvalue" [ngValue]="city.key">{{ city.value }}</option>
+                </select>
+                <br>
+                <hr>
+                <br>
+            </div>
         </div>
         <div class="input-field">
             <input formControlName="address" id="address" type="text" [ngClass]="{'invalid': form.get('address').invalid && form.get('address').touched}" required>
@@ -141,11 +146,16 @@
             </span>
         </div>
         <div class="input-field">
-            <input formControlName="register_city" id="register_city" type="text" [ngClass]="{'invalid': form.get('register_city').invalid && form.get('register_city').touched}" required>
-            <label for="register_city">Register city</label>
-            <span class="helper-text red-text" *ngIf="form.get('register_city').invalid && form.get('register_city').touched">
-                <span *ngIf="form.get('register_city').errors['required']">Enter register city</span>
-            </span>
+            <div>
+                <label>Register city</label>
+                <select class="browser-default" id="register_city" formControlName="register_city" required>
+                    <option [ngValue]="null" disabled>Choose your option</option>
+                    <option *ngFor="let city of city_values | keyvalue" [ngValue]="city.key">{{ city.value }}</option>
+                </select>
+                <br>
+                <hr>
+                <br>
+            </div>
         </div>
         <div class="input-field">
             <input formControlName="register_address" id="register_address" type="text" [ngClass]="{'invalid': form.get('register_address').invalid && form.get('register_address').touched}" required>
@@ -155,25 +165,40 @@
             </span>
         </div>
         <div class="input-field">
-            <input formControlName="family_status" id="family_status" type="text" [ngClass]="{'invalid': form.get('family_status').invalid && form.get('family_status').touched}" required>
-            <label for="family_status">Family status</label>
-            <span class="helper-text red-text" *ngIf="form.get('family_status').invalid && form.get('family_status').touched">
-                <span *ngIf="form.get('family_status').errors['required']">Enter family status</span>
-            </span>
+            <div>
+                <label>Family status</label>
+                <select class="browser-default" id="family_status" formControlName="family_status" required>
+                    <option [ngValue]="null" disabled>Choose your option</option>
+                    <option *ngFor="let family_status of family_status_values | keyvalue" [ngValue]="family_status.key">{{ family_status.value }}</option>
+                </select>
+                <br>
+                <hr>
+                <br>
+            </div>
         </div>
         <div class="input-field">
-            <input formControlName="citizen" id="citizen" type="text" [ngClass]="{'invalid': form.get('citizen').invalid && form.get('citizen').touched}" required>
-            <label for="citizen">Citizen</label>
-            <span class="helper-text red-text" *ngIf="form.get('citizen').invalid && form.get('citizen').touched">
-                <span *ngIf="form.get('citizen').errors['required']">Enter citizen</span>
-            </span>
+            <div>
+                <label>Citizen</label>
+                <select class="browser-default" id="citizen" formControlName="citizen" required>
+                    <option [ngValue]="null" disabled>Choose your option</option>
+                    <option *ngFor="let citizen of citizen_values | keyvalue" [ngValue]="citizen.key">{{ citizen.value }}</option>
+                </select>
+                <br>
+                <hr>
+                <br>
+            </div>
         </div>
         <div class="input-field">
-            <input formControlName="disability" id="disability" type="text" [ngClass]="{'invalid': form.get('disability').invalid && form.get('disability').touched}" required>
-            <label for="disability">Disability group</label>
-            <span class="helper-text red-text" *ngIf="form.get('disability').invalid && form.get('disability').touched">
-                <span *ngIf="form.get('disability').errors['required']">Enter disability group</span>
-            </span>
+            <div>
+                <label>Disability</label>
+                <select class="browser-default" id="disability" formControlName="disability" required>
+                    <option [value]="null" disabled>Choose your option</option>
+                    <option *ngFor="let disability of disability_values | keyvalue" [value]="disability.key">{{ disability.value }}</option>
+                </select>
+                <br>
+                <hr>
+                <br>
+            </div>
         </div>
         <div class="input-field">
             <div class="switch">
