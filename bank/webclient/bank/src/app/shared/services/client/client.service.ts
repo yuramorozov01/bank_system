@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { IMessage } from '../../interfaces/utils.interfaces';
 import { IClientList, IClient } from '../../interfaces/client.interfaces';
+import {FormGroup} from '@angular/forms';
 
 @Injectable({
 	providedIn: 'root',
@@ -17,26 +18,34 @@ export class ClientService {
 	}
 
 	getById(id: number): Observable<IClient> {
-    return this.http.get<IClient>(`/api/v1/client/${id}/`);
-  }
+        return this.http.get<IClient>(`/api/v1/client/${id}/`);
+    }
 
-  create(description: string, expireDate: Date): Observable<IClient> {
-		const formData = new FormData();
-		formData.append('description', description);
-		formData.append('expireDate', expireDate.toDateString());
+    create(formGroup: FormGroup): Observable<IClient> {
+        const formData = this.getValuesFromFormGroup(formGroup);
+        return this.http.post<IClient>('/api/v1/client/', formData);
+    }
 
-		return this.http.post<IClient>('/api/v1/client/', formData);
-	}
+    update(id: number, formGroup: FormGroup): Observable<IClient> {
+        const formData = this.getValuesFromFormGroup(formGroup);
+        return this.http.put<IClient>(`/api/v1/client/${id}/`, formData);
+    }
 
-	update(id: string, description: string, expireDate: Date): Observable<IClient> {
-		const formData = new FormData();
-		formData.append('description', description);
-		formData.append('expireDate', expireDate.toDateString());
+    delete(id: number): Observable<IMessage> {
+        return this.http.delete<IMessage>(`/api/v1/client/${id}/`);
+    }
 
-		return this.http.patch<IClient>(`/api/v1/client/${id}/`, formData);
-	}
+    getValuesFromFormGroup(formGroup: FormGroup): FormData {
+        const formData = new FormData();
+        const valuesFromFormGroup = formGroup.value;
+        Object.keys(valuesFromFormGroup).forEach((key) => {
+            let value = valuesFromFormGroup[key];
+            if (value == null) {
+                value = ''
+            }
+            formData.append(key, value);
+        });
+        return formData
+    }
 
-  delete(id: string): Observable<IMessage> {
-		return this.http.delete<IMessage>(`/api/v1/client/${id}/`);
-	}
 }

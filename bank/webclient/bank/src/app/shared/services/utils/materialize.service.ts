@@ -3,8 +3,10 @@ import { ElementRef } from '@angular/core';
 declare var M
 
 export class MaterializeService {
-	static toast(message: string) {
-		M.toast({html: message});
+	static toast(msg: any) {
+        Object.keys(msg).forEach((key) => {
+            M.toast({html: key + ': ' + msg[key]});
+        });
 	}
 
 	static initializeFloatingButton(ref: ElementRef) {

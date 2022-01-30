@@ -1,1 +1,210 @@
-<p>client-page works!</p>
+<div class="page-title">
+    <h4>
+        <a routerLink="/client">Clients</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        {{ isNew ? 'Add' : 'Edit' }} client
+    </h4>
+    <span>
+	    <button class="btn btn-small red" (click)="deleteClient()" *ngIf="!isNew">
+	    	<i class="material-icons">delete</i>
+		</button>
+    </span>
+</div>
+
+<div class="row">
+    <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="input-field">
+            <input formControlName="last_name" id="last_name" type="text" [ngClass]="{'invalid': form.get('last_name').invalid && form.get('last_name').touched}" required>
+            <label for="last_name">Last name</label>
+            <span class="helper-text red-text" *ngIf="form.get('last_name').invalid && form.get('last_name').touched">
+            	<span *ngIf="form.get('last_name').errors['required']">Enter last name</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="first_name" id="first_name" type="text" [ngClass]="{'invalid': form.get('first_name').invalid && form.get('first_name').touched}" required>
+            <label for="first_name">First name</label>
+            <span class="helper-text red-text" *ngIf="form.get('first_name').invalid && form.get('first_name').touched">
+            	<span *ngIf="form.get('first_name').errors['required']">Enter first name</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="patronymic" id="patronymic" type="text" [ngClass]="{'invalid': form.get('patronymic').invalid && form.get('patronymic').touched}" required>
+            <label for="patronymic">Patronymic</label>
+            <span class="helper-text red-text" *ngIf="form.get('patronymic').invalid && form.get('patronymic').touched">
+            	<span *ngIf="form.get('patronymic').errors['required']">Enter patronymic</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="birthday" id="birthday" type="date" [ngClass]="{'invalid': form.get('birthday').invalid && form.get('birthday').touched}" required>
+            <label for="birthday">Birthday</label>
+            <span class="helper-text red-text" *ngIf="form.get('birthday').invalid && form.get('birthday').touched">
+            	<span *ngIf="form.get('birthday').errors['required']">Enter birthday</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="birthday_place" id="birthday_place" type="text" [ngClass]="{'invalid': form.get('birthday_place').invalid && form.get('birthday_place').touched}" required>
+            <label for="birthday_place">Birthday place</label>
+            <span class="helper-text red-text" *ngIf="form.get('birthday_place').invalid && form.get('birthday_place').touched">
+            	<span *ngIf="form.get('birthday_place').errors['required']">Enter birthday place</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <div>
+                <label>Sex</label>
+                <br>
+                <label *ngFor="let sex of sex_values | keyvalue" style="margin-right: 15px;">
+                    <input id="sex" name="sex" formControlName="sex" type="radio" [value]="sex.key" class="with-gap"/>
+                    <span style="padding-left: 25px">{{ sex.value }}</span>
+                </label>
+                <hr>
+
+            </div>
+        </div>
+        <div class="input-field">
+            <input formControlName="passport_series" id="passport_series" type="text" [ngClass]="{'invalid': form.get('passport_series').invalid && form.get('passport_series').touched}" required>
+            <label for="passport_series">Passport series</label>
+            <span class="helper-text red-text" *ngIf="form.get('passport_series').invalid && form.get('passport_series').touched">
+            	<span *ngIf="form.get('passport_series').errors['required']">Enter passport series</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="passport_number" id="passport_number" type="text" [ngClass]="{'invalid': form.get('passport_number').invalid && form.get('passport_number').touched}" required>
+            <label for="passport_number">Passport number</label>
+            <span class="helper-text red-text" *ngIf="form.get('passport_number').invalid && form.get('passport_number').touched">
+            	<span *ngIf="form.get('passport_number').errors['required']">Enter passport number</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="passport_issued_by" id="passport_issued_by" type="text" [ngClass]="{'invalid': form.get('passport_issued_by').invalid && form.get('passport_issued_by').touched}" required>
+            <label for="passport_issued_by">Passport issuer</label>
+            <span class="helper-text red-text" *ngIf="form.get('passport_issued_by').invalid && form.get('passport_issued_by').touched">
+            	<span *ngIf="form.get('passport_issued_by').errors['required']">Enter passport issuer</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="passport_issued_at" id="passport_issued_at" type="date" [ngClass]="{'invalid': form.get('passport_issued_at').invalid && form.get('passport_issued_at').touched}" required>
+            <label for="passport_issued_at">Passport issue date</label>
+            <span class="helper-text red-text" *ngIf="form.get('passport_issued_at').invalid && form.get('passport_issued_at').touched">
+            	<span *ngIf="form.get('passport_issued_at').errors['required']">Enter passport issue date</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="id_number" id="id_number" type="text" [ngClass]="{'invalid': form.get('id_number').invalid && form.get('id_number').touched}" required>
+            <label for="id_number">ID number</label>
+            <span class="helper-text red-text" *ngIf="form.get('id_number').invalid && form.get('id_number').touched">
+            	<span *ngIf="form.get('id_number').errors['required']">Enter ID number</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="city" id="city" type="text" [ngClass]="{'invalid': form.get('city').invalid && form.get('city').touched}" required>
+            <label for="city">City</label>
+            <span class="helper-text red-text" *ngIf="form.get('city').invalid && form.get('city').touched">
+            	<span *ngIf="form.get('city').errors['required']">Enter city</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="address" id="address" type="text" [ngClass]="{'invalid': form.get('address').invalid && form.get('address').touched}" required>
+            <label for="address">Address</label>
+            <span class="helper-text red-text" *ngIf="form.get('address').invalid && form.get('address').touched">
+            	<span *ngIf="form.get('address').errors['required']">Enter address</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="home_number" id="home_number" type="text" [ngClass]="{'invalid': form.get('home_number').invalid && form.get('home_number').touched}">
+            <label for="home_number">Home number</label>
+            <span class="helper-text red-text" *ngIf="form.get('home_number').invalid && form.get('home_number').touched">
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="phone_number" id="phone_number" type="text" [ngClass]="{'invalid': form.get('phone_number').invalid && form.get('phone_number').touched}">
+            <label for="phone_number">Phone number</label>
+            <span class="helper-text red-text" *ngIf="form.get('phone_number').invalid && form.get('phone_number').touched">
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="email" id="email" type="email" [ngClass]="{'invalid': form.get('email').invalid && form.get('email').touched}">
+            <label for="email">Email</label>
+            <span class="helper-text red-text" *ngIf="form.get('email').invalid && form.get('email').touched">
+                <span *ngIf="form.get('email').errors['email']">Enter correct email</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="job_place" id="job_place" type="text" [ngClass]="{'invalid': form.get('job_place').invalid && form.get('job_place').touched}">
+            <label for="job_place">Job place</label>
+            <span class="helper-text red-text" *ngIf="form.get('job_place').invalid && form.get('job_place').touched">
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="job_position" id="job_position" type="text" [ngClass]="{'invalid': form.get('job_position').invalid && form.get('job_position').touched}">
+            <label for="job_position">Job position</label>
+            <span class="helper-text red-text" *ngIf="form.get('job_position').invalid && form.get('job_position').touched">
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="register_city" id="register_city" type="text" [ngClass]="{'invalid': form.get('register_city').invalid && form.get('register_city').touched}" required>
+            <label for="register_city">Register city</label>
+            <span class="helper-text red-text" *ngIf="form.get('register_city').invalid && form.get('register_city').touched">
+                <span *ngIf="form.get('register_city').errors['required']">Enter register city</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="register_address" id="register_address" type="text" [ngClass]="{'invalid': form.get('register_address').invalid && form.get('register_address').touched}" required>
+            <label for="register_address">Register address</label>
+            <span class="helper-text red-text" *ngIf="form.get('register_address').invalid && form.get('register_address').touched">
+                <span *ngIf="form.get('register_address').errors['required']">Enter register address</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="family_status" id="family_status" type="text" [ngClass]="{'invalid': form.get('family_status').invalid && form.get('family_status').touched}" required>
+            <label for="family_status">Family status</label>
+            <span class="helper-text red-text" *ngIf="form.get('family_status').invalid && form.get('family_status').touched">
+                <span *ngIf="form.get('family_status').errors['required']">Enter family status</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="citizen" id="citizen" type="text" [ngClass]="{'invalid': form.get('citizen').invalid && form.get('citizen').touched}" required>
+            <label for="citizen">Citizen</label>
+            <span class="helper-text red-text" *ngIf="form.get('citizen').invalid && form.get('citizen').touched">
+                <span *ngIf="form.get('citizen').errors['required']">Enter citizen</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="disability" id="disability" type="text" [ngClass]="{'invalid': form.get('disability').invalid && form.get('disability').touched}" required>
+            <label for="disability">Disability group</label>
+            <span class="helper-text red-text" *ngIf="form.get('disability').invalid && form.get('disability').touched">
+                <span *ngIf="form.get('disability').errors['required']">Enter disability group</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <div class="switch">
+                <label>
+                    Not a pensioner
+                    <input formControlName="pensioner" id="pensioner" type="checkbox">
+                    <span class="lever"></span>
+                    Pensioner
+                </label>
+            </div>
+        </div>
+        <div class="input-field">
+            <input formControlName="monthly_salary" id="monthly_salary" type="number" [ngClass]="{'invalid': form.get('monthly_salary').invalid && form.get('monthly_salary').touched}">
+            <label for="monthly_salary">Monthly salary</label>
+            <span class="helper-text red-text" *ngIf="form.get('monthly_salary').invalid && form.get('monthly_salary').touched">
+            </span>
+        </div>
+        <div class="input-field">
+            <div class="switch">
+                <label>
+                    Not liable for military service
+                    <input formControlName="army" id="army" type="checkbox">
+                    <span class="lever"></span>
+                    Liable
+                </label>
+            </div>
+        </div>
+        <div>
+            <button type="submit" [disabled]="form.invalid || form.disabled" class="waves-effect waves-light btn">
+                Save changes
+            </button>
+        </div>
+    </form>
+</div>
