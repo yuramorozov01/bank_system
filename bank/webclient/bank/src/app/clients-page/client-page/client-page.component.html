@@ -39,6 +39,7 @@
             <label for="birthday">Birthday</label>
             <span class="helper-text red-text" *ngIf="form.get('birthday').invalid && form.get('birthday').touched">
             	<span *ngIf="form.get('birthday').errors['required']">Enter birthday</span>
+                <span *ngIf="form.get('birthday').errors['invalidDate']">Specify date in the past</span>
             </span>
         </div>
         <div class="input-field">
@@ -86,6 +87,7 @@
             <label for="passport_issued_at">Passport issue date</label>
             <span class="helper-text red-text" *ngIf="form.get('passport_issued_at').invalid && form.get('passport_issued_at').touched">
             	<span *ngIf="form.get('passport_issued_at').errors['required']">Enter passport issue date</span>
+                <span *ngIf="form.get('birthday').errors['invalidDate']">Specify date in the past</span>
             </span>
         </div>
         <div class="input-field">

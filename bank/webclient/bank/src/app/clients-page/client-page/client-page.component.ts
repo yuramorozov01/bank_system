@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+
+import * as moment from 'moment';
 
 import { IClient } from '../../shared/interfaces/client.interfaces';
 
@@ -75,14 +77,14 @@ export class ClientPageComponent implements OnInit {
             first_name: new FormControl(null, Validators.required),
             patronymic: new FormControl(null, Validators.required),
 
-            birthday: new FormControl(this.datePipe.transform(curDate,"yyyy-MM-dd"), Validators.required),
+            birthday: new FormControl(this.datePipe.transform(curDate,"yyyy-MM-dd"), [Validators.required, this.dateValidator]),
             birthday_place: new FormControl(null, Validators.required),
             sex: new FormControl(null, Validators.required),
 
             passport_series: new FormControl(null, Validators.required),
             passport_number: new FormControl(null, Validators.required),
             passport_issued_by: new FormControl(null, Validators.required),
-            passport_issued_at: new FormControl(this.datePipe.transform(curDate,"yyyy-MM-dd"), Validators.required),
+            passport_issued_at: new FormControl(this.datePipe.transform(curDate,"yyyy-MM-dd"), [Validators.required, this.dateValidator]),
             id_number: new FormControl(null, Validators.required),
 
             city: new FormControl(null, Validators.required),
@@ -126,7 +128,6 @@ export class ClientPageComponent implements OnInit {
 					if (client) {
 						this.client = client;
 						this.form.patchValue(client);
-                        this.form.get("city").patchValue(client.city);
 						MaterializeService.updateTextInputs();
 					}
 					this.form.enable();
@@ -175,4 +176,14 @@ export class ClientPageComponent implements OnInit {
 		}
 	}
 
+    dateValidator(control: FormControl): { [s: string]: boolean } {
+        if (control.value) {
+            const date = moment(control.value);
+            const today = moment();
+            if (date.isAfter(today)) {
+                return {'invalidDate': true}
+            }
+        }
+        return null;
+    }
 }
