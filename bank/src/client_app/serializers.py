@@ -1,9 +1,10 @@
 from client_app.models import Client
 from rest_framework import serializers
+from datetime import datetime
 
 
 class ClientCreateSerializer(serializers.ModelSerializer):
-    '''Serializer for creating clients'''
+    '''Serializer for creating and updating clients'''
 
     class Meta:
         model = Client

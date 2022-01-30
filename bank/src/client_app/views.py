@@ -44,8 +44,8 @@ class ClientViewSet(viewsets.ModelViewSet):
             'create': ClientCreateSerializer,
             'retrieve': ClientDetailsSerializer,
             'list': ClientShortDetailsSerializer,
-            'update': ClientUpdateSerializer,
-            'partial_update': ClientUpdateSerializer,
+            'update': ClientCreateSerializer,
+            'partial_update': ClientCreateSerializer,
         }
         serializer_class = serializers_dict.get(self.action)
         return serializer_class
