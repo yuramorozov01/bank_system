@@ -18,6 +18,7 @@ class IsClientManagerChangeClient(permissions.BasePermission):
     def has_permission(self, request, view):
         return bool(request.user and request.user.has_perm('client_app.change_client'))
 
+
 class IsClientManagerDeleteClient(permissions.BasePermission):
     '''Permission to check if current user has permission to delete clients.'''
 

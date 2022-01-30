@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group, Permission
-from client_app.models import Client
 from django.contrib.contenttypes.models import ContentType
 
+from client_app.models import Client
 
 admin.site.register(Client)
 

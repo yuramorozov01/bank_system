@@ -1,14 +1,13 @@
-from client_app.models import Client
-from client_app.serializers import (ClientCreateSerializer,
-                                    ClientDetailsSerializer,
-                                    ClientShortDetailsSerializer,
-                                    ClientUpdateSerializer)
 from rest_framework import permissions, viewsets
+
+from client_app.models import Client
 from client_app.permissions import (IsClientManagerAddClient,
                                     IsClientManagerChangeClient,
                                     IsClientManagerDeleteClient,
                                     IsClientManagerViewClient)
-
+from client_app.serializers import (ClientCreateSerializer,
+                                    ClientDetailsSerializer,
+                                    ClientShortDetailsSerializer)
 
 
 class ClientViewSet(viewsets.ModelViewSet):

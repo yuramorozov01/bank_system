@@ -1,6 +1,8 @@
 from django.db import models
+
+from client_app.choices import (CitizenChoices, CityChoices, DisabilityChoices,
+                                FamilyStatusChoices, SexChoices)
 from client_app.validators import validate_date
-from client_app.choices import SexChoices, CityChoices, FamilyStatusChoices, CitizenChoices, DisabilityChoices
 
 
 class Client(models.Model):
