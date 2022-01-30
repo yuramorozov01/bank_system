@@ -16,9 +16,6 @@ export class MaterializeService {
 	static initializeParallax(ref: ElementRef) {
 		M.Parallax.init(ref.nativeElement);
 	}
-    static initializeSelect(ref: ElementRef) {
-        M.FormSelect.init(ref.nativeElement);
-    }
 
 	static updateTextInputs() {
 		M.updateTextFields();

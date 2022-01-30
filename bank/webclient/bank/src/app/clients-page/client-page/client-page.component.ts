@@ -17,9 +17,7 @@ import { MaterializeService } from '../../shared/services/utils/materialize.serv
 	styleUrls: ['./client-page.component.css']
 })
 export class ClientPageComponent implements OnInit {
-
 	@ViewChild('input') inputRef: ElementRef;
-    @ViewChild('select') selectRef: ElementRef;
 
 	form: FormGroup;
 	isNew = true;
@@ -135,10 +133,6 @@ export class ClientPageComponent implements OnInit {
 				},
 				error => MaterializeService.toast(error.error),
 			);
-	}
-
-    ngAfterViewInit(): void {
-		// MaterializeService.initializeSelect(this.selectRef);
 	}
 
 	triggerClick() {
