@@ -7,6 +7,7 @@ export interface IClientList {
   birthday: Date;
   sex: string;
 
+  passport_series: string;
   passport_number: string;
   id_number: string;
 }

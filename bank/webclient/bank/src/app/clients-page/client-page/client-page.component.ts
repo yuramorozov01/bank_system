@@ -65,6 +65,19 @@ export class ClientPageComponent implements OnInit {
         3: 'Group 3',
     }
 
+    passport_series_values = {
+        'AB': 'AB',
+        'BM': 'BM',
+        'HB': 'HB',
+        'KH': 'KH',
+        'MP': 'MP',
+        'MC': 'MC',
+        'KB': 'KB',
+        'PP': 'PP',
+        'SP': 'SP',
+        'DP': 'DP',
+    }
+
 	constructor(private router: Router,
 				private route: ActivatedRoute,
 				private clientService: ClientService,
@@ -73,25 +86,25 @@ export class ClientPageComponent implements OnInit {
 	ngOnInit(): void {
         let curDate = new Date();
         this.form = new FormGroup({
-            last_name: new FormControl(null, Validators.required),
-            first_name: new FormControl(null, Validators.required),
-            patronymic: new FormControl(null, Validators.required),
+            last_name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Zа-яА-Я]+[a-zA-Zа-яА-Я-]+[a-zA-Zа-яА-Я]+$')]),
+            first_name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Zа-яА-Я]+[a-zA-Zа-яА-Я-]+[a-zA-Zа-яА-Я]+$')]),
+            patronymic: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Zа-яА-Я]+[a-zA-Zа-яА-Я-]+[a-zA-Zа-яА-Я]+$')]),
 
-            birthday: new FormControl(this.datePipe.transform(curDate,"yyyy-MM-dd"), [Validators.required, this.dateValidator]),
-            birthday_place: new FormControl(null, Validators.required),
+            birthday: new FormControl(this.datePipe.transform(curDate,'yyyy-MM-dd'), [Validators.required, this.dateValidator]),
+            birthday_place: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Zа-яА-Я]+[a-zA-Zа-яА-Я-]+[a-zA-Zа-яА-Я]+$')]),
             sex: new FormControl(null, Validators.required),
 
             passport_series: new FormControl(null, Validators.required),
-            passport_number: new FormControl(null, Validators.required),
+            passport_number: new FormControl(null, [Validators.required, Validators.pattern('^[0-9]{7}$')]),
             passport_issued_by: new FormControl(null, Validators.required),
-            passport_issued_at: new FormControl(this.datePipe.transform(curDate,"yyyy-MM-dd"), [Validators.required, this.dateValidator]),
-            id_number: new FormControl(null, Validators.required),
+            passport_issued_at: new FormControl(this.datePipe.transform(curDate,'yyyy-MM-dd'), [Validators.required, this.dateValidator]),
+            id_number: new FormControl(null, [Validators.required, Validators.pattern('^[0-9]{7}[аАвВсСкКеЕмМнН][0-9]{3}(PB|BA|BI)[0-9]$')]),
 
             city: new FormControl(null, Validators.required),
             address: new FormControl(null, Validators.required),
 
-            home_number: new FormControl(),
-            phone_number: new FormControl(),
+            home_number: new FormControl(null, [Validators.required, Validators.pattern('^[0-9]{7}$')]),
+            phone_number: new FormControl(null, [Validators.required, Validators.pattern('^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$')]),
 
             email: new FormControl(null, Validators.email),
 

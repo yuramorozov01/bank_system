@@ -18,6 +18,7 @@
             <label for="last_name">Last name</label>
             <span class="helper-text red-text" *ngIf="form.get('last_name').invalid && form.get('last_name').touched">
             	<span *ngIf="form.get('last_name').errors['required']">Enter last name</span>
+                <span *ngIf="form.get('last_name').errors['pattern']">Incorrect last name</span>
             </span>
         </div>
         <div class="input-field">
@@ -25,6 +26,7 @@
             <label for="first_name">First name</label>
             <span class="helper-text red-text" *ngIf="form.get('first_name').invalid && form.get('first_name').touched">
             	<span *ngIf="form.get('first_name').errors['required']">Enter first name</span>
+                <span *ngIf="form.get('first_name').errors['pattern']">Incorrect first name</span>
             </span>
         </div>
         <div class="input-field">
@@ -32,6 +34,7 @@
             <label for="patronymic">Patronymic</label>
             <span class="helper-text red-text" *ngIf="form.get('patronymic').invalid && form.get('patronymic').touched">
             	<span *ngIf="form.get('patronymic').errors['required']">Enter patronymic</span>
+                <span *ngIf="form.get('patronymic').errors['pattern']">Incorrect patronymic</span>
             </span>
         </div>
         <div class="input-field">
@@ -47,6 +50,7 @@
             <label for="birthday_place">Birthday place</label>
             <span class="helper-text red-text" *ngIf="form.get('birthday_place').invalid && form.get('birthday_place').touched">
             	<span *ngIf="form.get('birthday_place').errors['required']">Enter birthday place</span>
+                <span *ngIf="form.get('birthday_place').errors['pattern']">Incorrect birthday place</span>
             </span>
         </div>
         <div class="input-field">
@@ -62,17 +66,23 @@
             </div>
         </div>
         <div class="input-field">
-            <input formControlName="passport_series" id="passport_series" type="text" [ngClass]="{'invalid': form.get('passport_series').invalid && form.get('passport_series').touched}" required>
-            <label for="passport_series">Passport series</label>
-            <span class="helper-text red-text" *ngIf="form.get('passport_series').invalid && form.get('passport_series').touched">
-            	<span *ngIf="form.get('passport_series').errors['required']">Enter passport series</span>
-            </span>
+            <div>
+                <label>Passport series</label>
+                <select class="browser-default" id="passport_series" formControlName="passport_series" required>
+                    <option [ngValue]="null" disabled>Choose your option</option>
+                    <option *ngFor="let passport_series of passport_series_values | keyvalue" [ngValue]="passport_series.key">{{ passport_series.value }}</option>
+                </select>
+                <br>
+                <hr>
+                <br>
+            </div>
         </div>
         <div class="input-field">
             <input formControlName="passport_number" id="passport_number" type="text" [ngClass]="{'invalid': form.get('passport_number').invalid && form.get('passport_number').touched}" required>
             <label for="passport_number">Passport number</label>
             <span class="helper-text red-text" *ngIf="form.get('passport_number').invalid && form.get('passport_number').touched">
             	<span *ngIf="form.get('passport_number').errors['required']">Enter passport number</span>
+                <span *ngIf="form.get('passport_number').errors['pattern']">Incorrect passport number</span>
             </span>
         </div>
         <div class="input-field">
@@ -87,7 +97,7 @@
             <label for="passport_issued_at">Passport issue date</label>
             <span class="helper-text red-text" *ngIf="form.get('passport_issued_at').invalid && form.get('passport_issued_at').touched">
             	<span *ngIf="form.get('passport_issued_at').errors['required']">Enter passport issue date</span>
-                <span *ngIf="form.get('birthday').errors['invalidDate']">Specify date in the past</span>
+                <span *ngIf="form.get('passport_issued_at').errors['invalidDate']">Specify date in the past</span>
             </span>
         </div>
         <div class="input-field">
@@ -95,6 +105,7 @@
             <label for="id_number">ID number</label>
             <span class="helper-text red-text" *ngIf="form.get('id_number').invalid && form.get('id_number').touched">
             	<span *ngIf="form.get('id_number').errors['required']">Enter ID number</span>
+                <span *ngIf="form.get('id_number').errors['pattern']">Incorrect ID number</span>
             </span>
         </div>
         <div class="input-field">
@@ -117,15 +128,17 @@
             </span>
         </div>
         <div class="input-field">
-            <input formControlName="home_number" id="home_number" type="text" [ngClass]="{'invalid': form.get('home_number').invalid && form.get('home_number').touched}">
+            <input formControlName="home_number" id="home_number" type="text" [ngClass]="{'invalid': form.get('home_number').invalid && form.get('home_number').touched && form.get('home_number').dirty}">
             <label for="home_number">Home number</label>
-            <span class="helper-text red-text" *ngIf="form.get('home_number').invalid && form.get('home_number').touched">
+            <span class="helper-text red-text" *ngIf="form.get('home_number').invalid && form.get('home_number').touched && form.get('home_number').dirty">
+                <span *ngIf="form.get('home_number').errors['pattern']">Incorrect home number</span>
             </span>
         </div>
         <div class="input-field">
-            <input formControlName="phone_number" id="phone_number" type="text" [ngClass]="{'invalid': form.get('phone_number').invalid && form.get('phone_number').touched}">
+            <input formControlName="phone_number" id="phone_number" type="text" [ngClass]="{'invalid': form.get('phone_number').invalid && form.get('phone_number').touched && form.get('home_number').dirty}">
             <label for="phone_number">Phone number</label>
-            <span class="helper-text red-text" *ngIf="form.get('phone_number').invalid && form.get('phone_number').touched">
+            <span class="helper-text red-text" *ngIf="form.get('phone_number').invalid && form.get('phone_number').touched && form.get('home_number').dirty">
+                <span *ngIf="form.get('phone_number').errors['pattern']">Incorrect phone number</span>
             </span>
         </div>
         <div class="input-field">
