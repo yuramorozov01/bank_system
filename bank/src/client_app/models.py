@@ -1,7 +1,8 @@
 from django.db import models
+from django.core.validators import RegexValidator
 
 from client_app.choices import (CitizenChoices, CityChoices, DisabilityChoices,
-                                FamilyStatusChoices, SexChoices)
+                                FamilyStatusChoices, SexChoices, PassportSeriesChoices)
 from client_app.validators import validate_date
 
 
@@ -10,25 +11,49 @@ class Client(models.Model):
     Detailed information about bank clients.
     '''
 
-    last_name = models.CharField('Last name', max_length=128)
-    first_name = models.CharField('First name', max_length=128)
-    patronymic = models.CharField('Patronymic', max_length=128)
+    last_name = models.CharField('Last name', max_length=128, validators=[RegexValidator(
+        regex='^[a-zA-Zа-яА-Я]+[a-zA-Zа-яА-Я-]+[a-zA-Zа-яА-Я]+$',
+        message='Incorrect last name'
+    )])
+    first_name = models.CharField('First name', max_length=128, validators=[RegexValidator(
+        regex='^[a-zA-Zа-яА-Я]+[a-zA-Zа-яА-Я-]+[a-zA-Zа-яА-Я]+$',
+        message='Incorrect first name'
+    )])
+    patronymic = models.CharField('Patronymic', max_length=128, validators=[RegexValidator(
+        regex='^[a-zA-Zа-яА-Я]+[a-zA-Zа-яА-Я-]+[a-zA-Zа-яА-Я]+$',
+        message='Incorrect patronymic'
+    )])
 
     birthday = models.DateField('Birthday', validators=[validate_date])
-    birthday_place = models.CharField('Birthday place', max_length=128)
+    birthday_place = models.CharField('Birthday place', max_length=128, validators=[RegexValidator(
+        regex='^[a-zA-Zа-яА-Я]+[a-zA-Zа-яА-Я-]+[a-zA-Zа-яА-Я]+$',
+        message='Incorrect birthday place'
+    )])
     sex = models.CharField('Sex', choices=SexChoices.choices, max_length=32)
 
-    passport_series = models.CharField('Passport series', max_length=8)
-    passport_number = models.CharField('Passport number', max_length=64, unique=True)
+    passport_series = models.CharField('Passport series', choices=PassportSeriesChoices.choices, max_length=8)
+    passport_number = models.CharField('Passport number', max_length=64, unique=True, validators=[RegexValidator(
+        regex='^[0-9]{7}$',
+        message='Incorrect passport number'
+    )])
     passport_issued_by = models.CharField('Passport issuer', max_length=128)
     passport_issued_at = models.DateField('Passport issue date', validators=[validate_date])
-    id_number = models.CharField('Identification number', max_length=128, unique=True)
+    id_number = models.CharField('Identification number', max_length=128, unique=True, validators=[RegexValidator(
+        regex='^[0-9]{7}[аАвВсСкКеЕмМнН][0-9]{3}(PB|BA|BI)[0-9]$',
+        message='Incorrect ID number'
+    )])
 
     city = models.CharField('City', choices=CityChoices.choices, max_length=128)
     address = models.CharField('Address', max_length=256)
 
-    home_number = models.CharField('Home number', max_length=32, null=True)
-    phone_number = models.CharField('Phone number', max_length=32, null=True)
+    home_number = models.CharField('Home number', max_length=32, null=True, validators=[RegexValidator(
+        regex='^[0-9]{7}$',
+        message='Incorrect home number'
+    )])
+    phone_number = models.CharField('Phone number', max_length=32, null=True, validators=[RegexValidator(
+        regex='^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$',
+        message='Incorrect phone number'
+    )])
 
     email = models.EmailField('Email', max_length=254, null=True)
 

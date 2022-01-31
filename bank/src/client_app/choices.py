@@ -45,3 +45,16 @@ class DisabilityChoices(models.IntegerChoices):
     GROUP_2 = 2, _('Group 2')
     GROUP_3 = 3, _('Group 3')
     __empty__ = _('Unknown')
+
+
+class PassportSeriesChoices(models.TextChoices):
+    AB = 'AB', _('AB')
+    BM = 'BM', _('BM')
+    HB = 'HB', _('HB')
+    KH = 'KH', _('KH')
+    MP = 'MP', _('MP')
+    MC = 'MC', _('MC')
+    KB = 'KB', _('KB')
+    PP = 'PP', _('PP')
+    SP = 'SP', _('SP')
+    DP = 'DP', _('DP')
