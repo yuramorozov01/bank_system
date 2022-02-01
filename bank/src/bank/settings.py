@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'drf_yasg',
 
     'client_app',
+    'deposit_app',
 ]
 
 MIDDLEWARE = [

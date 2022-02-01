@@ -70,7 +70,7 @@ class Client(models.Model):
         choices=DisabilityChoices.choices
     )
     pensioner = models.BooleanField('Pensioner')
-    monthly_salary = models.DecimalField('Monthly salary', max_digits=8, decimal_places=2, null=True)
+    monthly_salary = models.DecimalField('Monthly salary', max_digits=13, decimal_places=2, null=True)
     army = models.BooleanField('Liable for military service')
 
     class Meta:

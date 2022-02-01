@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
 
-class IsClientManagerAddClient(permissions.BasePermission):
+class IsUserManagerAddClient(permissions.BasePermission):
     '''Permission to check if current user has permission to add clients.'''
 
     message = 'You don\'t have permissions to add a new client.'
@@ -10,7 +10,7 @@ class IsClientManagerAddClient(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('client_app.add_client'))
 
 
-class IsClientManagerChangeClient(permissions.BasePermission):
+class IsUserManagerChangeClient(permissions.BasePermission):
     '''Permission to check if current user has permission to change clients.'''
 
     message = 'You don\'t have permissions to change the client.'
@@ -19,7 +19,7 @@ class IsClientManagerChangeClient(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('client_app.change_client'))
 
 
-class IsClientManagerDeleteClient(permissions.BasePermission):
+class IsUserManagerDeleteClient(permissions.BasePermission):
     '''Permission to check if current user has permission to delete clients.'''
 
     message = 'You don\'t have permissions to delete the client.'
@@ -28,7 +28,7 @@ class IsClientManagerDeleteClient(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('client_app.delete_client'))
 
 
-class IsClientManagerViewClient(permissions.BasePermission):
+class IsUserManagerViewClient(permissions.BasePermission):
     '''Permission to check if current user has permission to view clients.'''
 
     message = 'You don\'t have permissions to view the client.'
