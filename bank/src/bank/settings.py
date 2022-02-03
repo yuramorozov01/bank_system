@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     'client_app',
     'deposit_app',
+    'bank_account_app',
 ]
 
 MIDDLEWARE = [
