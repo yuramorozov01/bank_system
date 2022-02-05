@@ -23,6 +23,7 @@ from bank.yasg import urlpatterns as doc_urls
 urlpatterns = [
     path('api/v1/', include('client_app.urls')),
     path('api/v1/', include('deposit_app.urls')),
+    path('api/v1/', include('bank_account_app.urls')),
     path('admin/', admin.site.urls),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),

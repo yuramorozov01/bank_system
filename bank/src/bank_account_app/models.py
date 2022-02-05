@@ -10,7 +10,7 @@ class BankAccount(models.Model):
     '''
 
     number = models.CharField(
-        'Name',
+        'Number',
         max_length=13,
         unique=True,
         validators=[RegexValidator(
@@ -19,7 +19,7 @@ class BankAccount(models.Model):
         )]
     )
     activity_type = models.CharField('Activity type', choices=BankAccountActivityTypeChoices.choices, max_length=128)
-    # bank_account_type = models.CharField('Type', choices=BankAccountTypeChoices.choices, max_length=128)
+    bank_account_type = models.CharField('Type', choices=BankAccountTypeChoices.choices, max_length=128)
     balance = models.DecimalField(
         'Balance',
         max_digits=13,

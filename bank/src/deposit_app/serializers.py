@@ -3,6 +3,8 @@ from rest_framework import serializers
 
 from deposit_app.models import DepositType, DepositContract
 
+from bank_account_app.serializers import BankAccountShortDetailsSerializer
+
 
 class DepositTypeCreateSerializer(serializers.ModelSerializer):
     '''Serializer for creating and updating deposit types'''
@@ -30,7 +32,7 @@ class DepositTypeDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepositType
         fields = '__all__'
-        read_only_fields = ['name', 'percent', 'deposit_term', 'currency', 'min_downpayment', 'max_downpayment',
+        read_only_fields = ['id', 'name', 'percent', 'deposit_term', 'currency', 'min_downpayment', 'max_downpayment',
                             'is_revocable']
 
 
@@ -41,8 +43,8 @@ class DepositTypeShortDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DepositType
-        fields = ['name', 'currency', 'deposit_term', 'is_revocable']
-        read_only_fields = ['name', 'currency', 'deposit_term', 'is_revocable']
+        fields = ['id', 'name', 'currency', 'deposit_term', 'is_revocable']
+        read_only_fields = ['id', 'name', 'currency', 'deposit_term', 'is_revocable']
 
 
 class DepositContractCreateSerializer(serializers.ModelSerializer):
@@ -51,6 +53,7 @@ class DepositContractCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepositContract
         fields = '__all__'
+        read_only_fields = ['main_bank_account', 'deposit_bank_account']
 
     def validate(self, data):
         starts_at = data.get('starts_at')
@@ -68,6 +71,26 @@ class DepositContractCreateSerializer(serializers.ModelSerializer):
                     raise serializers.ValidationError({
                         'ends_at': 'Specify correct end date! It is has to be start date plus deposit term!',
                     })
+        main_bank_account = data.get('main_bank_account')
+        deposit_bank_account = data.get('deposit_bank_account')
+        if (main_bank_account is not None) and (deposit_bank_account is not None):
+            if main_bank_account == deposit_bank_account:
+                raise serializers.ValidationError({
+                    'main_bank_account': 'Main bank account can\'t be equal to deposit bank account!',
+                    'deposit_bank_account': 'Deposit bank account can\'t be equal to main bank account!',
+                })
+            client = data.get('client')
+            if client is not None:
+                if client != main_bank_account.client:
+                    raise serializers.ValidationError({
+                        'main_bank_account': 'Client of deposit contract has to be equal to client of '
+                                             'main bank account',
+                    })
+                if client != deposit_bank_account.client:
+                    raise serializers.ValidationError({
+                        'deposit_bank_account': 'Client of deposit contract has to be equal to client of '
+                                                'deposit bank account',
+                    })
         return data
 
 
@@ -76,10 +99,14 @@ class DepositContractDetailsSerializer(serializers.ModelSerializer):
     This serializer provides detailed information about deposit contract.
     '''
 
+    main_bank_account = BankAccountShortDetailsSerializer(read_only=True)
+    deposit_bank_account = BankAccountShortDetailsSerializer(read_only=True)
+
     class Meta:
         model = DepositContract
         fields = '__all__'
-        read_only_fields = ['deposit_type', 'starts_at', 'ends_at', 'deposit_amount', 'client']
+        read_only_fields = ['id', 'deposit_type', 'starts_at', 'ends_at', 'deposit_amount', 'client',
+                            'main_bank_account', 'deposit_bank_account']
 
 
 class DepositContractShortDetailsSerializer(serializers.ModelSerializer):
@@ -89,5 +116,5 @@ class DepositContractShortDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DepositContract
-        fields = ['deposit_type', 'starts_at', 'ends_at', 'deposit_amount', 'client']
-        read_only_fields = ['deposit_type', 'starts_at', 'ends_at', 'deposit_amount', 'client']
+        fields = ['id', 'deposit_type', 'starts_at', 'ends_at', 'deposit_amount', 'client']
+        read_only_fields = ['id', 'deposit_type', 'starts_at', 'ends_at', 'deposit_amount', 'client']

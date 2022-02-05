@@ -30,7 +30,7 @@ class ClientDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = '__all__'
-        read_only_fields = ['last_name', 'first_name', 'patronymic', 'birthday', 'birthday_place', 'sex',
+        read_only_fields = ['id', 'last_name', 'first_name', 'patronymic', 'birthday', 'birthday_place', 'sex',
                             'passport_series', 'passport_number', 'passport_issued_by', 'passport_issued_at',
                             'id_number', 'city', 'address', 'home_number', 'phone_number', 'email', 'job_place',
                             'job_position', 'register_city', 'register_address', 'family_status', 'citizen',
