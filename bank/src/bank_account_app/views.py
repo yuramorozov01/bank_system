@@ -6,7 +6,6 @@ from django.db import transaction
 from django.db.models import F
 from rest_framework import permissions, validators, viewsets
 from rest_framework.decorators import action
-from rest_framework.response import Response
 
 
 class BankAccountViewSet(viewsets.ReadOnlyModelViewSet):
@@ -45,18 +44,41 @@ class BankAccountViewSet(viewsets.ReadOnlyModelViewSet):
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]
 
-    @action(methods=['POST'], detail=True)
+    @action(methods=['PATCH'], detail=True)
     def top_up(self, request, pk=None):
         # Top up balance to bank account
         try:
             bank_account = BankAccount.objects.get(pk=pk)
+            amount = self.request.POST.get('amount')
+            self.validate_top_up_amount(amount)
+
             with transaction.atomic():
-                bank_account.balance = F('balance') + self.request.POST.get('amount')
+                bank_account.balance = F('balance') + amount
                 bank_account.save()
-                queryset = self.get_queryset()
-                serializer = self.get_serializer_class()(queryset)
-                return Response(serializer.data)
+            return self.retrieve(request, pk=pk)
+            # queryset = self.get_queryset()
+            # serializer = self.get_serializer_class()(queryset)
+            # return Response(serializer.data)
         except BankAccount.DoesNotExist:
             raise validators.ValidationError({
                 'bank_account': 'Bank account with specified id doesn\'t exists!',
+            })
+
+    def validate_top_up_amount(self, value):
+        if value is None:
+            raise validators.ValidationError({
+                'amount': 'This field is required!'
+            })
+
+        int_value = 0
+        try:
+            int_value = int(value)
+        except ValueError:
+            raise validators.ValidationError({
+                'amount': 'Incorrect value!'
+            })
+
+        if int_value < 0:
+            raise validators.ValidationError({
+                'amount': 'This field is has to be positive!'
             })
