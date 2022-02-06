@@ -1,7 +1,6 @@
+from client_app import views as client_views
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-
-from client_app import views as client_views
 
 router = DefaultRouter()
 router.register(

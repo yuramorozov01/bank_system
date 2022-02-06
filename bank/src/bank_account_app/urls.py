@@ -1,7 +1,6 @@
+from bank_account_app import views as bank_account_views
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-
-from bank_account_app import views as bank_account_views
 
 router = DefaultRouter()
 router.register(

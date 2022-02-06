@@ -1,6 +1,5 @@
-from rest_framework import serializers
-
 from client_app.models import Client
+from rest_framework import serializers
 
 
 class ClientCreateSerializer(serializers.ModelSerializer):
@@ -14,6 +13,8 @@ class ClientCreateSerializer(serializers.ModelSerializer):
         birthday = data.get('birthday')
         passport_issued_at = data.get('passport_issued_at')
         if (birthday is not None) and (passport_issued_at is not None):
+
+            # Check if birthday date is earlier than passport issue data
             if birthday > passport_issued_at:
                 raise serializers.ValidationError({
                     'birthday': 'Birthday can\'t be after passport issue date!',

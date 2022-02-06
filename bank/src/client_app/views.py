@@ -1,5 +1,7 @@
-from rest_framework import permissions, viewsets
-
+from bank_account_app.choices import (BankAccountActivityTypeChoices,
+                                      BankAccountTypeChoices)
+from bank_account_app.models import BankAccount
+from bank_account_app.utils import generate_bank_account_number
 from client_app.models import Client
 from client_app.permissions import (IsUserManagerAddClient,
                                     IsUserManagerChangeClient,
@@ -8,6 +10,8 @@ from client_app.permissions import (IsUserManagerAddClient,
 from client_app.serializers import (ClientCreateSerializer,
                                     ClientDetailsSerializer,
                                     ClientShortDetailsSerializer)
+from django.db import transaction
+from rest_framework import permissions, viewsets
 
 
 class ClientViewSet(viewsets.ModelViewSet):
@@ -61,3 +65,17 @@ class ClientViewSet(viewsets.ModelViewSet):
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]
+
+    def perform_create(self, serializer):
+        # Automatically create new main bank account after creating client
+        with transaction.atomic():
+            client = serializer.save()
+            new_main_bank_account_number = generate_bank_account_number(client, 0)
+            new_main_bank_account = BankAccount(
+                number=new_main_bank_account_number,
+                activity_type=BankAccountActivityTypeChoices.ACTIVE,
+                bank_account_type=BankAccountTypeChoices.MAIN,
+                balance=0,
+                client=client
+            )
+            new_main_bank_account.save()

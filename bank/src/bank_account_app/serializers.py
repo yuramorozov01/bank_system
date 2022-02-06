@@ -1,7 +1,6 @@
-from rest_framework import serializers
-
 from bank_account_app.models import BankAccount
 from client_app.serializers import ClientShortDetailsSerializer
+from rest_framework import serializers
 
 
 class BankAccountDetailsSerializer(serializers.ModelSerializer):

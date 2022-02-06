@@ -1,7 +1,6 @@
+from deposit_app import views as deposit_views
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-
-from deposit_app import views as deposit_views
 
 router = DefaultRouter()
 router.register(

@@ -1,8 +1,7 @@
-from django.db import models
-from django.core.validators import RegexValidator, MinValueValidator
-
-from deposit_app.choices import (CurrencyChoices)
+from deposit_app.choices import CurrencyChoices
 from deposit_app.validators import validate_date
+from django.core.validators import MinValueValidator
+from django.db import models
 
 
 class DepositType(models.Model):
@@ -53,7 +52,7 @@ class DepositContract(models.Model):
     ends_at = models.DateField('End date', validators=[validate_date])
     deposit_amount = models.DecimalField(
         'Deposit amount',
-        max_digits=13,
+        max_digits=21,
         decimal_places=2,
         validators=[MinValueValidator(0)]
     )
