@@ -21,7 +21,8 @@ from deposit_app.serializers import (DepositContractCreateSerializer,
                                      DepositTypeDetailsSerializer,
                                      DepositTypeShortDetailsSerializer)
 from django.db import transaction
-from rest_framework import permissions, validators, viewsets
+from rest_framework import permissions, status, validators, viewsets
+from rest_framework.response import Response
 
 
 class DepositTypeViewSet(viewsets.ModelViewSet):
@@ -129,9 +130,20 @@ class DepositContractViewSet(viewsets.ModelViewSet):
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]
 
+    def create(self, request, *args, **kwargs):
+        # Determine class field `custom_serializer` to extend ...
+        # ... this serializer with additional fields and validate them
+        # Setting new serializer is in method `perform_create`
+        serializer = self.get_serializer(data=request.data)
+        self.custom_serializer = serializer
+        self.custom_serializer.is_valid(raise_exception=True)
+        self.perform_create(self.custom_serializer)
+        headers = self.get_success_headers(self.custom_serializer.data)
+        return Response(self.custom_serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def perform_create(self, serializer):
         try:
-            client = Client.objects.get(pk=self.request.POST.get('client'))
+            client = Client.objects.get(pk=self.request.data.get('client'))
             with transaction.atomic():
 
                 # Create new main bank account if it doesn't exist
@@ -165,7 +177,7 @@ class DepositContractViewSet(viewsets.ModelViewSet):
                     'main_bank_account': new_main_bank_account,
                     'deposit_bank_account': new_deposit_bank_account,
                 }
-                serializer = DepositContractCreateSerializer(data=self.request.POST, context=context_data)
+                serializer = type(serializer)(data=self.request.data, context=context_data)
                 serializer.is_valid(raise_exception=True)
 
                 # Create deposit contract
@@ -173,6 +185,9 @@ class DepositContractViewSet(viewsets.ModelViewSet):
                     main_bank_account=new_main_bank_account,
                     deposit_bank_account=new_deposit_bank_account
                 )
+
+                # Change viewset serializer with serializer with additional arguments
+                self.custom_serializer = serializer
 
                 # Create special fund bank account if it doesn't exist
                 amount_of_special_funds = BankAccount.objects \

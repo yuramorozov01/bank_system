@@ -56,9 +56,6 @@ class BankAccountViewSet(viewsets.ReadOnlyModelViewSet):
                 bank_account.balance = F('balance') + amount
                 bank_account.save()
             return self.retrieve(request, pk=pk)
-            # queryset = self.get_queryset()
-            # serializer = self.get_serializer_class()(queryset)
-            # return Response(serializer.data)
         except BankAccount.DoesNotExist:
             raise validators.ValidationError({
                 'bank_account': 'Bank account with specified id doesn\'t exists!',
