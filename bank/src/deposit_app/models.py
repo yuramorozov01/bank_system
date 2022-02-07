@@ -74,6 +74,12 @@ class DepositContract(models.Model):
         on_delete=models.RESTRICT,
         related_name='contracts_deposit'
     )
+    special_bank_account = models.ForeignKey(
+        'bank_account_app.BankAccount',
+        verbose_name='Special bank account',
+        on_delete=models.RESTRICT,
+        related_name='contracts_special'
+    )
 
     class Meta:
         ordering = ['starts_at']

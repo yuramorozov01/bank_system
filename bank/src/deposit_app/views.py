@@ -180,15 +180,6 @@ class DepositContractViewSet(viewsets.ModelViewSet):
                 serializer = type(serializer)(data=self.request.data, context=context_data)
                 serializer.is_valid(raise_exception=True)
 
-                # Create deposit contract
-                deposit_contract = serializer.save(
-                    main_bank_account=new_main_bank_account,
-                    deposit_bank_account=new_deposit_bank_account
-                )
-
-                # Change viewset serializer with serializer with additional arguments
-                self.custom_serializer = serializer
-
                 # Create special fund bank account if it doesn't exist
                 amount_of_special_funds = BankAccount.objects \
                     .filter(
@@ -207,6 +198,16 @@ class DepositContractViewSet(viewsets.ModelViewSet):
                         'client': None,
                     }
                 )
+
+                # Create deposit contract
+                deposit_contract = serializer.save(
+                    main_bank_account=new_main_bank_account,
+                    deposit_bank_account=new_deposit_bank_account,
+                    special_bank_account=special_fund_bank_account
+                )
+
+                # Change viewset serializer with serializer with additional arguments
+                self.custom_serializer = serializer
 
                 # Transfer deposited money from main bank account to the special fund
                 transfer_money(new_main_bank_account, special_fund_bank_account, deposit_contract.deposit_amount)
