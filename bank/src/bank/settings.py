@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'djoser',
     'drf_yasg',
 
+    'base_app',
     'client_app',
     'deposit_app',
     'bank_account_app',

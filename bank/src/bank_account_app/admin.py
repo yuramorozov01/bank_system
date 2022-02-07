@@ -11,3 +11,6 @@ content_type = ContentType.objects.get_for_model(BankAccount)
 
 view_bank_account_permission = Permission.objects.get(codename='view_bankaccount', content_type=content_type)
 bank_staff_group.permissions.add(view_bank_account_permission)
+
+change_bank_account_permission = Permission.objects.get(codename='change_bankaccount', content_type=content_type)
+bank_staff_group.permissions.add(change_bank_account_permission)

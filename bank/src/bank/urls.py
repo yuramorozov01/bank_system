@@ -20,6 +20,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
+    path('api/v1/', include('base_app.urls')),
     path('api/v1/', include('client_app.urls')),
     path('api/v1/', include('deposit_app.urls')),
     path('api/v1/', include('bank_account_app.urls')),

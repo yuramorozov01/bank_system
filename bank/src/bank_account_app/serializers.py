@@ -27,3 +27,13 @@ class BankAccountShortDetailsSerializer(serializers.ModelSerializer):
         model = BankAccount
         fields = ['id', 'number', 'activity_type', 'bank_account_type', 'balance', 'client']
         read_only_fields = ['id', 'number', 'activity_type', 'bank_account_type', 'balance', 'client']
+
+
+class EmptyBankAccountSerializer(serializers.ModelSerializer):
+    '''Empty serializer.
+    To use GenericViewSet (GenericAPIView requires get_queryset() and get_serializer_class() methods).
+    '''
+
+    class Meta:
+        model = BankAccount
+        fields = []

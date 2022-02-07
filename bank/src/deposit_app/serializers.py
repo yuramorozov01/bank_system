@@ -57,7 +57,7 @@ class DepositContractCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepositContract
         fields = '__all__'
-        read_only_fields = ['main_bank_account', 'deposit_bank_account']
+        read_only_fields = ['main_bank_account', 'deposit_bank_account', 'special_bank_account']
 
     def validate(self, data):
         data = self.validate_start_end_dates(data)
