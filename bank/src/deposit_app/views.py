@@ -20,6 +20,7 @@ from deposit_app.serializers import (DepositContractCreateSerializer,
                                      DepositTypeCreateSerializer,
                                      DepositTypeDetailsSerializer,
                                      DepositTypeShortDetailsSerializer)
+from deposit_app.utils import deposit_withdraw
 from django.db import transaction
 from rest_framework import permissions, status, validators, viewsets
 from rest_framework.decorators import action
@@ -103,6 +104,7 @@ class DepositContractViewSet(viewsets.ModelViewSet):
             'list': DepositContract.objects.all(),
             'update': DepositContract.objects.all(),
             'partial_update': DepositContract.objects.all(),
+            'revoke': DepositContract.objects.filter(),
         }
         queryset = querysets_dict.get(self.action)
         return queryset.distinct()
@@ -114,6 +116,7 @@ class DepositContractViewSet(viewsets.ModelViewSet):
             'list': DepositContractShortDetailsSerializer,
             'update': DepositContractCreateSerializer,
             'partial_update': DepositContractCreateSerializer,
+            'revoke': DepositContractDetailsSerializer,
         }
         serializer_class = serializers_dict.get(self.action)
         return serializer_class
@@ -127,6 +130,7 @@ class DepositContractViewSet(viewsets.ModelViewSet):
             'list': [],
             'update': [IsUserManagerChangeDepositContract],
             'partial_update': [IsUserManagerChangeDepositContract],
+            'revoke': [IsUserManagerChangeDepositContract]
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]
@@ -164,7 +168,12 @@ class DepositContractViewSet(viewsets.ModelViewSet):
                 )
 
                 # Create new deposit bank account
-                new_deposit_bank_account_number = generate_bank_account_number(client, amount_of_bank_accounts + 1)
+
+                # If new main bank account has been created, increment amount of user's bank accounts
+                if created:
+                    amount_of_bank_accounts += 1
+
+                new_deposit_bank_account_number = generate_bank_account_number(client, amount_of_bank_accounts)
                 new_deposit_bank_account = BankAccount.objects.create(
                     number=new_deposit_bank_account_number,
                     activity_type=BankAccountActivityTypeChoices.ACTIVE,
@@ -222,4 +231,20 @@ class DepositContractViewSet(viewsets.ModelViewSet):
 
     @action(methods=['PUT', 'PATCH'], detail=True)
     def revoke(self, request, pk=None):
-        pass
+        try:
+            queryset = self.get_queryset()
+            with transaction.atomic():
+                deposit_contract = queryset.filter(is_ended=False).get(pk=pk)
+                if deposit_contract.deposit_type.is_revocable:
+                    deposit_withdraw(deposit_contract)
+                    deposit_contract.is_ended = True
+                    deposit_contract.save()
+                else:
+                    raise validators.ValidationError({
+                        'deposit_contract': 'Deposit type of deposit contract is not revocable!',
+                    })
+            return self.retrieve(request, pk=pk)
+        except DepositContract.DoesNotExist:
+            raise validators.ValidationError({
+                'deposit_contract': 'Deposit contract with specified id doesn\'t exists or had been ended!',
+            })

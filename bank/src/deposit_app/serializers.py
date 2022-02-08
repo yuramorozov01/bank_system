@@ -133,7 +133,7 @@ class DepositContractDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepositContract
         fields = '__all__'
-        read_only_fields = ['id', 'deposit_type', 'starts_at', 'ends_at', 'deposit_amount', 'client',
+        read_only_fields = ['id', 'deposit_type', 'starts_at', 'ends_at', 'is_ended', 'deposit_amount', 'client',
                             'main_bank_account', 'deposit_bank_account']
 
 
@@ -144,5 +144,5 @@ class DepositContractShortDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DepositContract
-        fields = ['id', 'deposit_type', 'starts_at', 'ends_at', 'deposit_amount', 'client']
+        fields = ['id', 'deposit_type', 'starts_at', 'ends_at', 'is_ended', 'deposit_amount', 'client']
         read_only_fields = ['id', 'deposit_type', 'starts_at', 'ends_at', 'deposit_amount', 'client']

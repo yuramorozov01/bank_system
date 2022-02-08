@@ -1,5 +1,5 @@
 from bank_account_app.models import BankAccount
-from bank_account_app.permissions import IsUserManagerViewBankAccount
+from bank_account_app.permissions import IsUserManagerViewBankAccount, IsUserManagerChangeBankAccount
 from bank_account_app.serializers import (BankAccountDetailsSerializer,
                                           BankAccountShortDetailsSerializer)
 from django.db import transaction
@@ -39,7 +39,7 @@ class BankAccountViewSet(viewsets.ReadOnlyModelViewSet):
         permissions_dict = {
             'retrieve': [],
             'list': [],
-            'top_up': [],
+            'top_up': [IsUserManagerChangeBankAccount],
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]
