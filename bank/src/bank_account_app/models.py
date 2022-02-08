@@ -43,7 +43,7 @@ class BankAccount(ValidateCleanModelMixin, models.Model):
         verbose_name_plural = 'Bank accounts'
 
     def __str__(self):
-        return f'{self.number} | {self.balance} | {self.client}'
+        return f'{self.number} | {self.balance} | {self.client} | {self.bank_account_type} | {self.activity_type}'
 
     def clean(self):
         errors = {}

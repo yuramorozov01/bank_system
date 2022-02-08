@@ -1,19 +1,19 @@
 from datetime import timedelta
+
+from bank_account_app.permissions import (IsUserManagerChangeBankAccount,
+                                          IsUserManagerViewBankAccount)
+from bank_account_app.serializers import EmptyBankAccountSerializer
 from base_app.models import BankSettings
 from deposit_app.models import DepositContract
-from bank_account_app.permissions import IsUserManagerViewBankAccount, IsUserManagerChangeBankAccount
-from bank_account_app.serializers import EmptyBankAccountSerializer
-from deposit_app.permissions import (IsUserManagerViewDepositType,
+from deposit_app.permissions import (IsUserManagerChangeDepositContract,
                                      IsUserManagerViewDepositContract,
-                                     IsUserManagerChangeDepositContract)
-
-from deposit_app.utils import deposit_withdraw, deposit_interest_accrual
-
+                                     IsUserManagerViewDepositType)
+from deposit_app.utils import deposit_interest_accrual, deposit_withdraw
 from django.db import transaction
 from django.db.models import F
-from rest_framework import permissions, validators, viewsets, mixins
-from rest_framework.response import Response
+from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
 
 class CloseDayViewSet(viewsets.GenericViewSet):
@@ -53,16 +53,23 @@ class CloseDayViewSet(viewsets.GenericViewSet):
         with transaction.atomic():
             bank_settings, created = BankSettings.objects.get_or_create()
 
-            deposit_contracts = DepositContract.objects.prefetch_related(
-                'deposit_type',
-                'main_bank_account',
-                'deposit_bank_account',
-                'special_bank_account'
-            )
+            deposit_contracts = DepositContract.objects\
+                .filter(
+                    is_ended=False,
+                    starts_at__lte=bank_settings.curr_bank_day,
+                    ends_at__gte=bank_settings.curr_bank_day
+                )\
+                .prefetch_related(
+                    'deposit_type',
+                    'main_bank_account',
+                    'deposit_bank_account',
+                    'special_bank_account'
+                )
             for deposit_contract in deposit_contracts:
                 # Withdraw deposit if today is the last day of deposit
                 if bank_settings.curr_bank_day == deposit_contract.ends_at:
                     deposit_withdraw(deposit_contract)
+                    deposit_contract.is_ended = True
                     deposit_contract.save()
 
                 # Deposit interest accrual if today is deposit day (started, but not ended)

@@ -50,6 +50,7 @@ class DepositContract(models.Model):
     )
     starts_at = models.DateField('Start date', validators=[validate_date])
     ends_at = models.DateField('End date', validators=[validate_date])
+    is_ended = models.BooleanField('Is deposit ended', default=False)
     deposit_amount = models.DecimalField(
         'Deposit amount',
         max_digits=21,

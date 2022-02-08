@@ -22,6 +22,7 @@ from deposit_app.serializers import (DepositContractCreateSerializer,
                                      DepositTypeShortDetailsSerializer)
 from django.db import transaction
 from rest_framework import permissions, status, validators, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 
@@ -218,3 +219,7 @@ class DepositContractViewSet(viewsets.ModelViewSet):
             raise validators.ValidationError({
                 'client': 'Specify client!',
             })
+
+    @action(methods=['PUT', 'PATCH'], detail=True)
+    def revoke(self, request, pk=None):
+        pass

@@ -1,6 +1,5 @@
-from django.contrib import admin
-
 from base_app.models import BankSettings
+from django.contrib import admin
 
 admin.site.register(BankSettings)
 

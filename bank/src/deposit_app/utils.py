@@ -1,6 +1,7 @@
-from bank_account_app.utils import transfer_money
-from bank_account_app.choices import BankAccountActivityTypeChoices
 from decimal import Decimal
+
+from bank_account_app.choices import BankAccountActivityTypeChoices
+from bank_account_app.utils import transfer_money
 
 
 def deposit_withdraw(deposit_contract):

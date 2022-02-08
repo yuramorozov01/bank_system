@@ -44,7 +44,7 @@ class BankAccountViewSet(viewsets.ReadOnlyModelViewSet):
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]
 
-    @action(methods=['PATCH'], detail=True)
+    @action(methods=['PUT', 'PATCH'], detail=True)
     def top_up(self, request, pk=None):
         # Top up balance to bank account
         try:
