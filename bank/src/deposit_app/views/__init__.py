@@ -1,0 +1,2 @@
+from deposit_app.views.deposit_type import DepositTypeViewSet
+from deposit_app.views.deposit_contract import DepositContractViewSet
