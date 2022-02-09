@@ -1,1 +1,40 @@
-<p>deposit-types-page works!</p>
+<div class="page-title">
+    <h4>Deposit types</h4>
+</div>
+
+<div class="row" *ngIf="deposit_types$ | async as deposit_types; else loader">
+    <table class="highlight" *ngIf="deposit_types.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Percent</th>
+                <th>Currency</th>
+                <th>Deposit term</th>
+                <th>Is revocable</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let deposit_type of deposit_types">
+                <td>{{ deposit_type.id }}</td>
+                <td>{{ deposit_type.name }}</td>
+                <td>{{ deposit_type.percent }}</td>
+                <td>{{ deposit_type.currency }}</td>
+                <td>{{ deposit_type.deposit_term }}</td>
+                <td>{{ deposit_type.is_revocable ? 'Revocable' : 'Not revocable' }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/deposit_type', deposit_type.id]">View</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #empty>
+        <div class="center">You don't have any deposit types!</div>
+    </ng-template>
+</div>
+
+<ng-template #loader>
+	<app-loader></app-loader>
+</ng-template>
