@@ -15,13 +15,13 @@ class DepositType(models.Model):
     currency = models.CharField('Currency', choices=CurrencyChoices.choices, max_length=5)
     min_downpayment = models.DecimalField(
         'Minimal downpayment',
-        max_digits=13,
+        max_digits=21,
         decimal_places=2,
         validators=[MinValueValidator(0)]
     )
     max_downpayment = models.DecimalField(
         'Maximum downpayment',
-        max_digits=13,
+        max_digits=21,
         decimal_places=2,
         null=True,
         validators=[MinValueValidator(0)]
