@@ -1,9 +1,10 @@
 <div class="page-title">
     <h4>Deposit types</h4>
+    <button class="waves-effect waves-light btn grey darken-1" routerLink="/deposit_type/new">Add deposit type</button>
 </div>
 
-<div class="row" *ngIf="deposit_types$ | async as deposit_types; else loader">
-    <table class="highlight" *ngIf="deposit_types.length !== 0; else empty">
+<div class="row" *ngIf="depositTypes$ | async as depositTypes; else loader">
+    <table class="highlight" *ngIf="depositTypes.length !== 0; else empty">
         <thead>
             <tr>
                 <th>ID</th>
@@ -16,15 +17,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let deposit_type of deposit_types">
-                <td>{{ deposit_type.id }}</td>
-                <td>{{ deposit_type.name }}</td>
-                <td>{{ deposit_type.percent }}</td>
-                <td>{{ deposit_type.currency }}</td>
-                <td>{{ deposit_type.deposit_term }}</td>
-                <td>{{ deposit_type.is_revocable ? 'Revocable' : 'Not revocable' }}</td>
+            <tr *ngFor="let depositType of depositTypes">
+                <td>{{ depositType.id }}</td>
+                <td>{{ depositType.name }}</td>
+                <td>{{ depositType.percent }}</td>
+                <td>{{ depositType.currency }}</td>
+                <td>{{ depositType.deposit_term }}</td>
+                <td>{{ depositType.is_revocable ? 'Revocable' : 'Not revocable' }}</td>
                 <td>
-                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/deposit_type', deposit_type.id]">View</button>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/deposit_type', depositType.id]">View</button>
                 </td>
             </tr>
         </tbody>

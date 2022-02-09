@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { DepositTypeService } from '../../shared/services/deposit/deposit_type/deposit_type.service';
+import { DepositTypeService } from '../../shared/services/deposit/deposit-type/deposit-type.service';
 import { IDepositTypeList } from '../../shared/interfaces/deposit.interfaces'
 import { MaterializeService} from '../../shared/services/utils/materialize.service';
 
@@ -13,13 +13,13 @@ import { MaterializeService} from '../../shared/services/utils/materialize.servi
 })
 export class DepositTypesPageComponent implements OnInit {
 
-	deposit_types$: Observable<IDepositTypeList[]>;
+	depositTypes$: Observable<IDepositTypeList[]>;
 
 	constructor(private depositTypeService: DepositTypeService) { }
 
 	ngOnInit(): void {
-		this.deposit_types$ = this.depositTypeService.fetch();
-        this.deposit_types$.subscribe(
+		this.depositTypes$ = this.depositTypeService.fetch();
+        this.depositTypes$.subscribe(
             (deposit_types: IDepositTypeList[]) => {
 			},
 			error => {

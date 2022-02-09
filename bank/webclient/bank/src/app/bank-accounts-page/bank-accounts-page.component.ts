@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { BankAccountService } from '../shared/services/bank_account/bank_account.service';
-import { IBankAccountList } from '../shared/interfaces/bank_account.interfaces';
+import { BankAccountService } from '../shared/services/bank-account/bank-account.service';
+import { IBankAccountList } from '../shared/interfaces/bank-account.interfaces';
 import { MaterializeService} from '../shared/services/utils/materialize.service';
 
 @Component({
@@ -13,13 +13,13 @@ import { MaterializeService} from '../shared/services/utils/materialize.service'
 })
 export class BankAccountsPageComponent implements OnInit {
 
-	bank_accounts$: Observable<IBankAccountList[]>;
+	bankAccounts$: Observable<IBankAccountList[]>;
 
 	constructor(private bankAccountService: BankAccountService) { }
 
 	ngOnInit(): void {
-		this.bank_accounts$ = this.bankAccountService.fetch();
-        this.bank_accounts$.subscribe(
+		this.bankAccounts$ = this.bankAccountService.fetch();
+        this.bankAccounts$.subscribe(
             (bank_accounts: IBankAccountList[]) => {
 			},
 			error => {

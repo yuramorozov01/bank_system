@@ -57,7 +57,7 @@
             <div>
                 <label>Sex</label>
                 <br>
-                <label *ngFor="let sex of sex_values | keyvalue" style="margin-right: 15px;">
+                <label *ngFor="let sex of sexValues | keyvalue" style="margin-right: 15px;">
                     <input id="sex" name="sex" formControlName="sex" type="radio" [value]="sex.key" class="with-gap"/>
                     <span style="padding-left: 25px">{{ sex.value }}</span>
                 </label>
@@ -70,7 +70,7 @@
                 <label>Passport series</label>
                 <select class="browser-default" id="passport_series" formControlName="passport_series" required>
                     <option [ngValue]="null" disabled>Choose your option</option>
-                    <option *ngFor="let passport_series of passport_series_values | keyvalue" [ngValue]="passport_series.key">{{ passport_series.value }}</option>
+                    <option *ngFor="let passport_series of passportSeriesValues | keyvalue" [ngValue]="passport_series.key">{{ passport_series.value }}</option>
                 </select>
                 <br>
                 <hr>
@@ -113,7 +113,7 @@
                 <label>City</label>
                 <select class="browser-default" id="city" formControlName="city" required>
                     <option [ngValue]="null" disabled>Choose your option</option>
-                    <option *ngFor="let city of city_values | keyvalue" [ngValue]="city.key">{{ city.value }}</option>
+                    <option *ngFor="let city of cityValues | keyvalue" [ngValue]="city.key">{{ city.value }}</option>
                 </select>
                 <br>
                 <hr>
@@ -165,7 +165,7 @@
                 <label>Register city</label>
                 <select class="browser-default" id="register_city" formControlName="register_city" required>
                     <option [ngValue]="null" disabled>Choose your option</option>
-                    <option *ngFor="let city of city_values | keyvalue" [ngValue]="city.key">{{ city.value }}</option>
+                    <option *ngFor="let city of cityValues | keyvalue" [ngValue]="city.key">{{ city.value }}</option>
                 </select>
                 <br>
                 <hr>
@@ -184,7 +184,7 @@
                 <label>Family status</label>
                 <select class="browser-default" id="family_status" formControlName="family_status" required>
                     <option [ngValue]="null" disabled>Choose your option</option>
-                    <option *ngFor="let family_status of family_status_values | keyvalue" [ngValue]="family_status.key">{{ family_status.value }}</option>
+                    <option *ngFor="let family_status of familyStatusValues | keyvalue" [ngValue]="family_status.key">{{ family_status.value }}</option>
                 </select>
                 <br>
                 <hr>
@@ -196,7 +196,7 @@
                 <label>Citizen</label>
                 <select class="browser-default" id="citizen" formControlName="citizen" required>
                     <option [ngValue]="null" disabled>Choose your option</option>
-                    <option *ngFor="let citizen of citizen_values | keyvalue" [ngValue]="citizen.key">{{ citizen.value }}</option>
+                    <option *ngFor="let citizen of citizenValues | keyvalue" [ngValue]="citizen.key">{{ citizen.value }}</option>
                 </select>
                 <br>
                 <hr>
@@ -208,7 +208,7 @@
                 <label>Disability</label>
                 <select class="browser-default" id="disability" formControlName="disability" required>
                     <option [value]="null" disabled>Choose your option</option>
-                    <option *ngFor="let disability of disability_values | keyvalue" [value]="disability.key">{{ disability.value }}</option>
+                    <option *ngFor="let disability of disabilityValues | keyvalue" [value]="disability.key">{{ disability.value }}</option>
                 </select>
                 <br>
                 <hr>

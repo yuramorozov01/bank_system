@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { IBankAccountList, IBankAccount } from '../../interfaces/bank_account.interfaces';
+import { IBankAccountList, IBankAccount } from '../../interfaces/bank-account.interfaces';
 import { FormGroup } from '@angular/forms';
 import { ParserService } from '../utils/parser.service';
 

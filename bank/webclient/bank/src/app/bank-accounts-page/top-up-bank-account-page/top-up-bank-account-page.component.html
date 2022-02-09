@@ -12,7 +12,7 @@
 <div class="row">
     <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="input-field">
-            <input formControlName="amount" id="amount" type="text" [ngClass]="{'invalid': form.get('amount').invalid && form.get('amount').touched}" required>
+            <input formControlName="amount" id="amount" type="number" [ngClass]="{'invalid': form.get('amount').invalid && form.get('amount').touched}" required>
             <label for="amount">Top up amount</label>
             <span class="helper-text red-text" *ngIf="form.get('amount').invalid && form.get('amount').touched">
             	<span *ngIf="form.get('amount').errors['required']">Enter top up amount</span>

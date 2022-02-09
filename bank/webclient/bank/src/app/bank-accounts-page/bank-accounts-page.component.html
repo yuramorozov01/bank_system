@@ -2,8 +2,8 @@
     <h4>Bank accounts</h4>
 </div>
 
-<div class="row" *ngIf="bank_accounts$ | async as bank_accounts; else loader">
-    <table class="highlight" *ngIf="bank_accounts.length !== 0; else empty">
+<div class="row" *ngIf="bankAccounts$ | async as bankAccounts; else loader">
+    <table class="highlight" *ngIf="bankAccounts.length !== 0; else empty">
         <thead>
             <tr>
                 <th>ID</th>
@@ -16,15 +16,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let bank_account of bank_accounts">
-                <td>{{ bank_account.id }}</td>
-                <td>{{ bank_account.number }}</td>
-                <td>{{ bank_account.activity_type }}</td>
-                <td>{{ bank_account.bank_account_type }}</td>
-                <td>{{ bank_account.balance }}</td>
-                <td *ngIf="bank_account.client else none">{{ bank_account.client.id_number }}</td>
+            <tr *ngFor="let bankAccount of bankAccounts">
+                <td>{{ bankAccount.id }}</td>
+                <td>{{ bankAccount.number }}</td>
+                <td>{{ bankAccount.activity_type }}</td>
+                <td>{{ bankAccount.bank_account_type }}</td>
+                <td>{{ bankAccount.balance }}</td>
+                <td *ngIf="bankAccount.client else none">{{ bankAccount.client.id_number }}</td>
                 <td>
-                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/bank_account', bank_account.id, 'top_up']">Top up</button>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/bank_account', bankAccount.id, 'top_up']">Top up</button>
                 </td>
             </tr>
         </tbody>

@@ -4,9 +4,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { switchMap } from 'rxjs/operators';
 
-import { IBankAccount } from '../../shared/interfaces/bank_account.interfaces';
+import { IBankAccount } from '../../shared/interfaces/bank-account.interfaces';
 
-import { BankAccountService } from '../../shared/services/bank_account/bank_account.service';
+import { BankAccountService } from '../../shared/services/bank-account/bank-account.service';
 import { MaterializeService } from '../../shared/services/utils/materialize.service';
 
 @Component({

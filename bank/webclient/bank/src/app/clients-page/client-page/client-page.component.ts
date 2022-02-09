@@ -25,13 +25,13 @@ export class ClientPageComponent implements OnInit {
 	isNew = true;
 	client: IClient;
 
-    sex_values = {
+    sexValues = {
         'Male': 'Male',
         'Female': 'Female',
         'X': 'X',
     };
 
-    city_values = {
+    cityValues = {
         'Minsk': 'Minsk',
         'Mogilev': 'Mogilev',
         'Vitebsk': 'Vitebsk',
@@ -43,14 +43,14 @@ export class ClientPageComponent implements OnInit {
         'Vilnius': 'Vilnius',
     }
 
-    family_status_values = {
+    familyStatusValues = {
         'Married': 'Married',
         'Singleness': 'Singleness',
         'Divorced': 'Divorced',
         'Common-law': 'Common-law',
     }
 
-    citizen_values = {
+    citizenValues = {
         'Belarus': 'Belarus',
         'Russian': 'Russian',
         'Ukraine': 'Ukraine',
@@ -58,14 +58,14 @@ export class ClientPageComponent implements OnInit {
         'Lithuania': 'Lithuania',
     }
 
-    disability_values = {
+    disabilityValues = {
         0: 'Group 0',
         1: 'Group 1',
         2: 'Group 2',
         3: 'Group 3',
     }
 
-    passport_series_values = {
+    passportSeriesValues = {
         'AB': 'AB',
         'BM': 'BM',
         'HB': 'HB',
