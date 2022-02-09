@@ -67,15 +67,15 @@ class BankAccountViewSet(viewsets.ReadOnlyModelViewSet):
                 'amount': 'This field is required!'
             })
 
-        int_value = 0
+        float_value = 0
         try:
-            int_value = int(value)
+            float_value = float(value)
         except ValueError:
             raise validators.ValidationError({
                 'amount': 'Incorrect value!'
             })
 
-        if int_value < 0:
+        if float_value < 0:
             raise validators.ValidationError({
                 'amount': 'This field is has to be positive!'
             })
