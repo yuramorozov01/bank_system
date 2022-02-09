@@ -44,8 +44,8 @@ class DepositTypeShortDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DepositType
-        fields = ['id', 'name', 'currency', 'deposit_term', 'is_revocable']
-        read_only_fields = ['id', 'name', 'currency', 'deposit_term', 'is_revocable']
+        fields = ['id', 'name', 'percent', 'currency', 'deposit_term', 'is_revocable']
+        read_only_fields = ['id', 'name', 'percent', 'currency', 'deposit_term', 'is_revocable']
 
 
 class DepositContractCreateSerializer(serializers.ModelSerializer):
