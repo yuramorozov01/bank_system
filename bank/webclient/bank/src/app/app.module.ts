@@ -21,6 +21,7 @@ import { ManagerPanelPageComponent } from './manager-panel-page/manager-panel-pa
 import { DepositPageComponent } from './deposits-page/deposit-page/deposit-page.component';
 import { DepositTypesPageComponent } from './deposits-page/deposit-types-page/deposit-types-page.component';
 import { DepositTypePageComponent } from './deposits-page/deposit-types-page/deposit-type-page/deposit-type-page.component';
+import { TopUpBankAccountPageComponent } from './bank-accounts-page/top-up-bank-account-page/top-up-bank-account-page.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { DepositTypePageComponent } from './deposits-page/deposit-types-page/dep
         DepositPageComponent,
         DepositTypesPageComponent,
         DepositTypePageComponent,
+        TopUpBankAccountPageComponent,
     ],
     imports: [
         BrowserModule,

@@ -15,6 +15,7 @@ import { DepositTypesPageComponent } from './deposits-page/deposit-types-page/de
 import { DepositTypePageComponent } from './deposits-page/deposit-types-page/deposit-type-page/deposit-type-page.component'
 
 import { AuthGuard } from './shared/services/auth/auth.guard';
+import { TopUpBankAccountPageComponent } from './bank-accounts-page/top-up-bank-account-page/top-up-bank-account-page.component';
 
 
 const routes: Routes = [
@@ -62,6 +63,10 @@ const routes: Routes = [
             {
                 path: 'bank_account',
                 component: BankAccountsPageComponent,
+            },
+            {
+                path: 'bank_account/:id/top_up',
+                component: TopUpBankAccountPageComponent,
             },
             {
                 path: 'deposit',

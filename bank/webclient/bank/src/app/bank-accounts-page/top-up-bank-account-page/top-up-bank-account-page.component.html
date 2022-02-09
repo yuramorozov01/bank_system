@@ -1,0 +1,28 @@
+<div class="page-title">
+    <h4>
+        <a routerLink="/bank_account">Bank accounts</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        Top up bank account balance
+    </h4>
+    <span>
+        <h5>Balance: <b>{{ bankAccount.balance }}</b></h5>
+    </span>
+</div>
+
+<div class="row">
+    <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="input-field">
+            <input formControlName="amount" id="amount" type="text" [ngClass]="{'invalid': form.get('amount').invalid && form.get('amount').touched}" required>
+            <label for="amount">Top up amount</label>
+            <span class="helper-text red-text" *ngIf="form.get('amount').invalid && form.get('amount').touched">
+            	<span *ngIf="form.get('amount').errors['required']">Enter top up amount</span>
+                <span *ngIf="form.get('amount').errors['pattern']">Incorrect top up amount</span>
+            </span>
+        </div>
+        <div>
+            <button type="submit" [disabled]="form.invalid || form.disabled" class="waves-effect waves-light btn">
+                Save changes
+            </button>
+        </div>
+    </form>
+</div>
