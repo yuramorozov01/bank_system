@@ -18,6 +18,10 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit {
 			url: '/client',
 			name: 'All clients',
 		},
+        {
+			url: '/bank_account',
+			name: 'Bank accounts',
+		},
 	];
 
 	constructor(private auth: AuthService,

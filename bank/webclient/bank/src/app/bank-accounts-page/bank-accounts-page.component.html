@@ -1,0 +1,44 @@
+<div class="page-title">
+    <h4>Bank accounts</h4>
+</div>
+
+<div class="row" *ngIf="bank_accounts$ | async as bank_accounts; else loader">
+    <table class="highlight" *ngIf="bank_accounts.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Number</th>
+                <th>Activity type</th>
+                <th>Bank account type</th>
+                <th>Balance</th>
+                <th>Client ID</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let bank_account of bank_accounts">
+                <td>{{ bank_account.id }}</td>
+                <td>{{ bank_account.number }}</td>
+                <td>{{ bank_account.activity_type }}</td>
+                <td>{{ bank_account.bank_account_type }}</td>
+                <td>{{ bank_account.balance }}</td>
+                <td *ngIf="bank_account.client else none">{{ bank_account.client.id_number }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/bank_account', bank_account.id]">View</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #empty>
+        <div class="center">You don't have any bank accounts!</div>
+    </ng-template>
+</div>
+
+<ng-template #loader>
+	<app-loader></app-loader>
+</ng-template>
+
+<ng-template #none>
+	<td>Bank</td>
+</ng-template>

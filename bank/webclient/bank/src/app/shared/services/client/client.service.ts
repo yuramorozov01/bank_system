@@ -5,13 +5,15 @@ import { Observable } from 'rxjs';
 
 import { IMessage } from '../../interfaces/utils.interfaces';
 import { IClientList, IClient } from '../../interfaces/client.interfaces';
-import {FormGroup} from '@angular/forms';
+import { ParserService } from '../utils/parser.service';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ClientService {
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient,
+                private parserService: ParserService) { }
 
 	fetch(): Observable<IClientList[]> {
 		return this.http.get<IClientList[]>('/api/v1/client/');
@@ -22,30 +24,16 @@ export class ClientService {
     }
 
     create(formGroup: FormGroup): Observable<IClient> {
-        const formData = this.getValuesFromFormGroup(formGroup);
+        const formData = this.parserService.getValuesFromFormGroup(formGroup);
         return this.http.post<IClient>('/api/v1/client/', formData);
     }
 
     update(id: number, formGroup: FormGroup): Observable<IClient> {
-        const formData = this.getValuesFromFormGroup(formGroup);
+        const formData = this.parserService.getValuesFromFormGroup(formGroup);
         return this.http.put<IClient>(`/api/v1/client/${id}/`, formData);
     }
 
     delete(id: number): Observable<IMessage> {
         return this.http.delete<IMessage>(`/api/v1/client/${id}/`);
     }
-
-    getValuesFromFormGroup(formGroup: FormGroup): FormData {
-        const formData = new FormData();
-        const valuesFromFormGroup = formGroup.value;
-        Object.keys(valuesFromFormGroup).forEach((key) => {
-            let value = valuesFromFormGroup[key];
-            if (value == null) {
-                value = ''
-            }
-            formData.append(key, value);
-        });
-        return formData
-    }
-
 }
