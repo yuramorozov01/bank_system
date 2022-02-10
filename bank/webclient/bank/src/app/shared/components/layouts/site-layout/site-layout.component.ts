@@ -26,6 +26,10 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit {
             url: '/deposit_type',
             name: 'Deposit types',
         },
+        {
+            url: '/deposit_contract',
+            name: 'Deposit contracts',
+        },
 	];
 
 	constructor(private auth: AuthService,

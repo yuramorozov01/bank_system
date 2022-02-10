@@ -1,1 +1,44 @@
-<p>deposits-page works!</p>
+<div class="page-title">
+    <h4>Deposit contracts</h4>
+    <button class="waves-effect waves-light btn grey darken-1" routerLink="/deposit_contract/new">Add deposit contract</button>
+</div>
+
+<div class="row" *ngIf="depositContracts$ | async as depositContracts; else loader">
+    <table class="highlight" *ngIf="depositContracts.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Deposit type</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Is ended</th>
+                <th>Deposit amount</th>
+                <th>Client</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let depositContract of depositContracts">
+                <td>{{ depositContract.id }}</td>
+                <td>{{ depositContract.deposit_type.name }}</td>
+                <td>{{ depositContract.starts_at }}</td>
+                <td>{{ depositContract.ends_at }}</td>
+                <td>{{ depositContract.is_ended ? 'Ended' : 'Not ended'}}</td>
+                <td>{{ depositContract.deposit_amount }}</td>
+                <td>{{ depositContract.client.id_number }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/deposit_contract', depositContract.id]">View</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #empty>
+        <div class="center">You don't have any deposit contracts!</div>
+    </ng-template>
+</div>
+
+<ng-template #loader>
+	<app-loader></app-loader>
+</ng-template>
