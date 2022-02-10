@@ -5,9 +5,9 @@ import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms'
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import { IDepositType } from '../../../shared/interfaces/deposit.interfaces';
+import { IDepositType } from '../../../shared/interfaces/deposit-contract.interfaces';
 
-import { DepositTypeService } from '../../../shared/services/deposit/deposit-type/deposit-type.service';
+import { DepositTypeService } from '../../../shared/services/deposit-contract/deposit-type/deposit-type.service';
 import { MaterializeService } from '../../../shared/services/utils/materialize.service';
 
 @Component({

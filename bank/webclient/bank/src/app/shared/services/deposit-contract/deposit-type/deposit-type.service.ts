@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { IMessage } from '../../../interfaces/utils.interfaces';
-import { IDepositType, IDepositTypeList } from '../../../interfaces/deposit.interfaces';
+import { IDepositType, IDepositTypeList } from '../../../interfaces/deposit-contract.interfaces';
 import { ParserService } from '../../utils/parser.service';
 import { FormGroup } from '@angular/forms';
 

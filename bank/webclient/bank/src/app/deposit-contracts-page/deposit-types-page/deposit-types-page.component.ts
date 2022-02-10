@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { DepositTypeService } from '../../shared/services/deposit/deposit-type/deposit-type.service';
-import { IDepositTypeList } from '../../shared/interfaces/deposit.interfaces'
+import { DepositTypeService } from '../../shared/services/deposit-contract/deposit-type/deposit-type.service';
+import { IDepositTypeList } from '../../shared/interfaces/deposit-contract.interfaces'
 import { MaterializeService} from '../../shared/services/utils/materialize.service';
 
 @Component({

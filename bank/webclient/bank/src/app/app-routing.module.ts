@@ -9,10 +9,10 @@ import { RegisterPageComponent } from './register-page/register-page.component';
 import { ClientsPageComponent } from "./clients-page/clients-page.component";
 import { ClientPageComponent } from "./clients-page/client-page/client-page.component";
 import { BankAccountsPageComponent } from './bank-accounts-page/bank-accounts-page.component';
-import { DepositsPageComponent } from './deposits-page/deposits-page.component'
-import { DepositPageComponent } from './deposits-page/deposit-page/deposit-page.component'
-import { DepositTypesPageComponent } from './deposits-page/deposit-types-page/deposit-types-page.component'
-import { DepositTypePageComponent } from './deposits-page/deposit-types-page/deposit-type-page/deposit-type-page.component'
+import { DepositContractsPageComponent } from './deposit-contracts-page/deposit-contracts-page.component';
+import { DepositContractPageComponent } from './deposit-contracts-page/deposit-contract-page/deposit-contract-page.component';
+import { DepositTypesPageComponent } from './deposit-contracts-page/deposit-types-page/deposit-types-page.component'
+import { DepositTypePageComponent } from './deposit-contracts-page/deposit-types-page/deposit-type-page/deposit-type-page.component'
 
 import { AuthGuard } from './shared/services/auth/auth.guard';
 import { TopUpBankAccountPageComponent } from './bank-accounts-page/top-up-bank-account-page/top-up-bank-account-page.component';
@@ -69,16 +69,16 @@ const routes: Routes = [
                 component: TopUpBankAccountPageComponent,
             },
             {
-                path: 'deposit',
-                component: DepositsPageComponent,
+                path: 'deposit_contract',
+                component: DepositContractsPageComponent,
             },
             {
-                path: 'deposit/new',
-                component: DepositPageComponent,
+                path: 'deposit_contract/new',
+                component: DepositContractPageComponent,
             },
             {
-                path: 'deposit/:id',
-                component: DepositPageComponent,
+                path: 'deposit_contract/:id',
+                component: DepositContractPageComponent,
             },
             {
                 path: 'deposit_type',
