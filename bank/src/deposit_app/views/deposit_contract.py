@@ -8,42 +8,35 @@ from client_app.models import Client
 from deposit_app.models import DepositContract
 from deposit_app.permissions import (IsUserManagerAddDepositContract,
                                      IsUserManagerChangeDepositContract,
-                                     IsUserManagerDeleteDepositContract,
                                      IsUserManagerViewDepositContract)
 from deposit_app.serializers import (DepositContractCreateSerializer,
                                      DepositContractDetailsSerializer,
                                      DepositContractShortDetailsSerializer)
 from deposit_app.utils import deposit_withdraw
 from django.db import transaction
-from rest_framework import permissions, status, validators, viewsets
+from rest_framework import permissions, status, validators, viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 
-class DepositContractViewSet(viewsets.ModelViewSet):
+class DepositContractViewSet(mixins.CreateModelMixin,
+                             mixins.RetrieveModelMixin,
+                             mixins.ListModelMixin,
+                             viewsets.GenericViewSet):
     '''
     create:
         Create a new deposit contract.
-    destroy:
-        Delete a deposit contract.
     retrieve:
         Get the specified deposit contract.
     list:
         Get a list of all deposit contracts.
-    update:
-        Update a deposit contract.
-    partial_update:
-        Update a deposit contract.
     '''
 
     def get_queryset(self):
         querysets_dict = {
             'create': DepositContract.objects.all(),
-            'destroy': DepositContract.objects.all(),
             'retrieve': DepositContract.objects.all(),
             'list': DepositContract.objects.all(),
-            'update': DepositContract.objects.all(),
-            'partial_update': DepositContract.objects.all(),
             'revoke': DepositContract.objects.filter(),
         }
         queryset = querysets_dict.get(self.action)
@@ -54,8 +47,6 @@ class DepositContractViewSet(viewsets.ModelViewSet):
             'create': DepositContractCreateSerializer,
             'retrieve': DepositContractDetailsSerializer,
             'list': DepositContractShortDetailsSerializer,
-            'update': DepositContractCreateSerializer,
-            'partial_update': DepositContractCreateSerializer,
             'revoke': DepositContractDetailsSerializer,
         }
         serializer_class = serializers_dict.get(self.action)
@@ -65,11 +56,8 @@ class DepositContractViewSet(viewsets.ModelViewSet):
         base_permissions = [permissions.IsAuthenticated, IsUserManagerViewDepositContract]
         permissions_dict = {
             'create': [IsUserManagerAddDepositContract],
-            'destroy': [IsUserManagerDeleteDepositContract],
             'retrieve': [],
             'list': [],
-            'update': [IsUserManagerChangeDepositContract],
-            'partial_update': [IsUserManagerChangeDepositContract],
             'revoke': [IsUserManagerChangeDepositContract]
         }
         base_permissions += permissions_dict.get(self.action, [])
