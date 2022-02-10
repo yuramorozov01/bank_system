@@ -14,7 +14,7 @@ from deposit_app.serializers import (DepositContractCreateSerializer,
                                      DepositContractShortDetailsSerializer)
 from deposit_app.utils import deposit_withdraw
 from django.db import transaction
-from rest_framework import permissions, status, validators, viewsets, mixins
+from rest_framework import mixins, permissions, status, validators, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 

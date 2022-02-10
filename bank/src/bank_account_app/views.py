@@ -1,5 +1,6 @@
 from bank_account_app.models import BankAccount
-from bank_account_app.permissions import IsUserManagerViewBankAccount, IsUserManagerChangeBankAccount
+from bank_account_app.permissions import (IsUserManagerChangeBankAccount,
+                                          IsUserManagerViewBankAccount)
 from bank_account_app.serializers import (BankAccountDetailsSerializer,
                                           BankAccountShortDetailsSerializer)
 from django.db import transaction

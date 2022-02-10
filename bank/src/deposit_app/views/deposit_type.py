@@ -6,7 +6,8 @@ from deposit_app.permissions import (IsUserManagerAddDepositType,
 from deposit_app.serializers import (DepositTypeCreateSerializer,
                                      DepositTypeDetailsSerializer,
                                      DepositTypeShortDetailsSerializer)
-from rest_framework import permissions, viewsets
+from django.db.models.deletion import RestrictedError
+from rest_framework import permissions, validators, viewsets
 
 
 class DepositTypeViewSet(viewsets.ModelViewSet):
@@ -60,3 +61,12 @@ class DepositTypeViewSet(viewsets.ModelViewSet):
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]
+
+    def perform_destroy(self, instance):
+        try:
+            instance.delete()
+        except RestrictedError:
+            raise validators.ValidationError({
+                'deposit_type': 'Cannot delete this deposit type, because there are some deposit contracts,'
+                                ' that uses this type',
+            })
