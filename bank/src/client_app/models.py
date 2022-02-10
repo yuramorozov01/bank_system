@@ -32,7 +32,7 @@ class Client(models.Model):
     sex = models.CharField('Sex', choices=SexChoices.choices, max_length=32)
 
     passport_series = models.CharField('Passport series', choices=PassportSeriesChoices.choices, max_length=8)
-    passport_number = models.CharField('Passport number', max_length=64, unique=True, validators=[RegexValidator(
+    passport_number = models.CharField('Passport number', max_length=64, validators=[RegexValidator(
         regex=r'^[0-9]{7}$',
         message='Incorrect passport number'
     )])
@@ -77,6 +77,7 @@ class Client(models.Model):
         ordering = ['last_name']
         verbose_name = 'Client'
         verbose_name_plural = 'Clients'
+        unique_together = ['passport_series', 'passport_number']
 
     def __str__(self):
         return f'{self.last_name} {self.first_name} {self.patronymic} ({self.birthday})'
