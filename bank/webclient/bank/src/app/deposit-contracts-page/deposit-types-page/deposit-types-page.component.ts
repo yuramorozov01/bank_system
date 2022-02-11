@@ -20,7 +20,7 @@ export class DepositTypesPageComponent implements OnInit {
 	ngOnInit(): void {
 		this.depositTypes$ = this.depositTypeService.fetch();
         this.depositTypes$.subscribe(
-            (deposit_types: IDepositTypeList[]) => {
+            (depositTypes: IDepositTypeList[]) => {
 			},
 			error => {
 				MaterializeService.toast(error.error);

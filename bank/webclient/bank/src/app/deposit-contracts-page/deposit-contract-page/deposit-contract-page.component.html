@@ -1,1 +1,73 @@
-<p>deposit-page works!</p>
+<div class="page-title">
+    <h4>
+        <a routerLink="/deposit_contract">Deposit contracts</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        {{ isNew ? 'Add' : 'View' }} deposit contract
+    </h4>
+</div>
+
+<div class="row">
+    <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="input-field">
+            <div>
+                <label>Deposit type</label>
+                <select class="browser-default" id="deposit_type" formControlName="deposit_type" *ngIf="depositTypes$ | async as depositTypes;" required>
+                    <option [ngValue]="null" disabled>Choose your option</option>
+                    <option *ngFor="let depositType of depositTypes" [ngValue]="depositType.id">{{ depositType.name }} | {{ depositType.percent }} | {{ depositType.currency }}</option>
+                </select>
+                <br>
+                <hr>
+                <br>
+            </div>
+        </div>
+        <div class="input-field">
+            <input formControlName="starts_at" id="starts_at" type="date" [ngClass]="{'invalid': form.get('starts_at').invalid && form.get('starts_at').touched}" required>
+            <label for="starts_at">Start date</label>
+            <span class="helper-text red-text" *ngIf="form.get('starts_at').invalid && form.get('starts_at').touched">
+            	<span *ngIf="form.get('starts_at').errors['required']">Enter start date</span>
+                <span *ngIf="form.get('starts_at').errors['invalidDate']">Specify start date in the future</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="ends_at" id="ends_at" type="date" [ngClass]="{'invalid': form.get('ends_at').invalid && form.get('ends_at').touched}" required>
+            <label for="ends_at">End date</label>
+            <span class="helper-text red-text" *ngIf="form.get('ends_at').invalid && form.get('ends_at').touched">
+            	<span *ngIf="form.get('ends_at').errors['required']">Enter end date</span>
+                <span *ngIf="form.get('ends_at').errors['invalidDate']">Specify end date in the future</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <div class="switch">
+                <label>
+                    Not ended
+                    <input formControlName="is_ended" id="is_ended" type="checkbox" disabled>
+                    <span class="lever"></span>
+                    Ended
+                </label>
+            </div>
+        </div>
+        <div class="input-field">
+            <input formControlName="deposit_amount" id="deposit_amount" type="number" [ngClass]="{'invalid': form.get('deposit_amount').invalid && form.get('deposit_amount').touched}">
+            <label for="deposit_amount">Deposit amount</label>
+            <span class="helper-text red-text" *ngIf="form.get('deposit_amount').invalid && form.get('deposit_amount').touched">
+            </span>
+        </div>
+        <div class="input-field">
+            <div>
+                <label>Client</label>
+                <select class="browser-default" id="client" formControlName="client" *ngIf="clients$ | async as clients;" required>
+                    <option [ngValue]="null" disabled>Choose your option</option>
+                    <option *ngFor="let client of clients" [ngValue]="client.id">{{ client.last_name }} | {{ client.first_name }} | {{ client.patronymic }} | {{ client.birthday }} | {{ client.id_number }} | {{ client.passport_series}}{{ client.passport_number }}</option>
+                </select>
+                <br>
+                <hr>
+                <br>
+            </div>
+        </div>
+        <div>
+            <button type="submit" [disabled]="form.invalid || form.disabled" class="waves-effect waves-light btn">
+                Save changes
+            </button>
+        </div>
+    </form>
+</div>

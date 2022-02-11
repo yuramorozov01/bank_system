@@ -20,7 +20,7 @@ export class BankAccountsPageComponent implements OnInit {
 	ngOnInit(): void {
 		this.bankAccounts$ = this.bankAccountService.fetch();
         this.bankAccounts$.subscribe(
-            (bank_accounts: IBankAccountList[]) => {
+            (bankAccounts: IBankAccountList[]) => {
 			},
 			error => {
 				MaterializeService.toast(error.error);
