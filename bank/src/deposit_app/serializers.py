@@ -63,6 +63,7 @@ class DepositContractCreateSerializer(serializers.ModelSerializer):
     def validate(self, data):
         data = self.validate_start_end_dates(data)
         data = self.validate_bank_accounts(data)
+        data = self.validate_deposit_amount_custom(data)
         return data
 
     def validate_start_end_dates(self, data):
@@ -119,6 +120,24 @@ class DepositContractCreateSerializer(serializers.ModelSerializer):
                 if main_bank_account.balance < deposit_amount:
                     raise serializers.ValidationError({
                         'deposit_amount': 'Not enough money on main bank account!',
+                    })
+        return data
+
+    def validate_deposit_amount_custom(self, data):
+        deposit_amount = data.get('deposit_amount')
+        deposit_type = data.get('deposit_type')
+        if (deposit_amount is not None) and (deposit_type is not None):
+            # Check if deposit amount is less than minimal downpayment of specified deposit type
+            if deposit_amount < deposit_type.min_downpayment:
+                raise serializers.ValidationError({
+                    'deposit_amount': 'Deposit amount is too low!',
+                })
+
+            # Check if deposit amount is more than maximum downpayment of specified deposit type
+            if deposit_type.max_downpayment is not None:
+                if deposit_amount > deposit_type.max_downpayment:
+                    raise serializers.ValidationError({
+                        'deposit_amount': 'Deposit amount is too big!',
                     })
         return data
 
