@@ -14,6 +14,10 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit {
 	@ViewChild('floating') floatingRef: ElementRef;
 
 	links = [
+        {
+            url: '/manage',
+            name: 'Manager panel',
+        },
 		{
 			url: '/client',
 			name: 'All clients',

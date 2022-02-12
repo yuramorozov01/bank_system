@@ -11,8 +11,9 @@ import { ClientPageComponent } from "./clients-page/client-page/client-page.comp
 import { BankAccountsPageComponent } from './bank-accounts-page/bank-accounts-page.component';
 import { DepositContractsPageComponent } from './deposit-contracts-page/deposit-contracts-page.component';
 import { DepositContractPageComponent } from './deposit-contracts-page/deposit-contract-page/deposit-contract-page.component';
-import { DepositTypesPageComponent } from './deposit-contracts-page/deposit-types-page/deposit-types-page.component'
-import { DepositTypePageComponent } from './deposit-contracts-page/deposit-types-page/deposit-type-page/deposit-type-page.component'
+import { DepositTypesPageComponent } from './deposit-contracts-page/deposit-types-page/deposit-types-page.component';
+import { DepositTypePageComponent } from './deposit-contracts-page/deposit-types-page/deposit-type-page/deposit-type-page.component';
+import { ManagerPanelPageComponent } from './manager-panel-page/manager-panel-page.component';
 
 import { AuthGuard } from './shared/services/auth/auth.guard';
 import { TopUpBankAccountPageComponent } from './bank-accounts-page/top-up-bank-account-page/top-up-bank-account-page.component';
@@ -91,6 +92,10 @@ const routes: Routes = [
             {
                 path: 'deposit_type/:id',
                 component: DepositTypePageComponent,
+            },
+            {
+                path: 'manager',
+                component: ManagerPanelPageComponent,
             },
 		],
 	},
