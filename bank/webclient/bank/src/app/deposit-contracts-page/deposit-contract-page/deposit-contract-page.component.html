@@ -7,7 +7,7 @@
 </div>
 
 <div class="row">
-    <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="isNew">
         <div class="input-field">
             <div>
                 <label>Deposit type</label>
@@ -37,19 +37,10 @@
             </span>
         </div>
         <div class="input-field">
-            <div class="switch">
-                <label>
-                    Not ended
-                    <input formControlName="is_ended" id="is_ended" type="checkbox" disabled>
-                    <span class="lever"></span>
-                    Ended
-                </label>
-            </div>
-        </div>
-        <div class="input-field">
-            <input formControlName="deposit_amount" id="deposit_amount" type="number" [ngClass]="{'invalid': form.get('deposit_amount').invalid && form.get('deposit_amount').touched}">
+            <input formControlName="deposit_amount" id="deposit_amount" type="number" [ngClass]="{'invalid': form.get('deposit_amount').invalid && form.get('deposit_amount').touched}" required>
             <label for="deposit_amount">Deposit amount</label>
             <span class="helper-text red-text" *ngIf="form.get('deposit_amount').invalid && form.get('deposit_amount').touched">
+                <span *ngIf="form.get('deposit_amount').errors['required']">Enter deposit amount</span>
             </span>
         </div>
         <div class="input-field">
@@ -67,6 +58,71 @@
         <div>
             <button type="submit" [disabled]="form.invalid || form.disabled" class="waves-effect waves-light btn">
                 Save changes
+            </button>
+        </div>
+    </form>
+    <form class="col s12 l12" [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!isNew">
+        <table class="highlight">
+            <tr>
+                <th>ID</th>
+                <td>{{ depositContract.id }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Deposit type</th>
+                <td>{{ depositContract.deposit_type.name }} | {{ depositContract.deposit_type.percent }} | {{ depositContract.deposit_type.currency }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/deposit_type', depositContract.deposit_type.id]">View</button>
+                </td>
+            </tr>
+            <tr>
+                <th>Start date</th>
+                <td>{{ depositContract.starts_at }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>End date</th>
+                <td>{{ depositContract.ends_at }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Is ended</th>
+                <td>{{ depositContract.is_ended ? 'Ended' : 'Not ended'}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Deposit amount</th>
+                <td>{{ depositContract.deposit_amount }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Client</th>
+                <td>{{ depositContract.client.last_name }} | {{ depositContract.client.first_name }} | {{ depositContract.client.patronymic }} | {{ depositContract.client.birthday }} | {{ depositContract.client.id_number }} | {{ depositContract.client.passport_series}}{{ depositContract.client.passport_number }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/client', depositContract.client.id]">View</button>
+                </td>
+            </tr>
+            <tr>
+                <th>Main bank account</th>
+                <td>{{ depositContract.main_bank_account.number }} | {{ depositContract.main_bank_account.activity_type }} | {{ depositContract.main_bank_account.bank_account_type }} | {{ depositContract.main_bank_account.balance }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Deposit bank account</th>
+                <td>{{ depositContract.deposit_bank_account.number }} | {{ depositContract.deposit_bank_account.activity_type }} | {{ depositContract.deposit_bank_account.bank_account_type }} | {{ depositContract.deposit_bank_account.balance }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Special bank account</th>
+                <td>{{ depositContract.special_bank_account.number }} | {{ depositContract.special_bank_account.activity_type }} | {{ depositContract.special_bank_account.bank_account_type }} | {{ depositContract.special_bank_account.balance }}</td>
+                <td></td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <div>
+            <button type="submit" [disabled]="depositContract.is_ended" class="waves-effect waves-light btn">
+                Revoke
             </button>
         </div>
     </form>

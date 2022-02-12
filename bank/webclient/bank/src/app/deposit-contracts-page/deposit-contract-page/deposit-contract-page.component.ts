@@ -44,12 +44,8 @@ export class DepositContractPageComponent implements OnInit {
             deposit_type: new FormControl(null, [Validators.required,]),
             starts_at: new FormControl(this.datePipe.transform(curDate,'yyyy-MM-dd'), [Validators.required, this.dateValidator]),
             ends_at: new FormControl(this.datePipe.transform(curDate,'yyyy-MM-dd'), [Validators.required, this.dateValidator]),
-            is_ended: new FormControl(false),
             deposit_amount: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(999999999999999999.99)]),
             client: new FormControl(null, Validators.required),
-            main_bank_account: new FormControl(null),
-            deposit_bank_account: new FormControl(null),
-            special_bank_account: new FormControl(null),
 		});
 
 		this.form.disable();
@@ -62,22 +58,7 @@ export class DepositContractPageComponent implements OnInit {
 							this.isNew = false;
 							return this.depositContractService.getById(params['id']);
 						} else {
-                            this.depositTypes$ = this.depositTypeService.fetch();
-                            this.depositTypes$.subscribe(
-                                (depositTypes: IDepositTypeList[]) => {
-                                },
-                                error => {
-                                    MaterializeService.toast(error.error);
-                                }
-                            )
-                            this.clients$ = this.clientService.fetch();
-                            this.clients$.subscribe(
-                                (clients: IClientList[]) => {
-                                },
-                                error => {
-                                    MaterializeService.toast(error.error);
-                                }
-                            )
+                            this.fetchNestedObjects();
                         }
 						return of(null);
 					}
@@ -87,6 +68,7 @@ export class DepositContractPageComponent implements OnInit {
 				(depositContract: IDepositContract) => {
 					if (depositContract) {
 						this.depositContract = depositContract;
+                        this.fetchNestedObjects();
 						this.form.patchValue(depositContract);
 						MaterializeService.updateTextInputs();
 					}
@@ -107,11 +89,15 @@ export class DepositContractPageComponent implements OnInit {
 		if (this.isNew) {
 			obs$ = this.depositContractService.create(this.form);
 		} else {
-			obs$ = this.depositContractService.revoke(this.depositContract.id);
+            const decision = window.confirm('Are you sure you want to revoke this deposit contract?');
+            if (decision) {
+                obs$ = this.depositContractService.revoke(this.depositContract.id);
+            }
 		}
 		obs$.subscribe(
 			(depositContract: IDepositContract) => {
 				this.depositContract = depositContract;
+                this.fetchNestedObjects();
                 this.form.patchValue(depositContract);
 				MaterializeService.updateTextInputs();
 				MaterializeService.toast({'Success': 'Deposit contract has been saved successfully'});
@@ -133,5 +119,24 @@ export class DepositContractPageComponent implements OnInit {
             }
         }
         return null;
+    }
+
+    fetchNestedObjects() {
+        this.depositTypes$ = this.depositTypeService.fetch();
+        this.depositTypes$.subscribe(
+            (depositTypes: IDepositTypeList[]) => {
+            },
+            error => {
+                MaterializeService.toast(error.error);
+            }
+        )
+        this.clients$ = this.clientService.fetch();
+        this.clients$.subscribe(
+            (clients: IClientList[]) => {
+            },
+            error => {
+                MaterializeService.toast(error.error);
+            }
+        )
     }
 }
