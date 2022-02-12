@@ -17,8 +17,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 
-class BankSettingsViewSet(mixins.ListModelMixin,
-                          viewsets.GenericViewSet):
+class BankSettingsViewSet(viewsets.GenericViewSet):
     '''
     list:
         Get bank settings
@@ -51,6 +50,11 @@ class BankSettingsViewSet(mixins.ListModelMixin,
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]
+
+    def list(self, request, *args, **kwargs):
+        bank_settings, _ = self.get_queryset()
+        serializer = self.get_serializer(bank_settings)
+        return Response(serializer.data)
 
     @action(methods=['PUT', 'PATCH'], detail=False)
     def close_day(self, request):
