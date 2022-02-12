@@ -58,7 +58,7 @@ class DepositContractCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepositContract
         fields = '__all__'
-        read_only_fields = ['main_bank_account', 'deposit_bank_account', 'special_bank_account']
+        read_only_fields = ['is_ended', 'main_bank_account', 'deposit_bank_account', 'special_bank_account']
 
     def validate(self, data):
         data = self.validate_start_end_dates(data)
@@ -147,11 +147,11 @@ class DepositContractDetailsSerializer(serializers.ModelSerializer):
     This serializer provides detailed information about deposit contract.
     '''
 
-    # deposit_type = DepositTypeShortDetailsSerializer(read_only=True)
-    # client = ClientShortDetailsSerializer(read_only=True)
-    # main_bank_account = BankAccountShortDetailsSerializer(read_only=True)
-    # deposit_bank_account = BankAccountShortDetailsSerializer(read_only=True)
-    # special_bank_account = BankAccountShortDetailsSerializer(read_only=True)
+    deposit_type = DepositTypeShortDetailsSerializer(read_only=True)
+    client = ClientShortDetailsSerializer(read_only=True)
+    main_bank_account = BankAccountShortDetailsSerializer(read_only=True)
+    deposit_bank_account = BankAccountShortDetailsSerializer(read_only=True)
+    special_bank_account = BankAccountShortDetailsSerializer(read_only=True)
 
     class Meta:
         model = DepositContract
