@@ -4,9 +4,9 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(
-    r'',
-    base_views.CloseDayViewSet,
-    basename='close_day'
+    r'bank_settings',
+    base_views.BankSettingsViewSet,
+    basename='bank_settings'
 )
 
 urlpatterns = [
