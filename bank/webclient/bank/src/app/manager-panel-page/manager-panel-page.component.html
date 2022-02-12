@@ -1,1 +1,23 @@
-<p>manager-panel-page works!</p>
+<div class="page-title">
+    <h4>
+        <a routerLink="/bank_accounts">Bank accounts</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        Manager panel
+    </h4>
+</div>
+
+<div class="row">
+    <form class="col s12 l6" (ngSubmit)="onSubmit()">
+        <span *ngIf="bankSettings$ | async as bankSettings;">
+            <h5>
+                Current date: <b>{{ bankSettings.curr_bank_day }}</b>
+            </h5>
+        </span>
+
+        <div>
+            <button type="submit" class="waves-effect waves-light btn">
+                Close bank day
+            </button>
+        </div>
+    </form>
+</div>
