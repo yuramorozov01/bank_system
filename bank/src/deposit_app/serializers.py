@@ -147,11 +147,11 @@ class DepositContractDetailsSerializer(serializers.ModelSerializer):
     This serializer provides detailed information about deposit contract.
     '''
 
-    deposit_type = DepositTypeShortDetailsSerializer(read_only=True)
-    client = ClientShortDetailsSerializer(read_only=True)
-    main_bank_account = BankAccountShortDetailsSerializer(read_only=True)
-    deposit_bank_account = BankAccountShortDetailsSerializer(read_only=True)
-    special_bank_account = BankAccountShortDetailsSerializer(read_only=True)
+    # deposit_type = DepositTypeShortDetailsSerializer(read_only=True)
+    # client = ClientShortDetailsSerializer(read_only=True)
+    # main_bank_account = BankAccountShortDetailsSerializer(read_only=True)
+    # deposit_bank_account = BankAccountShortDetailsSerializer(read_only=True)
+    # special_bank_account = BankAccountShortDetailsSerializer(read_only=True)
 
     class Meta:
         model = DepositContract
