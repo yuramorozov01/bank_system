@@ -81,7 +81,7 @@ class DepositContractCreateSerializer(serializers.ModelSerializer):
 
             # Check if end date is after specified in deposit type days
             if deposit_type is not None:
-                real_ends_at = starts_at + timedelta(days=deposit_type.deposit_term)
+                real_ends_at = starts_at + timedelta(days=(deposit_type.deposit_term - 1))
                 if ends_at != real_ends_at:
                     raise serializers.ValidationError({
                         'ends_at': 'Specify correct end date! It is has to be start date plus deposit term!',
