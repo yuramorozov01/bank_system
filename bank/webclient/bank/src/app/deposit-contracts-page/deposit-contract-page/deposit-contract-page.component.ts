@@ -96,12 +96,10 @@ export class DepositContractPageComponent implements OnInit {
 		}
 		obs$.subscribe(
 			(depositContract: IDepositContract) => {
-				this.depositContract = depositContract;
-                this.fetchNestedObjects();
-                this.form.patchValue(depositContract);
-				MaterializeService.updateTextInputs();
-				MaterializeService.toast({'Success': 'Deposit contract has been saved successfully'});
-				this.form.enable();
+                this.form.enable();
+                this.isNew = false;
+                MaterializeService.toast({'Success': 'Deposit contract has been created successfully'});
+                this.router.navigate(['/deposit_contract', depositContract.id]);
 			},
 			error => {
 				MaterializeService.toast(error.error);
@@ -112,9 +110,9 @@ export class DepositContractPageComponent implements OnInit {
 
     dateValidator(control: FormControl): { [s: string]: boolean } {
         if (control.value) {
-            const date = moment(control.value);
-            const today = moment();
-            if (date.isBefore(today)) {
+            const date = moment(control.value).toDate().getDate();
+            const today = moment().toDate().getDate();
+            if (date < today) {
                 return {'invalidDate': true}
             }
         }

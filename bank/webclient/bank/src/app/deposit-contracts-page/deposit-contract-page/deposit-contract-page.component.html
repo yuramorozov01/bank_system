@@ -61,7 +61,7 @@
             </button>
         </div>
     </form>
-    <form class="col s12 l12" [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!isNew">
+    <form class="col s12 l12" [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="(!isNew) && depositContract">
         <table class="highlight">
             <tr>
                 <th>ID</th>
