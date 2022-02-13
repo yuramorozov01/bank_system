@@ -74,17 +74,17 @@ class BankSettingsViewSet(viewsets.GenericViewSet):
                     'special_bank_account'
                 )
             for deposit_contract in deposit_contracts:
+                # Deposit interest accrual if today is deposit day
+                if (deposit_contract.starts_at <= bank_settings.curr_bank_day) and \
+                        (bank_settings.curr_bank_day <= deposit_contract.ends_at) and \
+                        (not deposit_contract.is_ended):
+                    deposit_interest_accrual(deposit_contract)
+                    deposit_contract.save()
+
                 # Withdraw deposit if today is the last day of deposit
                 if (bank_settings.curr_bank_day == deposit_contract.ends_at) and (not deposit_contract.is_ended):
                     deposit_withdraw(deposit_contract)
                     deposit_contract.is_ended = True
-                    deposit_contract.save()
-
-                # Deposit interest accrual if today is deposit day (started, but not ended)
-                elif (deposit_contract.starts_at <= bank_settings.curr_bank_day) and \
-                        (bank_settings.curr_bank_day < deposit_contract.ends_at) and \
-                        (not deposit_contract.is_ended):
-                    deposit_interest_accrual(deposit_contract)
                     deposit_contract.save()
 
             # Future: credit funcs
