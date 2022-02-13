@@ -16,7 +16,10 @@ def deposit_withdraw(deposit_contract):
 
     deposit_bank_account.activity_type = BankAccountActivityTypeChoices.PASSIVE
     deposit_bank_account.save()
+    deposit_bank_account.refresh_from_db()
+
     main_bank_account.save()
+    main_bank_account.refresh_from_db()
 
     special_bank_account = deposit_contract.special_bank_account
 
@@ -27,7 +30,10 @@ def deposit_withdraw(deposit_contract):
     )
 
     special_bank_account.save()
+    special_bank_account.refresh_from_db()
+
     main_bank_account.save()
+    main_bank_account.refresh_from_db()
 
 
 def deposit_interest_accrual(deposit_contract):
@@ -46,4 +52,7 @@ def deposit_interest_accrual(deposit_contract):
     )
 
     special_bank_account.save()
+    special_bank_account.refresh_from_db()
+
     deposit_bank_account.save()
+    deposit_bank_account.refresh_from_db()

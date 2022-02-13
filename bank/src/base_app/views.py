@@ -59,9 +59,9 @@ class BankSettingsViewSet(viewsets.GenericViewSet):
     @action(methods=['PUT', 'PATCH'], detail=False)
     def close_day(self, request):
         with transaction.atomic():
-            bank_settings, _ = self.get_queryset()
-
+            bank_settings, _ = BankSettings.objects.select_for_update().get_or_create()
             deposit_contracts = DepositContract.objects\
+                .select_for_update()\
                 .filter(
                     is_ended=False,
                     starts_at__lte=bank_settings.curr_bank_day,
@@ -76,16 +76,17 @@ class BankSettingsViewSet(viewsets.GenericViewSet):
             for deposit_contract in deposit_contracts:
                 # Deposit interest accrual if today is deposit day
                 if (deposit_contract.starts_at <= bank_settings.curr_bank_day) and \
-                        (bank_settings.curr_bank_day <= deposit_contract.ends_at) and \
-                        (not deposit_contract.is_ended):
+                        (bank_settings.curr_bank_day <= deposit_contract.ends_at):
                     deposit_interest_accrual(deposit_contract)
                     deposit_contract.save()
+                    deposit_contract.refresh_from_db()
 
                 # Withdraw deposit if today is the last day of deposit
-                if (bank_settings.curr_bank_day == deposit_contract.ends_at) and (not deposit_contract.is_ended):
+                if bank_settings.curr_bank_day == deposit_contract.ends_at:
                     deposit_withdraw(deposit_contract)
                     deposit_contract.is_ended = True
                     deposit_contract.save()
+                    deposit_contract.refresh_from_db()
 
             # Future: credit funcs
             # ...
@@ -93,6 +94,7 @@ class BankSettingsViewSet(viewsets.GenericViewSet):
             # Update current date in bank settings to +1
             bank_settings.curr_bank_day = F('curr_bank_day') + timedelta(days=1)
             bank_settings.save()
+            bank_settings.refresh_from_db()
 
         bank_settings, _ = self.get_queryset()
         serializer = self.get_serializer(bank_settings)
