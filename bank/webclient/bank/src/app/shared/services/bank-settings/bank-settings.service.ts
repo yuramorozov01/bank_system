@@ -15,7 +15,7 @@ export class BankSettingsService {
 		return this.http.get<IBankSettings>('/api/v1/bank_settings/');
 	}
 
-    close_day(): Observable<IBankSettings> {
+    closeDay(): Observable<IBankSettings> {
         return this.http.put<IBankSettings>('/api/v1/bank_settings/close_day/', {});
     }
 }

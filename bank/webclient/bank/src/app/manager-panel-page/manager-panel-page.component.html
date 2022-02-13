@@ -8,12 +8,12 @@
 
 <div class="row">
     <form class="col s12 l6" (ngSubmit)="onSubmit()">
-        <span *ngIf="bankSettings$ | async as bankSettings;">
+        <span *ngIf="bankSettings">
             <h5>
                 Current date: <b>{{ bankSettings.curr_bank_day }}</b>
             </h5>
         </span>
-
+        <br>
         <div>
             <button type="submit" class="waves-effect waves-light btn">
                 Close bank day
