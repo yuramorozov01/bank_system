@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'base_app',
     'client_app',
     'deposit_app',
+    'credit_app',
     'bank_account_app',
 ]
 

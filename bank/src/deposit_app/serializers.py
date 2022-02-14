@@ -161,7 +161,7 @@ class DepositContractDetailsSerializer(serializers.ModelSerializer):
 
 
 class DepositContractShortDetailsSerializer(serializers.ModelSerializer):
-    '''Serializer for a specified deposit type.
+    '''Serializer for a specified deposit contract.
     This serializer provides short information about deposit contract.
     '''
 
@@ -171,4 +171,4 @@ class DepositContractShortDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepositContract
         fields = ['id', 'deposit_type', 'starts_at', 'ends_at', 'is_ended', 'deposit_amount', 'client']
-        read_only_fields = ['id', 'deposit_type', 'starts_at', 'ends_at', 'deposit_amount', 'client']
+        read_only_fields = ['id', 'deposit_type', 'starts_at', 'ends_at', 'is_ended', 'deposit_amount', 'client']
