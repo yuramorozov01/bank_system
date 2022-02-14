@@ -4,6 +4,8 @@ from bank_account_app.choices import BankAccountActivityTypeChoices
 from bank_account_app.utils import transfer_money
 from base_app.models import BankSettings
 
+from credit_app.models import CreditContract
+
 
 def calc_debt_amount(credit_contract, pay_off=False):
     days_left = 1
@@ -54,3 +56,28 @@ def credit_interest_payment(credit_contract):
     make_credit_payment(credit_contract, pay_off=False)
     credit_contract.save()
     credit_contract.refresh_from_db()
+
+
+def credit_daily_recount(bank_settings):
+    credit_contracts = CreditContract.objects\
+        .select_for_update()\
+        .filter(
+            is_ended=False,
+            starts_at__lte=bank_settings.curr_bank_day,
+            ends_at__gte=bank_settings.curr_bank_day
+        )\
+        .prefetch_related(
+            'credit_type',
+            'main_bank_account',
+            'credit_bank_account',
+            'special_bank_account'
+        )
+    for credit_contract in credit_contracts:
+        # Credit interest payment if today is credit day
+        if (credit_contract.starts_at <= bank_settings.curr_bank_day) and \
+                (bank_settings.curr_bank_day <= credit_contract.ends_at):
+            credit_interest_payment(credit_contract)
+
+        # Pay off credit if today is the last day of credit
+        if bank_settings.curr_bank_day == credit_contract.ends_at:
+            credit_payoff(credit_contract)

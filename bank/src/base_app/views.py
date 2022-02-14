@@ -5,11 +5,11 @@ from bank_account_app.permissions import (IsUserManagerChangeBankAccount,
 from base_app.models import BankSettings
 from base_app.permissions import IsUserManagerViewBankSettings
 from base_app.serializers import BankSettingsDetailsSerializer
-from deposit_app.models import DepositContract
+from credit_app.utils import credit_daily_recount
 from deposit_app.permissions import (IsUserManagerChangeDepositContract,
                                      IsUserManagerViewDepositContract,
                                      IsUserManagerViewDepositType)
-from deposit_app.utils import deposit_interest_accrual, deposit_withdraw
+from deposit_app.utils import deposit_daily_recount
 from django.db import transaction
 from django.db.models import F
 from rest_framework import permissions, viewsets
@@ -60,31 +60,8 @@ class BankSettingsViewSet(viewsets.GenericViewSet):
     def close_day(self, request):
         with transaction.atomic():
             bank_settings, _ = BankSettings.objects.select_for_update().get_or_create()
-            deposit_contracts = DepositContract.objects\
-                .select_for_update()\
-                .filter(
-                    is_ended=False,
-                    starts_at__lte=bank_settings.curr_bank_day,
-                    ends_at__gte=bank_settings.curr_bank_day
-                )\
-                .prefetch_related(
-                    'deposit_type',
-                    'main_bank_account',
-                    'deposit_bank_account',
-                    'special_bank_account'
-                )
-            for deposit_contract in deposit_contracts:
-                # Deposit interest accrual if today is deposit day
-                if (deposit_contract.starts_at <= bank_settings.curr_bank_day) and \
-                        (bank_settings.curr_bank_day <= deposit_contract.ends_at):
-                    deposit_interest_accrual(deposit_contract)
-
-                # Withdraw deposit if today is the last day of deposit
-                if bank_settings.curr_bank_day == deposit_contract.ends_at:
-                    deposit_withdraw(deposit_contract)
-
-            # Future: credit funcs
-            # ...
+            deposit_daily_recount(bank_settings)
+            credit_daily_recount(bank_settings)
 
             # Update current date in bank settings to +1
             bank_settings.curr_bank_day = F('curr_bank_day') + timedelta(days=1)
