@@ -35,6 +35,10 @@ def deposit_withdraw(deposit_contract):
     main_bank_account.save()
     main_bank_account.refresh_from_db()
 
+    deposit_contract.is_ended = True
+    deposit_contract.save()
+    deposit_contract.refresh_from_db()
+
 
 def deposit_interest_accrual(deposit_contract):
     total_balance = deposit_contract.deposit_bank_account.balance + deposit_contract.deposit_amount
@@ -56,3 +60,6 @@ def deposit_interest_accrual(deposit_contract):
 
     deposit_bank_account.save()
     deposit_bank_account.refresh_from_db()
+
+    deposit_contract.save()
+    deposit_contract.refresh_from_db()

@@ -1,10 +1,10 @@
 from datetime import timedelta
 
-from base_app.permissions import IsUserManagerViewBankSettings
-from base_app.serializers import BankSettingsDetailsSerializer
 from bank_account_app.permissions import (IsUserManagerChangeBankAccount,
                                           IsUserManagerViewBankAccount)
 from base_app.models import BankSettings
+from base_app.permissions import IsUserManagerViewBankSettings
+from base_app.serializers import BankSettingsDetailsSerializer
 from deposit_app.models import DepositContract
 from deposit_app.permissions import (IsUserManagerChangeDepositContract,
                                      IsUserManagerViewDepositContract,
@@ -12,7 +12,7 @@ from deposit_app.permissions import (IsUserManagerChangeDepositContract,
 from deposit_app.utils import deposit_interest_accrual, deposit_withdraw
 from django.db import transaction
 from django.db.models import F
-from rest_framework import permissions, viewsets, mixins
+from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -78,15 +78,10 @@ class BankSettingsViewSet(viewsets.GenericViewSet):
                 if (deposit_contract.starts_at <= bank_settings.curr_bank_day) and \
                         (bank_settings.curr_bank_day <= deposit_contract.ends_at):
                     deposit_interest_accrual(deposit_contract)
-                    deposit_contract.save()
-                    deposit_contract.refresh_from_db()
 
                 # Withdraw deposit if today is the last day of deposit
                 if bank_settings.curr_bank_day == deposit_contract.ends_at:
                     deposit_withdraw(deposit_contract)
-                    deposit_contract.is_ended = True
-                    deposit_contract.save()
-                    deposit_contract.refresh_from_db()
 
             # Future: credit funcs
             # ...

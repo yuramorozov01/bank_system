@@ -9,6 +9,12 @@ router.register(
     basename='credit_type'
 )
 
+router.register(
+    r'credit_contract',
+    credit_views.CreditContractViewSet,
+    basename='credit_contract'
+)
+
 urlpatterns = [
     path(r'', include(router.urls)),
 ]

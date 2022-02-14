@@ -1,11 +1,11 @@
 from credit_app.models import CreditType
 from credit_app.permissions import (IsUserManagerAddCreditType,
-                                     IsUserManagerChangeCreditType,
-                                     IsUserManagerDeleteCreditType,
-                                     IsUserManagerViewCreditType)
+                                    IsUserManagerChangeCreditType,
+                                    IsUserManagerDeleteCreditType,
+                                    IsUserManagerViewCreditType)
 from credit_app.serializers import (CreditTypeCreateSerializer,
-                                     CreditTypeDetailsSerializer,
-                                     CreditTypeShortDetailsSerializer)
+                                    CreditTypeDetailsSerializer,
+                                    CreditTypeShortDetailsSerializer)
 from django.db.models.deletion import RestrictedError
 from rest_framework import permissions, validators, viewsets
 

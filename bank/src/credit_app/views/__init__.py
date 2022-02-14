@@ -1,1 +1,2 @@
+from credit_app.views.credit_contract import CreditContractViewSet
 from credit_app.views.credit_type import CreditTypeViewSet
