@@ -159,10 +159,11 @@ REST_FRAMEWORK = {
 
 
 # Settings for JWT authentication
+# this lifetime (30 and 40 days) is only for development
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=10),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=20),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=40),
 
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
