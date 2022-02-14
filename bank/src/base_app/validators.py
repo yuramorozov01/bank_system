@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 
-def validate_date(value):
+def validate_date_on_future(value):
     bank_settings, created = BankSettings.objects.get_or_create()
 
     if value < bank_settings.curr_bank_day:

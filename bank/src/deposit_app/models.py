@@ -1,5 +1,5 @@
-from deposit_app.choices import CurrencyChoices
-from deposit_app.validators import validate_date
+from base_app.choices import CurrencyChoices
+from base_app.validators import validate_date_on_future
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -48,8 +48,8 @@ class DepositContract(models.Model):
         on_delete=models.RESTRICT,
         related_name='contracts'
     )
-    starts_at = models.DateField('Start date', validators=[validate_date])
-    ends_at = models.DateField('End date', validators=[validate_date])
+    starts_at = models.DateField('Start date', validators=[validate_date_on_future])
+    ends_at = models.DateField('End date', validators=[validate_date_on_future])
     is_ended = models.BooleanField('Is deposit ended', default=False)
     deposit_amount = models.DecimalField(
         'Deposit amount',
@@ -61,25 +61,25 @@ class DepositContract(models.Model):
         'client_app.Client',
         verbose_name='Client',
         on_delete=models.RESTRICT,
-        related_name='contracts'
+        related_name='deposit_contracts'
     )
     main_bank_account = models.ForeignKey(
         'bank_account_app.BankAccount',
         verbose_name='Main bank account',
         on_delete=models.RESTRICT,
-        related_name='contracts_main'
+        related_name='deposit_contracts_main'
     )
     deposit_bank_account = models.ForeignKey(
         'bank_account_app.BankAccount',
         verbose_name='Deposit bank account',
         on_delete=models.RESTRICT,
-        related_name='contracts_deposit'
+        related_name='deposit_contracts_deposit'
     )
     special_bank_account = models.ForeignKey(
         'bank_account_app.BankAccount',
         verbose_name='Special bank account',
         on_delete=models.RESTRICT,
-        related_name='contracts_special'
+        related_name='deposit_contracts_special'
     )
 
     class Meta:
