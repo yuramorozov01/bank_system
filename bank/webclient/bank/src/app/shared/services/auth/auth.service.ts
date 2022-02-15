@@ -45,7 +45,7 @@ export class AuthService {
 
 	setAccessToken(access: string) {
 		this.access = access;
-	} 
+	}
 
 	getAccessToken(): string {
 		return this.access;
@@ -53,23 +53,24 @@ export class AuthService {
 
 	setRefreshToken(refresh: string) {
 		this.refresh = refresh;
-	} 
+	}
 
 	isAuthenticated(): boolean {
 		return !!this.access;
 	}
 
-	refreshAccessToken(): Observable<IAccess> {
-		return this.http.post<IAccess>('/auth/jwt/refresh/', { refresh: this.refresh })
-			.pipe(
-				tap(
-					({access}) => {
-						localStorage.setItem('auth-token', access);
-						this.setAccessToken(access);
-						this.startRefreshTokenTimer();
-					}
-				)
-			);
+	refreshAccessToken(refresh: string): void {
+		this.http.post<IAccess>('/auth/jwt/refresh/', { refresh: refresh })
+            .pipe(
+                tap(
+                    ({access}) => {
+
+                        localStorage.setItem('auth-token', access);
+                        this.setAccessToken(access);
+                        this.startRefreshTokenTimer();
+                    }
+                )
+            );
 	}
 
 	logout() {
@@ -80,11 +81,12 @@ export class AuthService {
 	}
 
 	startRefreshTokenTimer() {
+
 		const access = JSON.parse(atob(this.access.split('.')[1]));
 
 		const expiresIn = new Date(access.exp * 1000);
 		const timeout = expiresIn.getTime() - Date.now() - (60 * 1000);
-		this.refreshTokenTimeout = setTimeout(() => this.refreshAccessToken().subscribe(), timeout);
+		this.refreshTokenTimeout = setTimeout(() => this.refreshAccessToken(this.refresh), timeout);
 	}
 
 	stopRefreshTokenTimer() {
