@@ -17,6 +17,10 @@ import { ManagerPanelPageComponent } from './manager-panel-page/manager-panel-pa
 
 import { AuthGuard } from './shared/services/auth/auth.guard';
 import { TopUpBankAccountPageComponent } from './bank-accounts-page/top-up-bank-account-page/top-up-bank-account-page.component';
+import { CreditContractPageComponent } from './credit-contracts-page/credit-contract-page/credit-contract-page.component';
+import { CreditContractsPageComponent } from './credit-contracts-page/credit-contracts-page.component';
+import { CreditTypesPageComponent } from './credit-contracts-page/credit-types-page/credit-types-page.component';
+import { CreditTypePageComponent } from './credit-contracts-page/credit-types-page/credit-type-page/credit-type-page.component';
 
 
 const routes: Routes = [
@@ -92,6 +96,30 @@ const routes: Routes = [
             {
                 path: 'deposit_type/:id',
                 component: DepositTypePageComponent,
+            },
+            {
+                path: 'credit_contract',
+                component: CreditContractsPageComponent,
+            },
+            {
+                path: 'credit_contract/new',
+                component: CreditContractPageComponent,
+            },
+            {
+                path: 'credit_contract/:id',
+                component: CreditContractPageComponent,
+            },
+            {
+                path: 'credit_type',
+                component: CreditTypesPageComponent,
+            },
+            {
+                path: 'credit_type/new',
+                component: CreditTypePageComponent,
+            },
+            {
+                path: 'credit_type/:id',
+                component: CreditTypePageComponent,
             },
             {
                 path: 'manager',

@@ -22,6 +22,10 @@ import { DepositContractPageComponent } from './deposit-contracts-page/deposit-c
 import { DepositTypesPageComponent } from './deposit-contracts-page/deposit-types-page/deposit-types-page.component';
 import { DepositTypePageComponent } from './deposit-contracts-page/deposit-types-page/deposit-type-page/deposit-type-page.component';
 import { TopUpBankAccountPageComponent } from './bank-accounts-page/top-up-bank-account-page/top-up-bank-account-page.component';
+import { CreditContractsPageComponent } from './credit-contracts-page/credit-contracts-page.component';
+import { CreditContractPageComponent } from './credit-contracts-page/credit-contract-page/credit-contract-page.component';
+import { CreditTypesPageComponent } from './credit-contracts-page/credit-types-page/credit-types-page.component';
+import { CreditTypePageComponent } from './credit-contracts-page/credit-types-page/credit-type-page/credit-type-page.component';
 
 @NgModule({
     declarations: [
@@ -40,6 +44,10 @@ import { TopUpBankAccountPageComponent } from './bank-accounts-page/top-up-bank-
         DepositTypesPageComponent,
         DepositTypePageComponent,
         TopUpBankAccountPageComponent,
+        CreditContractsPageComponent,
+        CreditContractPageComponent,
+        CreditTypesPageComponent,
+        CreditTypePageComponent,
     ],
     imports: [
         BrowserModule,
