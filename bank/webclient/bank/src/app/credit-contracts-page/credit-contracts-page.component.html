@@ -1,1 +1,44 @@
-<p>credit-contracts-page works!</p>
+<div class="page-title">
+    <h4>Credit contracts</h4>
+    <button class="waves-effect waves-light btn grey darken-1" routerLink="/credit_contract/new">Add credit contract</button>
+</div>
+
+<div class="row" *ngIf="creditContracts$ | async as creditContracts; else loader">
+    <table class="highlight" *ngIf="creditContracts.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Credit type</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Is ended</th>
+                <th>Credit amount</th>
+                <th>Client</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let creditContract of creditContracts">
+                <td>{{ creditContract.id }}</td>
+                <td>{{ creditContract.credit_type.name }}</td>
+                <td>{{ creditContract.starts_at }}</td>
+                <td>{{ creditContract.ends_at }}</td>
+                <td>{{ creditContract.is_ended ? 'Ended' : 'Not ended'}}</td>
+                <td>{{ creditContract.credit_amount }}</td>
+                <td>{{ creditContract.client.id_number }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/credit_contract', creditContract.id]">View</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #empty>
+        <div class="center">You don't have any credit contracts!</div>
+    </ng-template>
+</div>
+
+<ng-template #loader>
+	<app-loader></app-loader>
+</ng-template>
