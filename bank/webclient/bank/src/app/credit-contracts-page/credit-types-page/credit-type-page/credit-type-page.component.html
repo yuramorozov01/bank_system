@@ -1,1 +1,84 @@
-<p>credit-type-page works!</p>
+<div class="page-title">
+    <h4>
+        <a routerLink="/credit_type">Credit types</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        {{ isNew ? 'Add' : 'Edit' }} credit type
+    </h4>
+    <span>
+	    <button class="btn btn-small red" (click)="deleteCreditType()" *ngIf="!isNew">
+	    	<i class="material-icons">delete</i>
+		</button>
+    </span>
+</div>
+
+<div class="row">
+    <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="input-field">
+            <input formControlName="name" id="name" type="text" [ngClass]="{'invalid': form.get('name').invalid && form.get('name').touched}" required>
+            <label for="name">Name</label>
+            <span class="helper-text red-text" *ngIf="form.get('name').invalid && form.get('name').touched">
+            	<span *ngIf="form.get('name').errors['required']">Enter name</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="percent" id="percent" type="number" [ngClass]="{'invalid': form.get('percent').invalid && form.get('percent').touched}" required>
+            <label for="percent">Percent</label>
+            <span class="helper-text red-text" *ngIf="form.get('percent').invalid && form.get('percent').touched">
+            	<span *ngIf="form.get('percent').errors['required']">Enter percent</span>
+                <span *ngIf="form.get('percent').errors['min']">Incorrect percent</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="credit_term" id="credit_term" type="number" [ngClass]="{'invalid': form.get('credit_term').invalid && form.get('credit_term').touched}" required>
+            <label for="credit_term">Credit term</label>
+            <span class="helper-text red-text" *ngIf="form.get('credit_term').invalid && form.get('credit_term').touched">
+            	<span *ngIf="form.get('credit_term').errors['required']">Enter credit term</span>
+                <span *ngIf="form.get('credit_term').errors['min']">Incorrect credit term</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <div>
+                <label>Currency</label>
+                <select class="browser-default" id="currency" formControlName="currency" required>
+                    <option [ngValue]="null" disabled>Choose your option</option>
+                    <option *ngFor="let currency of currencyValues | keyvalue" [ngValue]="currency.key">{{ currency.value }}</option>
+                </select>
+                <br>
+                <hr>
+                <br>
+            </div>
+        </div>
+        <div class="input-field">
+            <input formControlName="min_downpayment" id="min_downpayment" type="number" [ngClass]="{'invalid': form.get('min_downpayment').invalid && form.get('min_downpayment').touched}" required>
+            <label for="min_downpayment">Minimal downpayment</label>
+            <span class="helper-text red-text" *ngIf="form.get('min_downpayment').invalid && form.get('min_downpayment').touched">
+            	<span *ngIf="form.get('min_downpayment').errors['required']">Enter minimal downpayment</span>
+                <span *ngIf="form.get('min_downpayment').errors['min']">Incorrect minimal downpayment</span>
+                <span *ngIf="form.get('min_downpayment').errors['max']">Incorrect minimal downpayment</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="max_downpayment" id="max_downpayment" type="number" [ngClass]="{'invalid': form.get('max_downpayment').invalid && form.get('max_downpayment').touched}">
+            <label for="max_downpayment">Maximum downpayment</label>
+            <span class="helper-text red-text" *ngIf="form.get('max_downpayment').invalid && form.get('max_downpayment').touched">
+                <span *ngIf="form.get('max_downpayment').errors['min']">Incorrect maximum downpayment</span>
+                <span *ngIf="form.get('max_downpayment').errors['max']">Incorrect maximum downpayment</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <div class="switch">
+                <label>
+                    Not annuity payment
+                    <input formControlName="is_annuity_payment" id="is_annuity_payment" type="checkbox">
+                    <span class="lever"></span>
+                    Annuity payment
+                </label>
+            </div>
+        </div>
+        <div>
+            <button type="submit" [disabled]="form.invalid || form.disabled" class="waves-effect waves-light btn">
+                Save changes
+            </button>
+        </div>
+    </form>
+</div>
