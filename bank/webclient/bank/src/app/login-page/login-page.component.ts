@@ -23,6 +23,10 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 				private route: ActivatedRoute) { }
 
 	ngOnInit(): void {
+        if (this.auth.isAuthenticated()) {
+            this.router.navigate(['/client']);
+        }
+
 		this.form = new FormGroup({
 			username: new FormControl(null, [Validators.required]),
 			password: new FormControl(null, [Validators.required, Validators.minLength(6)]),

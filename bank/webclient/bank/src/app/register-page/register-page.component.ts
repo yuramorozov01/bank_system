@@ -23,6 +23,10 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 				private route: ActivatedRoute) { }
 
 	ngOnInit(): void {
+        if (this.auth.isAuthenticated()) {
+            this.router.navigate(['/client']);
+        }
+
 		this.form = new FormGroup({
 			email: new FormControl(null, [Validators.required, Validators.email]),
 			username: new FormControl(null, [Validators.required]),
