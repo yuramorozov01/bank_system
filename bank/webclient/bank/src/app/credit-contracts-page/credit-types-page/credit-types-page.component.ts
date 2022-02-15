@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Observable } from 'rxjs';
+
+import { CreditTypeService } from '../../shared/services/credit-contract/credit-type/credit-type.service';
+import { ICreditTypeList } from '../../shared/interfaces/credit-contract.interfaces'
+import { MaterializeService} from '../../shared/services/utils/materialize.service';
+
 @Component({
   selector: 'app-credit-types-page',
   templateUrl: './credit-types-page.component.html',
@@ -7,9 +13,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreditTypesPageComponent implements OnInit {
 
-  constructor() { }
+	creditTypes$: Observable<ICreditTypeList[]>;
 
-  ngOnInit(): void {
-  }
+	constructor(private creditTypeService: CreditTypeService) { }
+
+	ngOnInit(): void {
+		this.creditTypes$ = this.creditTypeService.fetch();
+        this.creditTypes$.subscribe(
+            (creditTypes: ICreditTypeList[]) => {
+			},
+			error => {
+				MaterializeService.toast(error.error);
+			}
+        )
+	}
 
 }
+

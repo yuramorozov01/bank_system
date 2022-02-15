@@ -1,1 +1,41 @@
-<p>credit-types-page works!</p>
+<div class="page-title">
+    <h4>Credit types</h4>
+    <button class="waves-effect waves-light btn grey darken-1" routerLink="/credit_type/new">Add credit type</button>
+</div>
+
+<div class="row" *ngIf="creditTypes$ | async as creditTypes; else loader">
+    <table class="highlight" *ngIf="creditTypes.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Percent</th>
+                <th>Currency</th>
+                <th>Credit term</th>
+                <th>Is annuity payment</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let creditType of creditTypes">
+                <td>{{ creditType.id }}</td>
+                <td>{{ creditType.name }}</td>
+                <td>{{ creditType.percent }}</td>
+                <td>{{ creditType.currency }}</td>
+                <td>{{ creditType.credit_term }}</td>
+                <td>{{ creditType.is_annuity_payment ? 'Annuity payment' : 'Not annuity payment' }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/credit_type', creditType.id]">View</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #empty>
+        <div class="center">You don't have any credit types!</div>
+    </ng-template>
+</div>
+
+<ng-template #loader>
+	<app-loader></app-loader>
+</ng-template>
