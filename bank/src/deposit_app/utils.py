@@ -2,7 +2,6 @@ from decimal import Decimal
 
 from bank_account_app.choices import BankAccountActivityTypeChoices
 from bank_account_app.utils import transfer_money
-
 from deposit_app.models import DepositContract
 
 

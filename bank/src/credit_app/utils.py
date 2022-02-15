@@ -3,7 +3,6 @@ from decimal import Decimal
 from bank_account_app.choices import BankAccountActivityTypeChoices
 from bank_account_app.utils import transfer_money
 from base_app.models import BankSettings
-
 from credit_app.models import CreditContract
 
 
