@@ -110,8 +110,8 @@ class CreditContractViewSet(CustomCreateModelMixin,
                 # Change viewset serializer with serializer with additional arguments
                 self.custom_serializer = serializer
 
-                # Transfer deposited money from main bank account to the special fund
-                transfer_money(special_fund_bank_account, new_main_bank_account, credit_contract.deposit_amount)
+                # Transfer credited money from main bank account to the special fund
+                transfer_money(special_fund_bank_account, new_main_bank_account, credit_contract.credit_amount)
                 special_fund_bank_account.save()
                 new_main_bank_account.save()
 
