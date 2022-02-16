@@ -98,7 +98,7 @@ export class DepositContractPageComponent implements OnInit {
 			(depositContract: IDepositContract) => {
                 this.form.enable();
                 this.isNew = false;
-                MaterializeService.toast({'Success': 'Deposit contract has been created successfully'});
+                MaterializeService.toast({'Success': 'Deposit contract has been saved successfully'});
                 this.router.navigate(['/deposit_contract', depositContract.id]);
 			},
 			error => {

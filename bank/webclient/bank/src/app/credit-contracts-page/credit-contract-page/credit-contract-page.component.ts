@@ -98,7 +98,7 @@ export class CreditContractPageComponent implements OnInit {
 			(creditContract: ICreditContract) => {
                 this.form.enable();
                 this.isNew = false;
-                MaterializeService.toast({'Success': 'Credit contract has been created successfully'});
+                MaterializeService.toast({'Success': 'Credit contract has been saved successfully'});
                 this.router.navigate(['/credit_contract', creditContract.id]);
 			},
 			error => {
