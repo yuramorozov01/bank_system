@@ -38,7 +38,7 @@ class DepositContractViewSet(CustomCreateModelMixin,
             'create': DepositContract.objects.all(),
             'retrieve': DepositContract.objects.all(),
             'list': DepositContract.objects.all(),
-            'revoke': DepositContract.objects.filter(is_ended=False),
+            'revoke': DepositContract.objects.all(),
         }
         queryset = querysets_dict.get(self.action)
         return queryset.distinct()
@@ -122,7 +122,7 @@ class DepositContractViewSet(CustomCreateModelMixin,
     def revoke(self, request, pk=None):
         try:
             with transaction.atomic():
-                deposit_contract = self.get_queryset().select_for_update().get(pk=pk)
+                deposit_contract = self.get_queryset().filter(is_ended=False).get(pk=pk)
                 if deposit_contract.deposit_type.is_revocable:
                     deposit_withdraw(deposit_contract)
                 else:

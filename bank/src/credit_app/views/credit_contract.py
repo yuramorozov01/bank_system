@@ -41,7 +41,7 @@ class CreditContractViewSet(CustomCreateModelMixin,
             'create': CreditContract.objects.all(),
             'retrieve': CreditContract.objects.all(),
             'list': CreditContract.objects.all(),
-            'pay_off': CreditContract.objects.filter(is_ended=False),
+            'pay_off': CreditContract.objects.all(),
         }
         queryset = querysets_dict.get(self.action)
         return queryset.distinct()
@@ -125,7 +125,7 @@ class CreditContractViewSet(CustomCreateModelMixin,
     def pay_off(self, request, pk=None):
         try:
             with transaction.atomic():
-                credit_contract = self.get_queryset().select_for_update().get(pk=pk)
+                credit_contract = self.get_queryset().filter(is_ended=False).get(pk=pk)
                 bank_setting, _ = BankSettings.objects.get_or_create()
                 credit_payoff(bank_setting, credit_contract)
             return self.retrieve(request, pk=pk)
