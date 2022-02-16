@@ -6,6 +6,7 @@ from bank_account_app.utils import (generate_bank_account_number,
                                     get_or_create_special_fund_bank_account,
                                     transfer_money)
 from base_app.mixins import CustomCreateModelMixin
+from base_app.models import BankSettings
 from client_app.models import Client
 from credit_app.models import CreditContract
 from credit_app.permissions import (IsUserManagerAddCreditContract,
@@ -125,7 +126,8 @@ class CreditContractViewSet(CustomCreateModelMixin,
         try:
             with transaction.atomic():
                 credit_contract = self.get_queryset().select_for_update().get(pk=pk)
-                credit_payoff(credit_contract)
+                bank_setting, _ = BankSettings.objects.get_or_create()
+                credit_payoff(bank_setting, credit_contract)
             return self.retrieve(request, pk=pk)
         except CreditContract.DoesNotExist:
             raise validators.ValidationError({
