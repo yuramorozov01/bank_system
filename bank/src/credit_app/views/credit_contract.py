@@ -5,6 +5,8 @@ from bank_account_app.utils import (generate_bank_account_number,
                                     get_or_create_main_bank_account,
                                     get_or_create_special_fund_bank_account,
                                     transfer_money)
+from bank_card_app.models import BankCard
+from bank_card_app.utils import generate_bank_card_number, hash_pin_code
 from base_app.mixins import CustomCreateModelMixin
 from base_app.models import BankSettings
 from client_app.models import Client
@@ -28,6 +30,7 @@ class CreditContractViewSet(CustomCreateModelMixin,
     '''
     create:
         Create a new credit contract.
+        Have to be specified PIN for credit bank card as POST param `pin`.
     retrieve:
         Get the specified credit contract.
     list:
@@ -88,6 +91,29 @@ class CreditContractViewSet(CustomCreateModelMixin,
                     bank_account_type=BankAccountTypeChoices.CREDIT,
                     balance=0,
                     client=client
+                )
+
+                # Create bank card for a credit bank account
+                pin = self.request.POST.get('pin')
+                if pin is None:
+                    raise validators.ValidationError({
+                        'pin': ['Specify PIN! (3 digits)'],
+                    })
+                else:
+                    if len(pin) != 3:
+                        raise validators.ValidationError({
+                            'pin': ['Specify correct PIN! Only 3 digits!'],
+                        })
+                    try:
+                        pin_int = int(pin)
+                    except ValueError:
+                        raise validators.ValidationError({
+                            'pin': ['Specify correct PIN! Only 3 digits!'],
+                        })
+                new_bank_card = BankCard.objects.create(
+                    number=generate_bank_card_number(new_credit_bank_account),
+                    pin=hash_pin_code(pin),
+                    bank_account=new_credit_bank_account,
                 )
 
                 # Validate in serializer new data with bank accounts

@@ -1,4 +1,5 @@
 from bank_account_app.models import BankAccount
+from bank_card_app.serializers import BankCardShortDetailsSerializer
 from client_app.serializers import ClientShortDetailsSerializer
 from rest_framework import serializers
 
@@ -9,16 +10,17 @@ class BankAccountDetailsSerializer(serializers.ModelSerializer):
     '''
 
     client = ClientShortDetailsSerializer(read_only=True)
+    bank_cards = BankCardShortDetailsSerializer(read_only=True, many=True)
 
     class Meta:
         model = BankAccount
         fields = '__all__'
-        read_only_fields = ['id', 'number', 'activity_type', 'bank_account_type', 'balance', 'client']
+        read_only_fields = ['id', 'number', 'activity_type', 'bank_account_type', 'balance', 'client', 'bank_cards']
 
 
 class BankAccountShortDetailsSerializer(serializers.ModelSerializer):
-    '''Serializer for a specified deposit type.
-    This serializer provides short information about deposit contract.
+    '''Serializer for a specified bank account type.
+    This serializer provides short information about bank account.
     '''
 
     client = ClientShortDetailsSerializer(read_only=True)
