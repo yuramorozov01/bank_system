@@ -1,15 +1,17 @@
 from base_app.models import BankSettings
 from django.contrib import admin
-from django.contrib.auth.models import Group, Permission
-from django.contrib.contenttypes.models import ContentType
+from base_app.utils import add_permissions_to_group
 
 admin.site.register(BankSettings)
 
 bank_settings, _ = BankSettings.objects.get_or_create()
 
-bank_staff_group, _ = Group.objects.get_or_create(name='bank_staff')
+permissions_to_add = [
+    {
+        'group_name': 'bank_staff',
+        'content_type_model': BankSettings,
+        'permissions': ['view_banksettings'],
+    },
+]
 
-content_type = ContentType.objects.get_for_model(BankSettings)
-
-view_bank_settings_permission = Permission.objects.get(codename='view_banksettings', content_type=content_type)
-bank_staff_group.permissions.add(view_bank_settings_permission)
+add_permissions_to_group(permissions_to_add)
