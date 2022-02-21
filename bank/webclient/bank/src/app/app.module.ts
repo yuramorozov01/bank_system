@@ -21,7 +21,7 @@ import { ManagerPanelPageComponent } from './manager-panel-page/manager-panel-pa
 import { DepositContractPageComponent } from './deposit-contracts-page/deposit-contract-page/deposit-contract-page.component';
 import { DepositTypesPageComponent } from './deposit-contracts-page/deposit-types-page/deposit-types-page.component';
 import { DepositTypePageComponent } from './deposit-contracts-page/deposit-types-page/deposit-type-page/deposit-type-page.component';
-import { TopUpBankAccountPageComponent } from './bank-accounts-page/top-up-bank-account-page/top-up-bank-account-page.component';
+import { BankAccountPageComponent } from './bank-accounts-page/bank-account-page/bank-account-page.component';
 import { CreditContractsPageComponent } from './credit-contracts-page/credit-contracts-page.component';
 import { CreditContractPageComponent } from './credit-contracts-page/credit-contract-page/credit-contract-page.component';
 import { CreditTypesPageComponent } from './credit-contracts-page/credit-types-page/credit-types-page.component';
@@ -43,7 +43,7 @@ import { CreditTypePageComponent } from './credit-contracts-page/credit-types-pa
         DepositContractPageComponent,
         DepositTypesPageComponent,
         DepositTypePageComponent,
-        TopUpBankAccountPageComponent,
+        BankAccountPageComponent,
         CreditContractsPageComponent,
         CreditContractPageComponent,
         CreditTypesPageComponent,

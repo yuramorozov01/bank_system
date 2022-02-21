@@ -24,7 +24,7 @@
                 <td>{{ bankAccount.balance }}</td>
                 <td *ngIf="bankAccount.client else none">{{ bankAccount.client.id_number }}</td>
                 <td>
-                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/bank_account', bankAccount.id, 'top_up']">Top up</button>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/bank_account', bankAccount.id]">View</button>
                 </td>
             </tr>
         </tbody>

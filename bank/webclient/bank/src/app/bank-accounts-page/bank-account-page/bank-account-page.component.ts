@@ -10,11 +10,11 @@ import { BankAccountService } from '../../shared/services/bank-account/bank-acco
 import { MaterializeService } from '../../shared/services/utils/materialize.service';
 
 @Component({
-  selector: 'app-top-up-bank-account-page',
-  templateUrl: './top-up-bank-account-page.component.html',
-  styleUrls: ['./top-up-bank-account-page.component.css']
+  selector: 'app-bank-account-page',
+  templateUrl: './bank-account-page.component.html',
+  styleUrls: ['./bank-account-page.component.css']
 })
-export class TopUpBankAccountPageComponent implements OnInit {
+export class BankAccountPageComponent implements OnInit {
 	@ViewChild('input') inputRef: ElementRef;
 
 	form: FormGroup;

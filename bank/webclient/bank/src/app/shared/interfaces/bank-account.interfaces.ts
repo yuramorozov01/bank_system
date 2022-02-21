@@ -1,4 +1,5 @@
 import { IClientList } from './client.interfaces';
+import { IBankCardList } from './bank-card.interfaces';
 
 export interface IBankAccountList {
 	id: number;
@@ -7,6 +8,7 @@ export interface IBankAccountList {
     bank_account_type: string;
     balance: number;
     client: IClientList;
+    bank_cards: IBankCardList[];
 }
 
 export interface IBankAccount {
@@ -16,4 +18,5 @@ export interface IBankAccount {
     bank_account_type: string;
     balance: number;
     client: IClientList;
+    bank_cards: IBankCardList[];
 }

@@ -16,7 +16,7 @@ import { DepositTypePageComponent } from './deposit-contracts-page/deposit-types
 import { ManagerPanelPageComponent } from './manager-panel-page/manager-panel-page.component';
 
 import { AuthGuard } from './shared/services/auth/auth.guard';
-import { TopUpBankAccountPageComponent } from './bank-accounts-page/top-up-bank-account-page/top-up-bank-account-page.component';
+import { BankAccountPageComponent } from './bank-accounts-page/bank-account-page/bank-account-page.component';
 import { CreditContractPageComponent } from './credit-contracts-page/credit-contract-page/credit-contract-page.component';
 import { CreditContractsPageComponent } from './credit-contracts-page/credit-contracts-page.component';
 import { CreditTypesPageComponent } from './credit-contracts-page/credit-types-page/credit-types-page.component';
@@ -70,8 +70,8 @@ const routes: Routes = [
                 component: BankAccountsPageComponent,
             },
             {
-                path: 'bank_account/:id/top_up',
-                component: TopUpBankAccountPageComponent,
+                path: 'bank_account/:id',
+                component: BankAccountPageComponent,
             },
             {
                 path: 'deposit_contract',

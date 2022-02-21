@@ -1,0 +1,83 @@
+<div class="page-title">
+    <h4>
+        <a routerLink="/bank_account">Bank accounts</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        Top up bank account balance
+    </h4>
+    <span>
+        <h5>Balance: <b>{{ bankAccount.balance }}</b></h5>
+    </span>
+</div>
+
+<div class="row">
+    <table class="highlight" *ngIf="bankAccount">
+        <h5>Main information</h5>
+        <tr>
+            <th>ID</th>
+            <td>{{ bankAccount.id }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>Number</th>
+            <td>{{ bankAccount.number }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>Activity type</th>
+            <td>{{ bankAccount.activity_type }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>Bank account type</th>
+            <td>{{ bankAccount.bank_account_type }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>Balance</th>
+            <td>{{ bankAccount.balance }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>Client</th>
+            <td>{{ bankAccount.client.last_name }} | {{ bankAccount.client.first_name }} | {{ bankAccount.client.patronymic }} | {{ bankAccount.client.birthday }} | {{ bankAccount.client.id_number }} | {{ bankAccount.client.passport_series}}{{ bankAccount.client.passport_number }}</td>
+            <td>
+                <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/client', bankAccount.client.id]">View</button>
+            </td>
+        </tr>
+        <h6>Bank cards</h6>
+        <table class="highlight" *ngIf="bankAccount.bank_cards.length !== 0; else empty">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bankCard of bankAccount.bank_cards">
+                    <td>{{ bankCard.id }}</td>
+                    <td>{{ bankCard.number }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <ng-template #empty>
+            <div class="center">You don't have any bank cards in this bank account!</div>
+            <br><hr><br>
+        </ng-template>
+    </table>
+    <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h5>Operations</h5>
+        <div class="input-field">
+            <input formControlName="amount" id="amount" type="number" [ngClass]="{'invalid': form.get('amount').invalid && form.get('amount').touched}" required>
+            <label for="amount">Top up amount</label>
+            <span class="helper-text red-text" *ngIf="form.get('amount').invalid && form.get('amount').touched">
+            	<span *ngIf="form.get('amount').errors['required']">Enter top up amount</span>
+                <span *ngIf="form.get('amount').errors['pattern']">Incorrect top up amount</span>
+            </span>
+        </div>
+        <div>
+            <button type="submit" [disabled]="form.invalid || form.disabled" class="waves-effect waves-light btn">
+                Save changes
+            </button>
+        </div>
+    </form>
+</div>
