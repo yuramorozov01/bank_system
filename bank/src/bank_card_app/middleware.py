@@ -25,9 +25,9 @@ class BankCardAuthenticationMiddleware:
                 if bank_card_number is not None:
                     request.bank_card = BankCard.objects.get(number=bank_card_number)
             except jwt.ExpiredSignatureError:
-                self.send_json_response('Bank card authentication token has expired', 401)
+                return self.send_json_response('Bank card authentication token has expired', 401)
             except (BankCard.DoesNotExist, jwt.DecodeError, jwt.InvalidTokenError):
-                self.send_json_response('Bank card authorization has failed. Please, send valid token.', 401)
+                return self.send_json_response('Bank card authorization has failed. Please, send valid token.', 401)
 
         response = self.get_response(request)
         # Code to be executed for each request/response after
