@@ -46,6 +46,7 @@ export class CreditContractPageComponent implements OnInit {
             ends_at: new FormControl(this.datePipe.transform(curDate,'yyyy-MM-dd'), [Validators.required, this.dateValidator]),
             credit_amount: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(999999999999999999.99)]),
             client: new FormControl(null, Validators.required),
+            pin: new FormControl(null, [Validators.required, Validators.pattern('^[0-9]{3}$')]),
 		});
 
 		this.form.disable();

@@ -55,6 +55,14 @@
                 <br>
             </div>
         </div>
+        <div class="input-field">
+            <input formControlName="pin" id="pin" type="number" [ngClass]="{'invalid': form.get('pin').invalid && form.get('pin').touched}" required>
+            <label for="pin">PIN for credit card</label>
+            <span class="helper-text red-text" *ngIf="form.get('pin').invalid && form.get('pin').touched">
+                <span *ngIf="form.get('pin').errors['required']">Enter PIN</span>
+                <span *ngIf="form.get('pin').errors['pattern']">Incorrect PIN</span>
+            </span>
+        </div>
         <div>
             <button type="submit" [disabled]="form.invalid || form.disabled" class="waves-effect waves-light btn">
                 Save changes
