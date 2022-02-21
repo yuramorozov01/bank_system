@@ -24,11 +24,12 @@ class BankAccountShortDetailsSerializer(serializers.ModelSerializer):
     '''
 
     client = ClientShortDetailsSerializer(read_only=True)
+    bank_cards = BankCardShortDetailsSerializer(read_only=True, many=True)
 
     class Meta:
         model = BankAccount
-        fields = ['id', 'number', 'activity_type', 'bank_account_type', 'balance', 'client']
-        read_only_fields = ['id', 'number', 'activity_type', 'bank_account_type', 'balance', 'client']
+        fields = ['id', 'number', 'activity_type', 'bank_account_type', 'balance', 'client', 'bank_cards']
+        read_only_fields = ['id', 'number', 'activity_type', 'bank_account_type', 'balance', 'client', 'bank_cards']
 
 
 class EmptyBankAccountSerializer(serializers.ModelSerializer):
