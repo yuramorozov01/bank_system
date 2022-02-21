@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
 
-class IsUserManagerViewBankSettings(permissions.BasePermission):
+class CanViewBankSettings(permissions.BasePermission):
     '''Permission to check if current user has permission to view bank settings.'''
 
     message = 'You don\'t have permissions to view bank settings.'

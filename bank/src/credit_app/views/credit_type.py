@@ -1,8 +1,6 @@
 from credit_app.models import CreditType
-from credit_app.permissions import (IsUserManagerAddCreditType,
-                                    IsUserManagerChangeCreditType,
-                                    IsUserManagerDeleteCreditType,
-                                    IsUserManagerViewCreditType)
+from credit_app.permissions import (CanAddCreditType, CanChangeCreditType,
+                                    CanDeleteCreditType, CanViewCreditType)
 from credit_app.serializers import (CreditTypeCreateSerializer,
                                     CreditTypeDetailsSerializer,
                                     CreditTypeShortDetailsSerializer)
@@ -50,14 +48,14 @@ class CreditTypeViewSet(viewsets.ModelViewSet):
         return serializer_class
 
     def get_permissions(self):
-        base_permissions = [permissions.IsAuthenticated, IsUserManagerViewCreditType]
+        base_permissions = [permissions.IsAuthenticated, CanViewCreditType]
         permissions_dict = {
-            'create': [IsUserManagerAddCreditType],
-            'destroy': [IsUserManagerDeleteCreditType],
+            'create': [CanAddCreditType],
+            'destroy': [CanDeleteCreditType],
             'retrieve': [],
             'list': [],
-            'update': [IsUserManagerChangeCreditType],
-            'partial_update': [IsUserManagerChangeCreditType],
+            'update': [CanChangeCreditType],
+            'partial_update': [CanChangeCreditType],
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]

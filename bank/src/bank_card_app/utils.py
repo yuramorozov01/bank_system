@@ -1,5 +1,4 @@
 from django.contrib.auth.hashers import ScryptPasswordHasher
-from random import randrange
 
 
 def generate_bank_card_number(bank_account):

@@ -1,6 +1,6 @@
 from bank_card_app.models import BankCard
-from django.contrib import admin
 from base_app.utils import add_permissions_to_group
+from django.contrib import admin
 
 admin.site.register(BankCard)
 

@@ -1,14 +1,14 @@
 from datetime import timedelta
 
-from bank_account_app.permissions import (IsUserManagerChangeBankAccount,
-                                          IsUserManagerViewBankAccount)
+from bank_account_app.permissions import (CanChangeBankAccount,
+                                          CanViewBankAccount)
 from base_app.models import BankSettings
-from base_app.permissions import IsUserManagerViewBankSettings
+from base_app.permissions import CanViewBankSettings
 from base_app.serializers import BankSettingsDetailsSerializer
 from credit_app.utils import credit_daily_recount
-from deposit_app.permissions import (IsUserManagerChangeDepositContract,
-                                     IsUserManagerViewDepositContract,
-                                     IsUserManagerViewDepositType)
+from deposit_app.permissions import (CanChangeDepositContract,
+                                     CanViewDepositContract,
+                                     CanViewDepositType)
 from deposit_app.utils import deposit_daily_recount
 from django.db import transaction
 from django.db.models import F
@@ -42,11 +42,11 @@ class BankSettingsViewSet(viewsets.GenericViewSet):
         return serializer_class
 
     def get_permissions(self):
-        base_permissions = [permissions.IsAuthenticated, IsUserManagerViewBankSettings, IsUserManagerViewBankAccount,
-                            IsUserManagerViewDepositType, IsUserManagerViewDepositContract]
+        base_permissions = [permissions.IsAuthenticated, CanViewBankSettings, CanViewBankAccount,
+                            CanViewDepositType, CanViewDepositContract]
         permissions_dict = {
             'list': [],
-            'close_day': [IsUserManagerChangeBankAccount, IsUserManagerChangeDepositContract],
+            'close_day': [CanChangeBankAccount, CanChangeDepositContract],
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]

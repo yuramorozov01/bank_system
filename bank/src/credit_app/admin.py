@@ -1,6 +1,6 @@
+from base_app.utils import add_permissions_to_group
 from credit_app.models import CreditContract, CreditType
 from django.contrib import admin
-from base_app.utils import add_permissions_to_group
 
 admin.site.register(CreditType)
 admin.site.register(CreditContract)

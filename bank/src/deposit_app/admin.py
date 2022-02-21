@@ -1,6 +1,6 @@
+from base_app.utils import add_permissions_to_group
 from deposit_app.models import DepositContract, DepositType
 from django.contrib import admin
-from base_app.utils import add_permissions_to_group
 
 admin.site.register(DepositType)
 admin.site.register(DepositContract)

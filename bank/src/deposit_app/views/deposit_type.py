@@ -1,8 +1,6 @@
 from deposit_app.models import DepositType
-from deposit_app.permissions import (IsUserManagerAddDepositType,
-                                     IsUserManagerChangeDepositType,
-                                     IsUserManagerDeleteDepositType,
-                                     IsUserManagerViewDepositType)
+from deposit_app.permissions import (CanAddDepositType, CanChangeDepositType,
+                                     CanDeleteDepositType, CanViewDepositType)
 from deposit_app.serializers import (DepositTypeCreateSerializer,
                                      DepositTypeDetailsSerializer,
                                      DepositTypeShortDetailsSerializer)
@@ -50,14 +48,14 @@ class DepositTypeViewSet(viewsets.ModelViewSet):
         return serializer_class
 
     def get_permissions(self):
-        base_permissions = [permissions.IsAuthenticated, IsUserManagerViewDepositType]
+        base_permissions = [permissions.IsAuthenticated, CanViewDepositType]
         permissions_dict = {
-            'create': [IsUserManagerAddDepositType],
-            'destroy': [IsUserManagerDeleteDepositType],
+            'create': [CanAddDepositType],
+            'destroy': [CanDeleteDepositType],
             'retrieve': [],
             'list': [],
-            'update': [IsUserManagerChangeDepositType],
-            'partial_update': [IsUserManagerChangeDepositType],
+            'update': [CanChangeDepositType],
+            'partial_update': [CanChangeDepositType],
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]

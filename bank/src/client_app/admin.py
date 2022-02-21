@@ -1,6 +1,6 @@
+from base_app.utils import add_permissions_to_group
 from client_app.models import Client
 from django.contrib import admin
-from base_app.utils import add_permissions_to_group
 
 admin.site.register(Client)
 

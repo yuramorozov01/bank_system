@@ -8,9 +8,9 @@ from bank_account_app.utils import (generate_bank_account_number,
 from base_app.mixins import CustomCreateModelMixin
 from client_app.models import Client
 from deposit_app.models import DepositContract
-from deposit_app.permissions import (IsUserManagerAddDepositContract,
-                                     IsUserManagerChangeDepositContract,
-                                     IsUserManagerViewDepositContract)
+from deposit_app.permissions import (CanAddDepositContract,
+                                     CanChangeDepositContract,
+                                     CanViewDepositContract)
 from deposit_app.serializers import (DepositContractCreateSerializer,
                                      DepositContractDetailsSerializer,
                                      DepositContractShortDetailsSerializer)
@@ -54,12 +54,12 @@ class DepositContractViewSet(CustomCreateModelMixin,
         return serializer_class
 
     def get_permissions(self):
-        base_permissions = [permissions.IsAuthenticated, IsUserManagerViewDepositContract]
+        base_permissions = [permissions.IsAuthenticated, CanViewDepositContract]
         permissions_dict = {
-            'create': [IsUserManagerAddDepositContract],
+            'create': [CanAddDepositContract],
             'retrieve': [],
             'list': [],
-            'revoke': [IsUserManagerChangeDepositContract]
+            'revoke': [CanChangeDepositContract]
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]

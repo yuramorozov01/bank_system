@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
 
-class IsUserManagerAddCreditType(permissions.BasePermission):
+class CanAddCreditType(permissions.BasePermission):
     '''Permission to check if current user has permission to add credit types.'''
 
     message = 'You don\'t have permissions to add a new credit type.'
@@ -10,7 +10,7 @@ class IsUserManagerAddCreditType(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('credit_app.add_credittype'))
 
 
-class IsUserManagerChangeCreditType(permissions.BasePermission):
+class CanChangeCreditType(permissions.BasePermission):
     '''Permission to check if current user has permission to change credit types.'''
 
     message = 'You don\'t have permissions to change the credit type.'
@@ -19,7 +19,7 @@ class IsUserManagerChangeCreditType(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('credit_app.change_credittype'))
 
 
-class IsUserManagerDeleteCreditType(permissions.BasePermission):
+class CanDeleteCreditType(permissions.BasePermission):
     '''Permission to check if current user has permission to delete credit types.'''
 
     message = 'You don\'t have permissions to delete the credit type.'
@@ -28,7 +28,7 @@ class IsUserManagerDeleteCreditType(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('credit_app.delete_credittype'))
 
 
-class IsUserManagerViewCreditType(permissions.BasePermission):
+class CanViewCreditType(permissions.BasePermission):
     '''Permission to check if current user has permission to view credit types.'''
 
     message = 'You don\'t have permissions to view the credit type.'
@@ -37,7 +37,7 @@ class IsUserManagerViewCreditType(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('credit_app.view_credittype'))
 
 
-class IsUserManagerAddCreditContract(permissions.BasePermission):
+class CanAddCreditContract(permissions.BasePermission):
     '''Permission to check if current user has permission to add credit contracts.'''
 
     message = 'You don\'t have permissions to add a new credit contract.'
@@ -46,7 +46,7 @@ class IsUserManagerAddCreditContract(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('credit_app.add_creditcontract'))
 
 
-class IsUserManagerChangeCreditContract(permissions.BasePermission):
+class CanChangeCreditContract(permissions.BasePermission):
     '''Permission to check if current user has permission to change credit contracts.'''
 
     message = 'You don\'t have permissions to change the credit contract.'
@@ -55,7 +55,7 @@ class IsUserManagerChangeCreditContract(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('credit_app.change_creditcontract'))
 
 
-class IsUserManagerDeleteCreditContract(permissions.BasePermission):
+class CanDeleteCreditContract(permissions.BasePermission):
     '''Permission to check if current user has permission to delete credit contracts.'''
 
     message = 'You don\'t have permissions to delete the credit contract.'
@@ -64,7 +64,7 @@ class IsUserManagerDeleteCreditContract(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('credit_app.delete_creditcontract'))
 
 
-class IsUserManagerViewCreditContract(permissions.BasePermission):
+class CanViewCreditContract(permissions.BasePermission):
     '''Permission to check if current user has permission to view credit contracts.'''
 
     message = 'You don\'t have permissions to view the credit contract.'

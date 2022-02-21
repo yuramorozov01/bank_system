@@ -11,9 +11,9 @@ from base_app.mixins import CustomCreateModelMixin
 from base_app.models import BankSettings
 from client_app.models import Client
 from credit_app.models import CreditContract
-from credit_app.permissions import (IsUserManagerAddCreditContract,
-                                    IsUserManagerChangeCreditContract,
-                                    IsUserManagerViewCreditContract)
+from credit_app.permissions import (CanAddCreditContract,
+                                    CanChangeCreditContract,
+                                    CanViewCreditContract)
 from credit_app.serializers import (CreditContractCreateSerializer,
                                     CreditContractDetailsSerializer,
                                     CreditContractShortDetailsSerializer)
@@ -60,12 +60,12 @@ class CreditContractViewSet(CustomCreateModelMixin,
         return serializer_class
 
     def get_permissions(self):
-        base_permissions = [permissions.IsAuthenticated, IsUserManagerViewCreditContract]
+        base_permissions = [permissions.IsAuthenticated, CanViewCreditContract]
         permissions_dict = {
-            'create': [IsUserManagerAddCreditContract],
+            'create': [CanAddCreditContract],
             'retrieve': [],
             'list': [],
-            'pay_off': [IsUserManagerChangeCreditContract]
+            'pay_off': [CanChangeCreditContract]
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]

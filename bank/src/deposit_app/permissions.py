@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
 
-class IsUserManagerAddDepositType(permissions.BasePermission):
+class CanAddDepositType(permissions.BasePermission):
     '''Permission to check if current user has permission to add deposit types.'''
 
     message = 'You don\'t have permissions to add a new deposit type.'
@@ -10,7 +10,7 @@ class IsUserManagerAddDepositType(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('deposit_app.add_deposittype'))
 
 
-class IsUserManagerChangeDepositType(permissions.BasePermission):
+class CanChangeDepositType(permissions.BasePermission):
     '''Permission to check if current user has permission to change deposit types.'''
 
     message = 'You don\'t have permissions to change the deposit type.'
@@ -19,7 +19,7 @@ class IsUserManagerChangeDepositType(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('deposit_app.change_deposittype'))
 
 
-class IsUserManagerDeleteDepositType(permissions.BasePermission):
+class CanDeleteDepositType(permissions.BasePermission):
     '''Permission to check if current user has permission to delete deposit types.'''
 
     message = 'You don\'t have permissions to delete the deposit type.'
@@ -28,7 +28,7 @@ class IsUserManagerDeleteDepositType(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('deposit_app.delete_deposittype'))
 
 
-class IsUserManagerViewDepositType(permissions.BasePermission):
+class CanViewDepositType(permissions.BasePermission):
     '''Permission to check if current user has permission to view deposit types.'''
 
     message = 'You don\'t have permissions to view the deposit type.'
@@ -37,7 +37,7 @@ class IsUserManagerViewDepositType(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('deposit_app.view_deposittype'))
 
 
-class IsUserManagerAddDepositContract(permissions.BasePermission):
+class CanAddDepositContract(permissions.BasePermission):
     '''Permission to check if current user has permission to add deposit contracts.'''
 
     message = 'You don\'t have permissions to add a new deposit contract.'
@@ -46,7 +46,7 @@ class IsUserManagerAddDepositContract(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('deposit_app.add_depositcontract'))
 
 
-class IsUserManagerChangeDepositContract(permissions.BasePermission):
+class CanChangeDepositContract(permissions.BasePermission):
     '''Permission to check if current user has permission to change deposit contracts.'''
 
     message = 'You don\'t have permissions to change the deposit contract.'
@@ -55,7 +55,7 @@ class IsUserManagerChangeDepositContract(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('deposit_app.change_depositcontract'))
 
 
-class IsUserManagerDeleteDepositContract(permissions.BasePermission):
+class CanDeleteDepositContract(permissions.BasePermission):
     '''Permission to check if current user has permission to delete deposit contracts.'''
 
     message = 'You don\'t have permissions to delete the deposit contract.'
@@ -64,7 +64,7 @@ class IsUserManagerDeleteDepositContract(permissions.BasePermission):
         return bool(request.user and request.user.has_perm('deposit_app.delete_depositcontract'))
 
 
-class IsUserManagerViewDepositContract(permissions.BasePermission):
+class CanViewDepositContract(permissions.BasePermission):
     '''Permission to check if current user has permission to view deposit contracts.'''
 
     message = 'You don\'t have permissions to view the deposit contract.'

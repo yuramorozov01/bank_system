@@ -3,10 +3,8 @@ from bank_account_app.choices import (BankAccountActivityTypeChoices,
 from bank_account_app.models import BankAccount
 from bank_account_app.utils import generate_bank_account_number
 from client_app.models import Client
-from client_app.permissions import (IsUserManagerAddClient,
-                                    IsUserManagerChangeClient,
-                                    IsUserManagerDeleteClient,
-                                    IsUserManagerViewClient)
+from client_app.permissions import (CanAddClient, CanChangeClient,
+                                    CanDeleteClient, CanViewClient)
 from client_app.serializers import (ClientCreateSerializer,
                                     ClientDetailsSerializer,
                                     ClientShortDetailsSerializer)
@@ -54,14 +52,14 @@ class ClientViewSet(viewsets.ModelViewSet):
         return serializer_class
 
     def get_permissions(self):
-        base_permissions = [permissions.IsAuthenticated, IsUserManagerViewClient]
+        base_permissions = [permissions.IsAuthenticated, CanViewClient]
         permissions_dict = {
-            'create': [IsUserManagerAddClient],
-            'destroy': [IsUserManagerDeleteClient],
+            'create': [CanAddClient],
+            'destroy': [CanDeleteClient],
             'retrieve': [],
             'list': [],
-            'update': [IsUserManagerChangeClient],
-            'partial_update': [IsUserManagerChangeClient],
+            'update': [CanChangeClient],
+            'partial_update': [CanChangeClient],
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]
