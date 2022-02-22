@@ -75,7 +75,7 @@ class BankCardViewSet(mixins.RetrieveModelMixin,
             # Create new access JWT with payload to authenticate bank card
             payload = {
                 'bank_card_number': bank_card.number,
-                'exp': datetime.now(tz=timezone.utc) + timedelta(minutes=2),
+                'exp': datetime.now(tz=timezone.utc) + timedelta(minutes=1000),
             }
             new_access_jwt = jwt.encode(payload, config('SECRET_KEY'), algorithm='HS256')
             return JsonResponse({'access': new_access_jwt}, status=201)
