@@ -51,7 +51,7 @@ class BankAccountViewSet(viewsets.ReadOnlyModelViewSet):
         try:
             bank_account = BankAccount.objects.get(pk=pk)
             amount = self.request.POST.get('amount')
-            self.validate_top_up_amount(amount)
+            amount = self.validate_top_up_amount(amount)
 
             with transaction.atomic():
                 bank_account.balance = F('balance') + amount
@@ -80,3 +80,4 @@ class BankAccountViewSet(viewsets.ReadOnlyModelViewSet):
             raise validators.ValidationError({
                 'amount': 'This field is has to be positive!'
             })
+        return float_value
