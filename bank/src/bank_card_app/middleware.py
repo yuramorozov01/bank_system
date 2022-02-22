@@ -17,6 +17,7 @@ class BankCardAuthenticationMiddleware:
     def __call__(self, request):
         # Code to be executed for each request before
         # the view (and later middleware) are called.
+        request.bank_card = None
         jwt_token = request.headers.get('X-Bank-Card-Authorization', None)
         if jwt_token:
             try:
@@ -24,10 +25,8 @@ class BankCardAuthenticationMiddleware:
                 bank_card_number = payload.get('bank_card_number')
                 if bank_card_number is not None:
                     request.bank_card = BankCard.objects.get(number=bank_card_number)
-            except jwt.ExpiredSignatureError:
-                return self.send_json_response('Bank card authentication token has expired', 401)
-            except (BankCard.DoesNotExist, jwt.DecodeError, jwt.InvalidTokenError):
-                return self.send_json_response('Bank card authorization has failed. Please, send valid token.', 401)
+            except (BankCard.DoesNotExist, jwt.ExpiredSignatureError, jwt.DecodeError, jwt.InvalidTokenError):
+                pass
 
         response = self.get_response(request)
         # Code to be executed for each request/response after
