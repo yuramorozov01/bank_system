@@ -1,1 +1,24 @@
-<p>atm-login-page works!</p>
+<form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="card-content">
+        <span class="card-title">Enter the bank card</span>
+        <div class="input-field">
+            <input formControlName="number" id="number" type="text" [ngClass]="{'invalid': form.get('number').invalid && form.get('number').touched}" required>
+            <label for="number">Bank card number:</label>
+            <span class="helper-text red-text" *ngIf="form.get('number').invalid && form.get('number').touched">
+                <span *ngIf="form.get('number').errors['required']">Enter bank card number</span>
+                <span *ngIf="form.get('number').errors['pattern']">Incorrect bank card number</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="pin" id="pin" type="password" [ngClass]="{'invalid': form.get('pin').invalid && form.get('pin').touched}" required>
+            <label for="pin">PIN:</label>
+            <span class="helper-text red-text" *ngIf="form.get('pin').invalid && form.get('pin').touched">
+                <span *ngIf="form.get('pin').errors['required']">Enter pin</span>
+                <span *ngIf="form.get('pin').errors['pattern']">Incorrect pin</span>
+            </span>
+        </div>
+    </div>
+    <div class="card-action">
+        <button class="modal-action btn waves-effect" type="submit" [disabled]="form.invalid || form.disabled">Enter card</button>
+    </div>
+</form>

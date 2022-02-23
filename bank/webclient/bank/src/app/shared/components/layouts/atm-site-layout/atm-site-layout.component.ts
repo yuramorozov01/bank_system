@@ -12,7 +12,7 @@ export class AtmSiteLayoutComponent implements OnInit {
 
 	links = [
         {
-            url: '',
+            url: '/login',
             name: 'Bank',
         },
         {

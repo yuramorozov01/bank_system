@@ -56,7 +56,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 				this.router.navigate(['/client']);
 			},
 			error => {
-				MaterializeService.toast(error.error.detail);
+				MaterializeService.toast(error.error);
 				this.form.enable();
 			}
 		);

@@ -8,10 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class AtmAuthLayoutComponent implements OnInit {
 	links = [
         {
-            url: '',
+            url: '/login',
             name: 'Bank',
         },
-		{
+        {
 			url: '/atm/login',
 			name: 'Login',
 		},

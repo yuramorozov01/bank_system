@@ -138,12 +138,12 @@ const routes: Routes = [
         component: AtmAuthLayoutComponent,
         children: [
             {
-                path: 'atm',
+                path: '',
                 redirectTo: '/atm/login',
                 pathMatch: 'full',
             },
             {
-                path: 'atm/login',
+                path: 'login',
                 component: AtmLoginPageComponent,
             },
         ],
@@ -154,16 +154,16 @@ const routes: Routes = [
         canActivate: [AtmAuthGuard],
         children: [
             {
-                path: 'atm',
+                path: '',
                 redirectTo: '/atm/balance',
                 pathMatch: 'full',
             },
             {
-                path: 'atm/balance',
+                path: 'balance',
                 component: AtmBalancePageComponent,
             },
             {
-                path: 'atm/withdraw',
+                path: 'withdraw',
                 component: AtmWithdrawPageComponent,
             },
         ],
