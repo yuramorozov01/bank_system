@@ -33,7 +33,7 @@ export class AtmService {
 
         doc.html(pdfReceipt.innerHTML, {
             callback: function (doc) {
-                doc.save('balanceReceipt.pdf');
+                doc.save('receipt.pdf');
                 MaterializeService.toast({'Success': 'Receipt has been successfully saved!'});
             },
             margin: [5, 5, 5, 5],

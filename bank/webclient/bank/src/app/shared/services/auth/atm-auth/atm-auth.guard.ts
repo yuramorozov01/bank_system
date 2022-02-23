@@ -18,7 +18,7 @@ export class AtmAuthGuard implements CanActivate, CanActivateChild {
 		if (this.atmAuth.isAuthenticated()) {
 			return of(true);
 		} else {
-			this.router.navigate(['/'], {
+			this.router.navigate(['/atm'], {
 				queryParams: {
 					accessDenied: true,
 				},
