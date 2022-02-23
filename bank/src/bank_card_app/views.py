@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import jwt
 from bank_card_app.models import BankCard
 from bank_card_app.permissions import IsAuthenticatedBankCard, IsAuthenticatedBankCardOrCanViewBankCard
-from bank_card_app.serializers import BankCardShortDetailsSerializer
+from bank_card_app.serializers import AccesJWTSerializer, BankCardShortDetailsSerializer, ReceiptSerializer
 from decouple import config
 from django.contrib.auth.hashers import ScryptPasswordHasher
 from django.db import transaction
@@ -29,7 +29,13 @@ class BankCardViewSet(mixins.RetrieveModelMixin,
             `amount`: withdraw amount
         Returns:
             `time`: current time
-            `withdraw_amount`: withdraw amount
+            `value`: withdraw amount
+            `bank_card_number`: bank card number
+    balance:
+        Get balance of bank account by bank card.
+        Returns:
+            `time`: current time
+            `value`: bank account balance
             `bank_card_number`: bank card number
     '''
 
@@ -37,7 +43,8 @@ class BankCardViewSet(mixins.RetrieveModelMixin,
         querysets_dict = {
             'retrieve': BankCard.objects.all(),
             'auth': BankCard.objects.all(),
-            'withdraw': BankCard.objects.filter(number=self.request.bank_card.number),
+            'withdraw': BankCard.objects.all(),
+            'balance': BankCard.objects.all(),
         }
         queryset = querysets_dict.get(self.action)
         return queryset.distinct()
@@ -45,6 +52,9 @@ class BankCardViewSet(mixins.RetrieveModelMixin,
     def get_serializer_class(self):
         serializers_dict = {
             'retrieve': BankCardShortDetailsSerializer,
+            'auth': AccesJWTSerializer,
+            'withdraw': ReceiptSerializer,
+            'balance': ReceiptSerializer,
         }
         serializer_class = serializers_dict.get(self.action)
         return serializer_class
@@ -55,6 +65,7 @@ class BankCardViewSet(mixins.RetrieveModelMixin,
             'retrieve': [IsAuthenticatedBankCardOrCanViewBankCard],
             'auth': [],
             'withdraw': [IsAuthenticatedBankCard],
+            'balance': [IsAuthenticatedBankCard],
         }
         base_permissions += permissions_dict.get(self.action, [])
         return [permission() for permission in base_permissions]
@@ -119,11 +130,11 @@ class BankCardViewSet(mixins.RetrieveModelMixin,
             bank_account.save()
 
         receipt = {
-            'time': datetime.now(tz=timezone.utc).strftime('%Y-%m-%d %H-%M-%S %Z'),
-            'withdraw_amount': withdraw_amount,
+            'time': datetime.now(tz=timezone.utc).strftime('%Y-%m-%d %H:%M:%S %Z'),
+            'value': withdraw_amount,
             'bank_card_number': bank_card.number,
         }
-        return JsonResponse(receipt, status=200)
+        return JsonResponse(ReceiptSerializer(data=receipt).initial_data, status=200)
 
     def validate_withdraw_amount(self, value):
         if value is None:
@@ -143,3 +154,13 @@ class BankCardViewSet(mixins.RetrieveModelMixin,
                 'amount': 'This field is has to be positive!'
             })
         return float_value
+
+    @action(methods=['GET'], detail=False)
+    def balance(self, request):
+        bank_card = self.request.bank_card
+        receipt = {
+            'time': datetime.now(tz=timezone.utc).strftime('%Y-%m-%d %H:%M:%S %Z'),
+            'value': bank_card.bank_account.balance,
+            'bank_card_number': bank_card.number,
+        }
+        return JsonResponse(ReceiptSerializer(data=receipt).initial_data, status=200)
