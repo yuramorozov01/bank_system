@@ -6,6 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./atm-auth-layout.component.css']
 })
 export class AtmAuthLayoutComponent implements OnInit {
+	links = [
+        {
+            url: '',
+            name: 'Bank',
+        },
+		{
+			url: '/atm/login',
+			name: 'Login',
+		},
+	];
 
   constructor() { }
 

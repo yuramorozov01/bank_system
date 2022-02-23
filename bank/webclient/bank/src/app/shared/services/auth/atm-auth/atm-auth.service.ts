@@ -27,7 +27,7 @@ export class AtmAuthService {
             .pipe(
                 tap(
                     ({access}) => {
-                        localStorage.setItem('bank-card-auth-token', access);
+                        localStorage.setItem('atm-auth-token', access);
                         this.setAccessToken(access);
                     }
                 )
@@ -48,6 +48,6 @@ export class AtmAuthService {
 
 	logout() {
 		this.setAccessToken(null);
-        localStorage.removeItem('bank-card-auth-token')
+        localStorage.removeItem('atm-auth-token')
 	}
 }
