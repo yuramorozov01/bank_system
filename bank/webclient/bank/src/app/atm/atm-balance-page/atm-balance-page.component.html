@@ -1,1 +1,27 @@
-<p>atm-balance-page works!</p>
+<div class="page-title">
+    <h4>
+        <a routerLink="/atm">ATM</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        Bank card balance
+    </h4>
+    <button type="submit" class="waves-effect waves-light btn grey darken-1" (click)="printReceipt()">Print balance receipt</button>
+</div>
+
+<div class="row" #pdfReceipt>
+    <table class="highlight" *ngIf="balanceReceipt">
+        <h5>Balance receipt</h5>
+        <tr>
+            <th>Time</th>
+            <td>{{ balanceReceipt.time }}</td>
+        </tr>
+        <tr>
+            <th>Balance</th>
+            <td>{{ balanceReceipt.value }}</td>
+        </tr>
+        <tr>
+            <th>Bank card number</th>
+            <td>{{ balanceReceipt.bank_card_number }}</td>
+        </tr>
+    </table>
+</div>
+<button type="submit" class="waves-effect waves-light btn darken-1" (click)="refreshBalance()">Refresh balance</button>
