@@ -33,7 +33,12 @@ export class AtmWithdrawPageComponent implements OnInit {
     onSubmit() {
 		let obs$;
 		this.form.disable();
-        obs$ = this.atmService.withdraw(this.form);
+        const decision = window.confirm('Withdraw amount: ' + this.form.value.amount + '\nContinue?');
+        if (decision) {
+            obs$ = this.atmService.withdraw(this.form);
+        } else {
+            this.form.enable();
+        }
 		obs$.subscribe(
 			(withdrawReceipt: IReceipt) => {
 				this.withdrawReceipt = withdrawReceipt;
