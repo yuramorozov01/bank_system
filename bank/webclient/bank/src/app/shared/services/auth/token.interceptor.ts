@@ -5,10 +5,12 @@ import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { AuthService } from './auth.service';
+import { AtmAuthService } from './atm-auth/atm-auth.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 	constructor(private auth: AuthService,
+                private atmAuth: AtmAuthService,
 				private router: Router) {
 
 	}
@@ -18,6 +20,13 @@ export class TokenInterceptor implements HttpInterceptor {
 			req = req.clone({
 				setHeaders: {
 					Authorization: `JWT ${this.auth.getAccessToken()}`,
+				},
+			});
+		}
+        if (this.atmAuth.isAuthenticated()) {
+			req = req.clone({
+				setHeaders: {
+					'X-Bank-Card-Authorization': `${this.atmAuth.getAccessToken()}`,
 				},
 			});
 		}
@@ -35,7 +44,7 @@ export class TokenInterceptor implements HttpInterceptor {
 					sessionFailed: true,
 				},
 			});
-		}	
+		}
 
 		return throwError(error);
 	}

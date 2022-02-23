@@ -26,6 +26,11 @@ import { CreditContractsPageComponent } from './credit-contracts-page/credit-con
 import { CreditContractPageComponent } from './credit-contracts-page/credit-contract-page/credit-contract-page.component';
 import { CreditTypesPageComponent } from './credit-contracts-page/credit-types-page/credit-types-page.component';
 import { CreditTypePageComponent } from './credit-contracts-page/credit-types-page/credit-type-page/credit-type-page.component';
+import { AtmSiteLayoutComponent } from './shared/components/layouts/atm-site-layout/atm-site-layout.component';
+import { AtmAuthLayoutComponent } from './shared/components/layouts/atm-auth-layout/atm-auth-layout.component';
+import { AtmWithdrawPageComponent } from './atm/atm-withdraw-page/atm-withdraw-page.component';
+import { AtmBalancePageComponent } from './atm/atm-balance-page/atm-balance-page.component';
+import { AtmLoginPageComponent } from './atm/atm-login-page/atm-login-page.component';
 
 @NgModule({
     declarations: [
@@ -48,6 +53,11 @@ import { CreditTypePageComponent } from './credit-contracts-page/credit-types-pa
         CreditContractPageComponent,
         CreditTypesPageComponent,
         CreditTypePageComponent,
+        AtmSiteLayoutComponent,
+        AtmAuthLayoutComponent,
+        AtmWithdrawPageComponent,
+        AtmBalancePageComponent,
+        AtmLoginPageComponent,
     ],
     imports: [
         BrowserModule,

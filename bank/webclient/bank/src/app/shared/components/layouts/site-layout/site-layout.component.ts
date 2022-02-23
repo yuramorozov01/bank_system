@@ -15,6 +15,10 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit {
 
 	links = [
         {
+            url: '/atm',
+            name: 'ATM',
+        },
+        {
             url: '/manager',
             name: 'Manager panel',
         },

@@ -8,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class AuthLayoutComponent implements OnInit {
 
 	links = [
+        {
+            url: '/atm',
+            name: 'ATM',
+        },
 		{
 			url: '/login',
 			name: 'Login',

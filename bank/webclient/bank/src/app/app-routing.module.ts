@@ -21,6 +21,12 @@ import { CreditContractPageComponent } from './credit-contracts-page/credit-cont
 import { CreditContractsPageComponent } from './credit-contracts-page/credit-contracts-page.component';
 import { CreditTypesPageComponent } from './credit-contracts-page/credit-types-page/credit-types-page.component';
 import { CreditTypePageComponent } from './credit-contracts-page/credit-types-page/credit-type-page/credit-type-page.component';
+import { AtmAuthGuard } from './shared/services/auth/atm-auth/atm-auth.guard';
+import { AtmAuthLayoutComponent } from './shared/components/layouts/atm-auth-layout/atm-auth-layout.component';
+import { AtmSiteLayoutComponent } from './shared/components/layouts/atm-site-layout/atm-site-layout.component';
+import { AtmLoginPageComponent } from './atm/atm-login-page/atm-login-page.component';
+import { AtmBalancePageComponent } from './atm/atm-balance-page/atm-balance-page.component';
+import { AtmWithdrawPageComponent } from './atm/atm-withdraw-page/atm-withdraw-page.component';
 
 
 const routes: Routes = [
@@ -127,6 +133,41 @@ const routes: Routes = [
             },
 		],
 	},
+    {
+        path: 'atm',
+        component: AtmAuthLayoutComponent,
+        children: [
+            {
+                path: '',
+                redirectTo: '/login',
+                pathMatch: 'full',
+            },
+            {
+                path: 'login',
+                component: AtmLoginPageComponent,
+            },
+        ],
+    },
+    {
+        path: 'atm',
+        component: AtmSiteLayoutComponent,
+        canActivate: [AtmAuthGuard],
+        children: [
+            {
+                path: '',
+                redirectTo: '/balance',
+                pathMatch: 'full',
+            },
+            {
+                path: 'balance',
+                component: AtmBalancePageComponent,
+            },
+            {
+                path: 'withdraw',
+                component: AtmWithdrawPageComponent,
+            },
+        ],
+    },
 ];
 
 @NgModule({
